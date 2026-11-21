@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Waris BrickArt |ต่อความสุข ให้เป็นงานศิลปะ</title>
+<title>Waris BrickArt | เปลี่ยนรูปที่รักให้เป็นงานศิลปะตัวต่อ</title>
 <meta name="description" content="อัปโหลดรูปของคุณ เลือกขนาด ดูแบบฟรีก่อนสั่ง Waris BrickArt ส่งชุดตัวต่อพร้อมแผนผังการต่อถึงบ้าน">
 <meta property="og:title" content="Waris BrickArt · ของขวัญภาพตัวต่อจากรูปของคุณ">
 <meta property="og:description" content="อัปรูป เลือกขนาด ดูแบบฟรีก่อนสั่ง">
@@ -276,6 +276,7 @@ footer .in{padding-block:32px;display:flex;flex-wrap:wrap;justify-content:space-
 footer b{font-family:var(--display);font-size:22px}
 footer p{opacity:.75;max-width:52ch}
 footer a{color:inherit}
+.ftslogan{font-style:italic;letter-spacing:.04em;color:var(--sun);opacity:1!important;margin:2px 0 4px}
 .ftqr{display:grid;justify-items:center;gap:6px;text-decoration:none;font-size:13px}.ftqr img{background:#fff;padding:6px;border-radius:10px;image-rendering:pixelated}
 </style>
 </head>
@@ -312,9 +313,9 @@ footer a{color:inherit}
 <header class="hero" id="top">
   <img class="bg" id="heroImg" alt="ภาพหลักของร้าน">
   <div class="in hero-copy">
-    <p class="eyebrow" id="heroTag">Your photo · One piece only</p>
+    <p class="eyebrow" id="heroTag">Custom-made for your special someone</p>
     <h1 id="heroWords"><span>Your</span><span>Story</span><span>In Bricks</span></h1>
-    <p class="lead" id="heroH">เปลี่ยนรูปที่คุณรัก ให้เป็นภาพตัวต่อชิ้นเดียวในโลก</p>
+    <p class="lead" id="heroH">ต่อความสุข ให้เป็นงานศิลปะ</p>
     <p class="sub" id="heroP">อัปโหลดรูปแล้วเห็นแบบทันที จะต่อเองเป็นกิจกรรมพิเศษกับคนที่รัก หรือให้เราต่อให้พร้อมแขวนก็ได้</p>
     <div class="row">
       <a href="#create" class="btn red">เริ่มสร้างเลย →</a>
@@ -323,7 +324,7 @@ footer a{color:inherit}
   </div>
 </header>
 
-<div class="ribbon" aria-hidden="true"><div><span class="rib">ชิ้นงานที่มีเพียงหนึ่งเดียว <b>✦</b> ดูแบบฟรีก่อนสั่ง <b>✦</b> จัดส่งภายใน 1–3 วัน <b>✦</b> ต่อเองหรือให้ร้านต่อให้ <b>✦</b></span><span class="rib">ชิ้นงานที่มีเพียงหนึ่งเดียว <b>✦</b> ดูแบบฟรีก่อนสั่ง <b>✦</b> จัดส่งภายใน 1–3 วัน <b>✦</b> ต่อเองหรือให้ร้านต่อให้ <b>✦</b></span></div></div>
+<div class="ribbon" aria-hidden="true"><div><span class="rib">Custom-made for your special someone <b>✦</b> ดูแบบฟรีก่อนสั่ง <b>✦</b> จัดส่งภายใน 1–3 วัน <b>✦</b> ต่อเองหรือให้ร้านต่อให้ <b>✦</b></span><span class="rib">Custom-made for your special someone <b>✦</b> ดูแบบฟรีก่อนสั่ง <b>✦</b> จัดส่งภายใน 1–3 วัน <b>✦</b> ต่อเองหรือให้ร้านต่อให้ <b>✦</b></span></div></div>
 
 <section class="in" id="about">
   <div class="about">
@@ -392,7 +393,7 @@ footer a{color:inherit}
 
 <footer>
   <div class="in">
-    <div><b id="ftName">Waris BrickArt</b><p>ภาพตัวต่อจากรูปของคุณ ทุกชิ้นมีเพียงชิ้นเดียวในโลก</p><p id="ftContact" style="margin-top:6px" hidden></p></div>
+    <div><b id="ftName">Waris BrickArt</b><p class="ftslogan" id="ftSlogan">Custom-made for your special someone</p><p>ต่อความสุข ให้เป็นงานศิลปะ ทุกชิ้นมีเพียงชิ้นเดียวในโลก</p><p id="ftContact" style="margin-top:6px" hidden></p></div>
     <a class="ftqr" id="ftQr" target="_blank" rel="noopener" hidden><img alt="QR แอด LINE ร้าน" width="104" height="104"><span>สแกนแอด LINE ร้าน</span></a>
     <p id="ftNote">Waris BrickArt เป็นแบรนด์อิสระ ไม่มีส่วนเกี่ยวข้องกับผู้ผลิตตัวต่อรายใด</p>
   </div>
@@ -502,7 +503,7 @@ footer a{color:inherit}
 const API_URL = "https://script.google.com/macros/s/AKfycby-DVBVH-VQhApHKH6NluyJxd3ZrY23f2OjHCz6DzVyYzCHVLWajnWj9hSenQANXad_/exec";
 /* ============================================================================== */
 const HAS_API=/^https:\/\/script\.google\.com\/.+\/exec$/.test(API_URL.trim());
-const FALLBACK={"palette": [{"code": "BLK", "name": "ดำ", "hex": "#1B2A34"}, {"code": "WHT", "name": "ขาว", "hex": "#F4F4F4"}, {"code": "SKN", "name": "เนื้อ", "hex": "#F2C9A0"}, {"code": "ORG", "name": "ส้ม", "hex": "#FE8A18"}, {"code": "YEL", "name": "เหลือง", "hex": "#F2CD37"}, {"code": "RED", "name": "แดง", "hex": "#C91A09"}, {"code": "BRN", "name": "น้ำตาล", "hex": "#82422A"}, {"code": "PUR", "name": "ม่วง", "hex": "#6A3FA0"}, {"code": "DGR", "name": "เทาเข้ม", "hex": "#6C6E68"}, {"code": "LGR", "name": "เทาอ่อน", "hex": "#A0A5A9"}, {"code": "PNK", "name": "ชมพู", "hex": "#FC97AC"}, {"code": "LBL", "name": "ฟ้า", "hex": "#9FC3E9"}, {"code": "BLU", "name": "น้ำเงิน", "hex": "#0055BF"}, {"code": "DGN", "name": "เขียวเข้ม", "hex": "#184632"}, {"code": "LGN", "name": "เขียวอ่อน", "hex": "#6FBF73"}], "prices": [{"w": 48, "h": 48, "price": 1690}, {"w": 48, "h": 64, "price": 2250}, {"w": 64, "h": 64, "price": 3000}, {"w": 64, "h": 96, "price": 4500}], "shop": {"name": "Waris BrickArt", "tagline": "Your photo · One piece only", "headline": "เปลี่ยนรูปที่คุณรัก ให้เป็นภาพตัวต่อชิ้นเดียวในโลก", "sub": "อัปโหลดรูปแล้วเห็นแบบทันที จะต่อเองเป็นกิจกรรมพิเศษกับคนที่รัก หรือให้เราต่อให้พร้อมแขวนก็ได้", "shipDays": "1–3 วัน", "line": "@967wicnz", "ig": "", "assembleFee": 0, "heroWords": "Your, Story, In Bricks", "quote": "ต่อเรื่องราวเล็ก ๆ ให้กลายเป็นของขวัญชิ้นใหญ่"}};
+const FALLBACK={"palette": [{"code": "BLK", "name": "ดำ", "hex": "#1B2A34"}, {"code": "WHT", "name": "ขาว", "hex": "#F4F4F4"}, {"code": "SKN", "name": "เนื้อ", "hex": "#F2C9A0"}, {"code": "ORG", "name": "ส้ม", "hex": "#FE8A18"}, {"code": "YEL", "name": "เหลือง", "hex": "#F2CD37"}, {"code": "RED", "name": "แดง", "hex": "#C91A09"}, {"code": "BRN", "name": "น้ำตาล", "hex": "#82422A"}, {"code": "PUR", "name": "ม่วง", "hex": "#6A3FA0"}, {"code": "DGR", "name": "เทาเข้ม", "hex": "#6C6E68"}, {"code": "LGR", "name": "เทาอ่อน", "hex": "#A0A5A9"}, {"code": "PNK", "name": "ชมพู", "hex": "#FC97AC"}, {"code": "LBL", "name": "ฟ้า", "hex": "#9FC3E9"}, {"code": "BLU", "name": "น้ำเงิน", "hex": "#0055BF"}, {"code": "DGN", "name": "เขียวเข้ม", "hex": "#184632"}, {"code": "LGN", "name": "เขียวอ่อน", "hex": "#6FBF73"}], "prices": [{"w": 48, "h": 48, "price": 1690}, {"w": 48, "h": 64, "price": 2250}, {"w": 64, "h": 64, "price": 3000}, {"w": 64, "h": 96, "price": 4500}], "shop": {"name": "Waris BrickArt", "tagline": "Custom-made for your special someone", "headline": "ต่อความสุข ให้เป็นงานศิลปะ", "sub": "อัปโหลดรูปแล้วเห็นแบบทันที จะต่อเองเป็นกิจกรรมพิเศษกับคนที่รัก หรือให้เราต่อให้พร้อมแขวนก็ได้", "shipDays": "1–3 วัน", "line": "@967wicnz", "ig": "", "assembleFee": 0, "heroWords": "Your, Story, In Bricks", "quote": "ต่อเรื่องราวเล็ก ๆ ให้กลายเป็นของขวัญชิ้นใหญ่"}};
 let COLORS,MODES,SIZES,SHOP;
 function applyData(D){
   COLORS=D.palette.map(p=>{const rgb=[1,3,5].map(i=>parseInt(p.hex.slice(i,i+2),16));return{n:p.name,code:p.code,h:p.hex,rgb,lab:rgb2lab(rgb[0],rgb[1],rgb[2])}});
@@ -677,7 +678,7 @@ function applyShop(){const sh=SHOP;
   $("heroP").textContent=sh.sub||"";
   const rib=["ชิ้นงานที่มีเพียงหนึ่งเดียว","ดูแบบฟรีก่อนสั่ง","จัดส่งภายใน "+sh.shipDays,"ต่อเองหรือให้ร้านต่อให้"].map(t=>esc(t)+" <b>✦</b>").join(" ");
   document.querySelectorAll(".rib").forEach(e=>e.innerHTML=rib);document.querySelectorAll(".shipTxt").forEach(e=>e.textContent=sh.shipDays);
-  $("ftName").textContent=nm;$("ftNote").textContent=nm+" เป็นแบรนด์อิสระ ไม่มีส่วนเกี่ยวข้องกับผู้ผลิตตัวต่อรายใด";
+  $("ftName").textContent=nm;$("ftSlogan").textContent=sh.tagline||"Custom-made for your special someone";$("ftNote").textContent=nm+" เป็นแบรนด์อิสระ ไม่มีส่วนเกี่ยวข้องกับผู้ผลิตตัวต่อรายใด";
   const lineUrl=sh.line?"https://line.me/R/ti/p/"+encodeURIComponent(sh.line):"";
   const c=[];if(sh.line)c.push('<a href="'+lineUrl+'" target="_blank" rel="noopener">LINE: <b>'+esc(sh.line)+"</b></a>");
   const fq=$("ftQr");fq.hidden=!LINEQR;if(LINEQR){fq.querySelector("img").src=LINEQR;if(lineUrl)fq.href=lineUrl;else fq.removeAttribute("href")}if(sh.ig)c.push('<a href="https://instagram.com/'+encodeURIComponent(sh.ig)+'" target="_blank" rel="noopener">IG: @'+esc(sh.ig)+"</a>");
@@ -1041,7 +1042,7 @@ function gTipsPage(plan, qr) {
     o.fillStyle = "#ffffff"; o.fillRect(bx + 50, by + 125, 300, 300); o.imageSmoothingEnabled = false; o.drawImage(qr, bx + 50, by + 125, 300, 300); o.imageSmoothingEnabled = true;
     o.fillStyle = "#6b5a3e"; o.font = "22px Kanit, sans-serif"; o.fillText("แจ้งเลขออเดอร์ " + plan.id, bx + bw / 2, by + 480); o.textAlign = "left";
   }
-  o.fillStyle = "#2b1d0e"; o.font = "600 40px Kanit, sans-serif"; o.textAlign = "center"; o.fillText("ขอบคุณที่ให้ " + (plan.shop || "Brick Art") + " ได้เป็นส่วนหนึ่งของความทรงจำ ✦", PW / 2, 920); o.textAlign = "left";
+  o.fillStyle = "#2b1d0e"; o.font = "600 40px Kanit, sans-serif"; o.textAlign = "center"; o.fillText("ขอบคุณที่ให้ " + (plan.shop || "Brick Art") + " ได้เป็นส่วนหนึ่งของความทรงจำ ", PW / 2, 920); o.textAlign = "left";
   return c;
 }
 function gLoadImg(src) { return new Promise(res => { if (!src) return res(null); const i = new Image(); i.onload = () => res(i); i.onerror = () => res(null); i.src = src; }); }
