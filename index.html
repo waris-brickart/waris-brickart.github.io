@@ -73,7 +73,7 @@ nav .btn.sm{white-space:nowrap}
 .eyebrow{font-family:var(--pixel);font-size:13px!important;letter-spacing:.2em;text-transform:uppercase;color:var(--dirt)!important}
 .hero-copy .lead{font-family:var(--display);font-size:clamp(18px,2.2vw,22px);font-weight:600;color:var(--ink);max-width:28ch}
 .hero-copy .sub{font-size:16px;color:var(--muted);max-width:36ch}
-@media (max-width:760px){.hero{flex-direction:column;align-items:stretch;min-height:0}.hero .bg{position:relative;height:auto;aspect-ratio:16/10}.hero::after{display:none}.hero-copy{max-width:none;padding-block:24px}}
+@media (max-width:760px){.hero{flex-direction:column;align-items:stretch;min-height:0;background:linear-gradient(180deg,#e9c56c 0%,#f5d98c 30%,#fbeab8 70%,#fff4d2 100%)}.hero .bg{position:relative;height:auto;aspect-ratio:16/10}.hero::after{display:none}.hero-copy{max-width:none;padding-block:24px}}
 .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
 .spark{width:26px;height:26px;color:var(--sun-dk)}
 
@@ -128,7 +128,8 @@ section{padding-block:clamp(28px,5vw,56px)}
 .step p{color:var(--muted);font-size:15px}
 
 /* builder */
-.builder{background:var(--card);border-radius:28px;padding:clamp(16px,3vw,32px);display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:28px}
+.builder{background:var(--card);border-radius:28px;padding:clamp(16px,3vw,32px);display:grid;grid-template-columns:minmax(0,1fr);gap:28px}
+#create{max-width:760px;margin-inline:auto}
 @media (max-width:900px){.builder{grid-template-columns:1fr}}
 .preview{display:grid;gap:12px;align-content:start}
 .stage{position:relative;border-radius:18px;overflow:hidden;background:#ffffff;box-shadow:inset 0 0 0 1px var(--line);max-width:100%;touch-action:none;cursor:grab}
@@ -262,10 +263,15 @@ html.lock,html.lock body{overflow:hidden}
 .colines .tot{font-weight:700;font-size:18px;border-top:1px dashed var(--line);padding-top:8px}.colines .tot span:last-child{color:var(--red)}
 .cohead{font-family:var(--display);margin:6px 0 0;font-size:22px}
 #orderForm input,#orderForm textarea{font-size:16px}
-.minipv{position:fixed;right:max(12px,env(safe-area-inset-right));bottom:calc(14px + env(safe-area-inset-bottom));z-index:60;width:min(38vw,170px);background:#fff;border:3px solid var(--sun);border-radius:14px;padding:4px;box-shadow:0 8px 24px rgba(43,29,14,.25);display:grid;gap:2px;cursor:pointer;transition:transform .2s,opacity .2s}
+.minipv{position:fixed;left:max(12px,env(safe-area-inset-left));bottom:calc(14px + env(safe-area-inset-bottom));z-index:60;width:min(38vw,170px);background:#fff;border:3px solid var(--sun);border-radius:14px;padding:4px;box-shadow:0 8px 24px rgba(43,29,14,.25);display:grid;gap:2px;cursor:pointer;transition:transform .2s,opacity .2s}
 .minipv canvas{width:100%;height:auto;display:block;border-radius:9px}
 .minipv span{font-size:11px;text-align:center;color:var(--muted)}
 .minipv[hidden]{display:none!important}
+.linefab{position:fixed;right:max(16px,env(safe-area-inset-right));bottom:calc(16px + env(safe-area-inset-bottom));z-index:70;display:inline-flex;align-items:center;gap:8px;background:#06c755;color:#fff;text-decoration:none;font-weight:700;font-size:15px;padding:12px 18px 12px 14px;border-radius:999px;box-shadow:0 6px 18px rgba(6,120,60,.35);transition:transform .15s}
+.linefab:hover{transform:translateY(-2px)}.linefab[hidden]{display:none!important}
+@media (max-width:600px){.linefab{padding:12px;font-size:14px}.linefab span{display:none}}
+.ftline{display:inline-block;background:#06c755;color:#fff!important;text-decoration:none;font-weight:700;padding:8px 14px;border-radius:999px}
+.app,.page{padding-bottom:calc(84px + env(safe-area-inset-bottom))}
 .paybox{display:grid;gap:10px;background:#fff;border-radius:16px;padding:16px;justify-items:start}
 .paybox h4{font-family:var(--display);font-size:20px;font-weight:600;margin:0}
 .paybox h4 span{color:var(--red)}
@@ -285,6 +291,7 @@ footer a{color:inherit}
 </style>
 </head>
 <body>
+<a class="linefab" id="lineFab" href="https://line.me/R/ti/p/@967wicnz" target="_blank" rel="noopener" aria-label="ติดต่อสอบถามทาง LINE"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path fill="#fff" d="M12 3C6.5 3 2 6.6 2 11c0 3.9 3.5 7.2 8.3 7.9.3.1.8.2.9.5.1.3.1.7 0 1l-.1.9c0 .3-.2 1 .9.5s6-3.5 8.2-6C21.5 14.2 22 12.7 22 11c0-4.4-4.5-8-10-8z"/></svg><span>ติดต่อสอบถาม</span></a>
 <button class="minipv" id="miniPv" type="button" aria-label="ดูภาพตัวอย่างขนาดใหญ่" hidden><canvas id="miniCv" width="320" height="320"></canvas><span>แตะเพื่อดูภาพใหญ่</span></button>
 <div class="thanks" id="thanks" role="dialog" aria-modal="true" aria-labelledby="thH" hidden>
   <div class="thbox">
@@ -417,15 +424,6 @@ footer a{color:inherit}
         </label>
   </div>
   <div class="builder">
-    <div class="preview">
-      <div class="row" style="justify-content:space-between">
-        <div class="seg" id="view"><button data-v="mosaic" aria-pressed="true">ภาพตัวต่อ</button><button data-v="photo" aria-pressed="false">ภาพจริง</button></div>
-        <span class="note" id="dimTxt"></span>
-      </div>
-      <div class="stage" id="stage"><canvas id="out" aria-label="ภาพตัวอย่างงานตัวต่อ"></canvas><span class="hint">ลากเพื่อขยับรูป</span></div>
-      <label class="zoom">ซูม<input type="range" id="zoom" min="100" max="400" value="100"><output id="zoomOut">1.0×</output></label>
-    </div>
-
     <div class="form">
       <div>
         <div class="lbl"><i>2</i>เลือกขนาด</div>
@@ -439,6 +437,15 @@ footer a{color:inherit}
         <div class="oris" id="orient"><button type="button" data-v="portrait" aria-pressed="true"><i class="oshape p"></i><b>แนวตั้ง</b><span id="oP"></span></button><button type="button" data-v="landscape" aria-pressed="false"><i class="oshape l"></i><b>แนวนอน</b><span id="oL"></span></button></div>
         <p class="note" id="orientNote" style="margin-top:6px" hidden>ขนาดนี้เป็นสี่เหลี่ยมจัตุรัส ใช้ได้ทั้งสองแบบ</p>
       </div>
+    <div class="preview" id="pvBlock">
+      <div class="lbl" style="margin-bottom:0"><i>✓</i>ภาพตัวอย่างงานของคุณ</div>
+      <div class="row" style="justify-content:space-between">
+        <div class="seg" id="view"><button data-v="mosaic" aria-pressed="true">ภาพตัวต่อ</button><button data-v="photo" aria-pressed="false">ภาพจริง</button></div>
+        <span class="note" id="dimTxt"></span>
+      </div>
+      <div class="stage" id="stage"><canvas id="out" aria-label="ภาพตัวอย่างงานตัวต่อ"></canvas><span class="hint">ลากเพื่อขยับรูป</span></div>
+      <label class="zoom">ซูม<input type="range" id="zoom" min="100" max="400" value="100"><output id="zoomOut">1.0×</output></label>
+    </div>
       <div>
         <div class="lbl"><i>4</i>โทนสี</div>
         <div class="seg" id="mode"><button data-v="color" aria-pressed="true">เหมือนจริง</button><button data-v="gray" aria-pressed="false">ขาว-ดำ</button><button data-v="pop" aria-pressed="false">ป๊อปอาร์ต</button><button data-v="pastel" aria-pressed="false">พาสเทล</button></div>
@@ -683,8 +690,9 @@ function applyShop(){const sh=SHOP;
   const rib=["ชิ้นงานที่มีเพียงหนึ่งเดียว","ดูแบบฟรีก่อนสั่ง","จัดส่งภายใน "+sh.shipDays,"ต่อเองหรือให้ร้านต่อให้"].map(t=>esc(t)+" <b>✦</b>").join(" ");
   document.querySelectorAll(".rib").forEach(e=>e.innerHTML=rib);document.querySelectorAll(".shipTxt").forEach(e=>e.textContent=sh.shipDays);
   $("ftName").textContent=nm;$("ftSlogan").textContent=sh.tagline||"Custom-made for your special someone";$("ftNote").textContent=nm+" เป็นแบรนด์อิสระ ไม่มีส่วนเกี่ยวข้องกับผู้ผลิตตัวต่อรายใด";
-  const lineUrl=sh.line?"https://line.me/R/ti/p/"+encodeURIComponent(sh.line):"";
-  const c=[];if(sh.line)c.push('<a href="'+lineUrl+'" target="_blank" rel="noopener">LINE: <b>'+esc(sh.line)+"</b></a>");
+  const lineUrl=sh.line?"https://line.me/R/ti/p/"+encodeURIComponent(sh.line).replace(/^%40/,"@"):"";
+  const c=[];if(sh.line)c.push('<a class="ftline" href="'+lineUrl+'" target="_blank" rel="noopener">แชทกับร้านทาง LINE →</a>');
+  const fl=$("lineFab");fl.hidden=!lineUrl;if(lineUrl)fl.href=lineUrl;
   const fq=$("ftQr");fq.hidden=!LINEQR;if(LINEQR){fq.querySelector("img").src=LINEQR;if(lineUrl)fq.href=lineUrl;else fq.removeAttribute("href")}if(sh.ig)c.push('<a href="https://instagram.com/'+encodeURIComponent(sh.ig)+'" target="_blank" rel="noopener">IG: @'+esc(sh.ig)+"</a>");
   $("ftContact").innerHTML=c.join(" · ");$("ftContact").hidden=!c.length;buildAssemble()}
 applyShop();
@@ -705,11 +713,14 @@ function render(){
 }
 function drawMini(){const m=$("miniCv");if(!m)return;const k=Math.min(320/out.width,320/out.height);m.width=Math.round(out.width*k);m.height=Math.round(out.height*k);m.getContext("2d").drawImage(out,0,0,m.width,m.height)}
 (function(){const mp=$("miniPv"),mq=matchMedia("(max-width: 900px)");let stageVis=true,inCreate=false,btnVis=false;
-  const upd=()=>{mp.hidden=!(mq.matches&&inCreate&&!stageVis&&!btnVis&&VIEW==="make"&&$("thanks").hidden)};
+  const place=()=>{if(mp.hidden)return;const t=$("toCheckout").getBoundingClientRect().top,f=$("lineFab").getBoundingClientRect().top;let lift=14;
+    if(t<innerHeight)lift=Math.max(lift,innerHeight-t+10);mp.style.bottom="calc("+lift+"px + env(safe-area-inset-bottom))"};
+  const upd=()=>{mp.hidden=!(mq.matches&&inCreate&&!stageVis&&!btnVis&&VIEW==="make"&&$("thanks").hidden);place()};
+  addEventListener("scroll",()=>{if(!mp.hidden)place()},{passive:true});addEventListener("resize",place);
   if("IntersectionObserver" in window){
     new IntersectionObserver(es=>{stageVis=es[0].intersectionRatio>0.35;upd()},{threshold:[0,0.35,1]}).observe($("stage"));
     new IntersectionObserver(es=>{inCreate=es[0].isIntersecting;upd()},{threshold:0}).observe($("create"));
-    new IntersectionObserver(es=>{btnVis=es[0].isIntersecting;upd()},{threshold:0}).observe($("toCheckout"));
+    new IntersectionObserver(es=>{btnVis=es[0].isIntersecting;upd()},{threshold:0}).observe(document.querySelector("#create .sum"));
   }
   (mq.addEventListener?mq.addEventListener("change",upd):mq.addListener(upd));
   mp.addEventListener("click",()=>$("stage").scrollIntoView({behavior:"smooth",block:"center"}));})();
