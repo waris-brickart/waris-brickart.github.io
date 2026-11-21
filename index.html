@@ -10,16 +10,17 @@
 <meta name="theme-color" content="#f4cdd4">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='9' cy='9' r='7' fill='%23d7362b'/%3E%3Ccircle cx='23' cy='9' r='7' fill='%23ffd86b'/%3E%3Ccircle cx='9' cy='23' r='7' fill='%237fb0e0'/%3E%3Ccircle cx='23' cy='23' r='7' fill='%233b1f1c'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kanit:wght@500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500;700&family=Kanit:wght@500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600&display=swap">
 <style>
-/* Layout: playful gift-shop storefront — pink frame around a cream "page", big image cards with rounded corners, red as the single loud accent, sky-blue as a quiet second.
-   Single committed light look (brand colors), so no dark-mode remap. */
+/* Layout: voxel "block world" storefront in warm yellow — full-bleed hero picture with pixel headline, about collage, featured works strip, wide quote banner, then the builder. All pictures are swappable from the admin.
+   Single committed light look, so no dark-mode remap. */
 :root{
   color-scheme:light;
-  --frame:#f4cdd4; --paper:#fdf6f0; --card:#ffffff; --ink:#3b1f1c; --muted:#7d625d; --line:#ecd9d2;
-  --red:#d7362b; --red-dk:#b02a21; --sky:#bcd6ef; --butter:#ffd86b; --blush:#f9dfe3;
+  --frame:#fbe7a1; --paper:#fffaeb; --card:#ffffff; --ink:#2b1d0e; --muted:#6f5a3f; --line:#f0dfb4;
+  --red:#9a5b00; --red-dk:#7a4700; --sky:#cfe8ff; --butter:#f5c542; --sun:#f5c542; --sun-dk:#d9a514; --blush:#fff1c2; --dirt:#8a5a2b; --leaf:#7fb24a;
+  --pixel:"Pixelify Sans","Kanit",system-ui,sans-serif;
   --display:"Kanit",system-ui,sans-serif; --body:"IBM Plex Sans Thai","Kanit",system-ui,sans-serif;
-  --r:22px;
+  --r:16px;
 }
 *{box-sizing:border-box}
 [hidden]{display:none!important}
@@ -28,7 +29,8 @@ html{scroll-behavior:smooth}
 body{margin:0;background:var(--frame);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6;
   padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
   padding-left:max(12px,env(safe-area-inset-left,0px));padding-right:max(12px,env(safe-area-inset-right,0px))}
-.page{max-width:1180px;margin:12px auto 24px;background:var(--paper);border-radius:28px;overflow:hidden}
+.page{max-width:1180px;margin:12px auto 24px;background:var(--paper);border-radius:22px;overflow:hidden;box-shadow:0 10px 0 rgba(138,90,43,.18)}
+body{background-color:var(--frame);background-image:linear-gradient(rgba(255,255,255,.25) 2px,transparent 2px),linear-gradient(90deg,rgba(255,255,255,.25) 2px,transparent 2px);background-size:24px 24px}
 .in{padding-inline:clamp(16px,4vw,48px)}
 h1,h2,h3{font-family:var(--display);line-height:1.15;margin:0;text-wrap:balance}
 p{margin:0}
@@ -40,62 +42,81 @@ button,input,textarea{font:inherit}
 nav{position:sticky;top:0;z-index:20;background:rgba(253,246,240,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
 nav .in{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:14px}
 .logo{display:flex;align-items:center;gap:10px;text-decoration:none}
-.logo b{font-family:var(--display);font-size:24px;font-weight:700;letter-spacing:.01em}
-.logo b span{color:var(--red)}
-.mark{display:grid;grid-template-columns:repeat(2,13px);gap:3px}
-.mark i{width:13px;height:13px;border-radius:50%;display:block;box-shadow:inset 0 -2px 0 rgba(0,0,0,.15)}
+.logo b{font-family:var(--pixel);font-size:24px;font-weight:700;letter-spacing:.01em}
+.logo b span{color:var(--sun-dk)}
+.mark{display:grid;grid-template-columns:repeat(2,13px);gap:2px}
+.mark i{width:13px;height:13px;border-radius:2px;display:block;box-shadow:inset 0 -3px 0 rgba(0,0,0,.18)}
 .links{display:flex;gap:22px;font-size:15px}
 .links a{text-decoration:none;color:var(--muted)}
 .links a:hover{color:var(--ink)}
 @media (max-width:760px){.links{display:none}}
-.btn{display:inline-flex;align-items:center;gap:8px;border:0;border-radius:999px;padding:12px 22px;font-weight:600;cursor:pointer;text-decoration:none;font-size:15px;transition:transform .15s}
-.btn:hover{transform:translateY(-1px)}
-.btn.red{background:var(--red);color:#fff}
-.btn.red:hover{background:var(--red-dk)}
-.btn.ghost{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--ink)}
+.btn{display:inline-flex;align-items:center;gap:8px;border:0;border-radius:8px;padding:12px 22px;font-weight:600;cursor:pointer;text-decoration:none;font-size:15px;transition:transform .12s,box-shadow .12s}
+.btn:hover{transform:translateY(-2px)}
+.btn:active{transform:translateY(2px)}
+.btn.red{background:var(--sun);color:var(--ink);box-shadow:0 4px 0 var(--sun-dk)}
+.btn.red:hover{background:#ffd357}
+.btn.ghost{background:rgba(255,255,255,.75);color:var(--ink);box-shadow:inset 0 0 0 2px var(--ink)}
 .btn.sm{padding:9px 16px;font-size:14px}
 
 /* hero */
-.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:20px;padding-block:24px}
-@media (max-width:860px){.hero{grid-template-columns:1fr}}
-.hero-copy{background:var(--blush);border-radius:var(--r);padding:clamp(24px,4vw,48px);display:flex;flex-direction:column;justify-content:center;gap:20px;position:relative}
-.hero-copy h1{font-size:clamp(36px,5.6vw,64px);font-weight:700;color:var(--red)}
-.hero-copy h1 em{font-style:normal;color:var(--ink)}
-.hero-copy p{font-size:18px;max-width:34ch;color:var(--muted)}
-.spark{position:absolute;top:24px;right:28px;width:26px;height:26px;color:var(--red)}
+.hero{position:relative;min-height:clamp(420px,52vw,600px);display:flex;align-items:center;overflow:hidden;background:var(--sky)}
+.hero .bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(255,250,235,.96) 0%,rgba(255,250,235,.82) 34%,rgba(255,250,235,0) 62%);pointer-events:none}
+.hero-copy{position:relative;z-index:1;display:flex;flex-direction:column;gap:16px;max-width:520px;padding-block:40px}
+.hero-copy h1{font-family:var(--pixel);font-weight:700;font-size:clamp(44px,7vw,84px);line-height:.98;letter-spacing:.01em;color:var(--ink)}
+.hero-copy h1 span{display:block}
+.hero-copy h1 span:last-child{color:var(--sun-dk);text-shadow:3px 3px 0 var(--dirt)}
+.eyebrow{font-family:var(--pixel);font-size:13px!important;letter-spacing:.2em;text-transform:uppercase;color:var(--dirt)!important}
+.hero-copy .lead{font-family:var(--display);font-size:clamp(18px,2.2vw,22px);font-weight:600;color:var(--ink);max-width:28ch}
+.hero-copy .sub{font-size:16px;color:var(--muted);max-width:36ch}
+@media (max-width:760px){.hero{flex-direction:column;align-items:stretch;min-height:0}.hero .bg{position:relative;height:auto;aspect-ratio:16/10}.hero::after{display:none}.hero-copy{max-width:none;padding-block:24px}}
 .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
-.dots{position:absolute;right:26px;bottom:24px;display:grid;grid-template-columns:repeat(3,6px);gap:6px}
-.dots i{width:6px;height:6px;border-radius:50%;background:var(--red);opacity:.55}
+.spark{width:26px;height:26px;color:var(--sun-dk)}
 
-/* compare */
-.compare{position:relative;border-radius:var(--r);overflow:hidden;aspect-ratio:1/1;max-width:100%;background:#222;user-select:none}
-.compare canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
-.compare .top{clip-path:inset(0 50% 0 0)}
-.compare .bar{position:absolute;top:0;bottom:0;left:50%;width:3px;background:#fff;transform:translateX(-50%);pointer-events:none}
-.compare .knob{position:absolute;top:50%;left:50%;width:46px;height:46px;border-radius:50%;background:#fff;transform:translate(-50%,-50%);display:grid;place-items:center;box-shadow:0 4px 14px rgba(0,0,0,.25);pointer-events:none;font-weight:700;color:var(--ink);font-size:14px}
-.compare input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:ew-resize;margin:0}
-.tag{position:absolute;bottom:14px;padding:4px 12px;border-radius:999px;background:rgba(255,255,255,.9);font-size:13px;font-weight:600;pointer-events:none}
-.tag.l{left:14px}.tag.r{right:14px}
+/* about */
+.about{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:clamp(20px,4vw,48px);align-items:center}
+@media (max-width:860px){.about{grid-template-columns:1fr}}
+.collage{position:relative;padding:0 8% 10% 0}
+.collage img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:14px;border:4px solid #fff;box-shadow:0 8px 0 rgba(138,90,43,.2)}
+.collage .mini{position:absolute;right:0;bottom:0;width:42%;aspect-ratio:1/1;border-radius:12px;border:4px solid #fff;box-shadow:0 8px 0 rgba(138,90,43,.25);background:#fff;display:block}
+.collage .arrow{position:absolute;right:30%;bottom:18%;background:var(--sun);color:var(--ink);font-family:var(--pixel);font-size:13px;padding:4px 10px;border-radius:6px;box-shadow:0 3px 0 var(--sun-dk)}
+.about-copy{display:grid;gap:14px;border-left:3px solid var(--line);padding-left:clamp(16px,3vw,32px)}
+.about-copy h2{font-family:var(--pixel);font-size:clamp(30px,4vw,44px);line-height:1.05}
+.about-copy p{color:var(--muted);max-width:44ch}
+.kicker{font-family:var(--pixel);font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--dirt)}
 
 /* section heads */
 section{padding-block:clamp(28px,5vw,56px)}
 .head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:12px;margin-bottom:22px}
-.head h2{font-size:clamp(28px,4vw,42px);font-weight:600;display:flex;align-items:center;gap:10px}
-.head h2 svg{width:22px;height:22px;color:var(--red);flex:none}
+.head h2{font-size:clamp(26px,3.6vw,38px);font-weight:600;display:flex;align-items:center;gap:10px}
 .head p{color:var(--muted);max-width:46ch}
+.divider{display:flex;align-items:center;gap:16px;justify-content:center;margin-bottom:22px}
+.divider::before,.divider::after{content:"";flex:1;height:2px;background:var(--line)}
+.divider span{font-family:var(--pixel);letter-spacing:.24em;font-size:14px;text-transform:uppercase}
 
-/* gallery */
-.gallery{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
-@media (max-width:860px){.gallery{grid-template-columns:repeat(2,minmax(0,1fr))}}
-.g{display:grid;gap:10px}
-.g .ph{border-radius:18px;padding:12px;max-width:100%}
-.g canvas{width:100%;height:auto;aspect-ratio:1/1;display:block;border-radius:8px}
-.g .cap{display:flex;flex-direction:column;gap:0;padding-inline:4px;min-width:0}
-.g .cap b{font-family:var(--display);font-weight:500;font-size:clamp(16px,4.2vw,18px);line-height:1.3}
-.g .cap span{font-size:14px;color:var(--red);font-weight:600}
+/* featured works strip */
+.works{position:relative}
+.gallery{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(220px,calc((100% - 48px)/4));gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:10px;scrollbar-width:thin}
+@media (max-width:760px){.gallery{grid-auto-columns:72%}}
+.g{display:grid;gap:8px;scroll-snap-align:start}
+.g .ph{border-radius:14px;padding:0;overflow:hidden;border:4px solid #fff;box-shadow:0 6px 0 rgba(138,90,43,.18);background:#fff}
+.g canvas{width:100%;height:auto;aspect-ratio:1/1;display:block}
+.g .cap{display:flex;justify-content:space-between;align-items:baseline;gap:8px;padding-inline:4px;min-width:0}
+.g .cap b{font-family:var(--display);font-weight:500;font-size:16px;line-height:1.3}
+.g .cap span{font-family:var(--pixel);font-size:14px;color:var(--red);font-weight:700;white-space:nowrap}
+.navbtn{position:absolute;top:calc(50% - 40px);width:44px;height:44px;border-radius:50%;border:2px solid var(--ink);background:#fff;font-size:18px;cursor:pointer;display:grid;place-items:center;z-index:2}
+.navbtn.l{left:-6px}.navbtn.r{right:-6px}
+@media (max-width:760px){.navbtn{display:none}}
+
+/* quote banner */
+.quote{position:relative;border-radius:18px;overflow:hidden;min-height:220px;display:flex;align-items:center;background:var(--sky)}
+.quote img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.quote::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(255,250,235,.95) 0%,rgba(255,250,235,.7) 38%,rgba(255,250,235,0) 65%)}
+.quote blockquote{position:relative;margin:0;padding:28px clamp(20px,4vw,44px);font-family:var(--pixel);font-size:clamp(22px,3vw,32px);line-height:1.25;max-width:20ch;color:var(--ink)}
+.quote blockquote::before{content:"\201C";color:var(--leaf);font-size:1.6em;line-height:0;vertical-align:-.35em;margin-right:6px}
 
 /* steps */
-.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px}
 @media (max-width:760px){.steps{grid-template-columns:1fr}}
 .step{background:var(--card);border-radius:var(--r);padding:24px;display:grid;gap:8px;align-content:start}
 .step .n{width:40px;height:40px;border-radius:50%;background:var(--red);color:#fff;display:grid;place-items:center;font-family:var(--display);font-weight:600;font-size:18px}
@@ -106,9 +127,9 @@ section{padding-block:clamp(28px,5vw,56px)}
 .builder{background:var(--card);border-radius:28px;padding:clamp(16px,3vw,32px);display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:28px}
 @media (max-width:900px){.builder{grid-template-columns:1fr}}
 .preview{display:grid;gap:12px;align-content:start}
-.stage{position:relative;border-radius:18px;overflow:hidden;background:#1d1b1a;max-width:100%;touch-action:none;cursor:grab}
+.stage{position:relative;border-radius:18px;overflow:hidden;background:#ffffff;box-shadow:inset 0 0 0 1px var(--line);max-width:100%;touch-action:none;cursor:grab}
 .stage:active{cursor:grabbing}
-.stage canvas{width:100%;height:auto;aspect-ratio:1/1;display:block}
+.stage canvas{width:auto;height:auto;max-width:100%;max-height:72vh;display:block;margin:0 auto}
 .stage .hint{position:absolute;left:12px;bottom:12px;background:rgba(255,255,255,.9);border-radius:999px;padding:4px 12px;font-size:13px;pointer-events:none}
 .seg{display:inline-flex;flex-wrap:wrap;gap:4px;background:var(--paper);padding:4px;border-radius:999px}
 .seg button{border:0;background:transparent;border-radius:999px;padding:8px 16px;cursor:pointer;color:var(--muted);font-weight:500;font-size:14px}
@@ -180,12 +201,12 @@ details p{color:var(--muted);margin-top:8px;font-size:15px}
 .btn.red::after{content:"";position:absolute;top:0;bottom:0;left:0;width:40%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);animation:shimmer 3.2s ease-in-out infinite;pointer-events:none}
 .dots i{animation:wave 1.8s ease-in-out infinite}
 .dots i:nth-child(3n+2){animation-delay:.3s}.dots i:nth-child(3n){animation-delay:.6s}
-.ribbon{background:var(--red);color:#fff;overflow:hidden;white-space:nowrap;padding-block:12px;font-family:var(--display);font-weight:500;font-size:18px}
+.ribbon{background:var(--ink);color:#fff;overflow:hidden;white-space:nowrap;padding-block:12px;font-family:var(--display);font-weight:500;font-size:17px}
 .ribbon div{display:inline-flex;gap:28px;animation:slide 22s linear infinite;padding-right:28px}
 .ribbon span{display:inline-flex;align-items:center;gap:28px}
 .ribbon b{color:var(--butter);font-weight:500}
-.g .ph{transition:transform .25s}
-.g:hover .ph{transform:translateY(-6px) rotate(-1deg)}
+.g .ph{transition:transform .2s}
+.g:hover .ph{transform:translateY(-6px)}
 .size[aria-pressed="true"] em{animation:pop .3s ease-out}
 .badge{position:absolute;top:14px;left:14px;background:var(--butter);color:var(--ink);font-weight:600;font-size:13px;padding:4px 12px;border-radius:999px;animation:blink 2.2s ease-in-out infinite;pointer-events:none}
 .spin{width:18px;height:18px;border:3px solid rgba(255,255,255,.5);border-top-color:#fff;border-radius:50%;animation:spinr .8s linear infinite;display:inline-block}
@@ -205,6 +226,7 @@ footer{background:var(--ink);color:#f6e9e5}
 footer .in{padding-block:32px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;font-size:14px}
 footer b{font-family:var(--display);font-size:22px}
 footer p{opacity:.75;max-width:52ch}
+footer a{color:inherit}
 </style>
 </head>
 <body>
@@ -214,52 +236,62 @@ footer p{opacity:.75;max-width:52ch}
   <div class="in">
     <a href="#top" class="logo" aria-label="Brick Art หน้าแรก">
       <span class="mark" aria-hidden="true"><i style="background:#d7362b"></i><i style="background:#ffd86b"></i><i style="background:#7fb0e0"></i><i style="background:#3b1f1c"></i></span>
-      <b>Brick<span>Art</span></b>
+      <b id="logoTxt">Brick<span>Art</span></b>
     </a>
-    <div class="links"><a href="#ideas">ไอเดียของขวัญ</a><a href="#how">วิธีสั่ง</a><a href="#create">ขนาดและราคา</a><a href="#track">ติดตามออเดอร์</a><a href="#faq">คำถามที่พบบ่อย</a></div>
+    <div class="links"><a href="#about">เกี่ยวกับเรา</a><a href="#ideas">ผลงาน</a><a href="#how">วิธีสั่ง</a><a href="#create">ขนาดและราคา</a><a href="#track">ติดตามออเดอร์</a><a href="#faq">คำถามที่พบบ่อย</a></div>
     <a href="#create" class="btn red sm">สร้างของคุณ</a>
   </div>
 </nav>
 
-<header class="in hero" id="top">
-  <div class="hero-copy">
-    <svg class="spark" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 0c1 7 5 11 12 12-7 1-11 5-12 12-1-7-5-11-12-12 7-1 11-5 12-12z"/></svg>
-    <h1>เปลี่ยนรูปที่รัก <em>ให้เป็นงานศิลปะตัวต่อ</em></h1>
-    <p>อัปโหลดรูปของคุณ เลือกขนาด แล้วดูแบบฟรีก่อนสั่ง เราส่งชุดตัวต่อพร้อมแผนผังการต่อถึงบ้าน</p>
+<header class="hero" id="top">
+  <img class="bg" id="heroImg" alt="ภาพหลักของร้าน">
+  <div class="in hero-copy">
+    <p class="eyebrow" id="heroTag">Custom-made for your special someone</p>
+    <h1 id="heroWords"><span>Build</span><span>Create</span><span>Gift</span></h1>
+    <p class="lead" id="heroH">ชิ้นงานที่มีเพียงหนึ่งเดียว เพราะเรื่องราวของคุณไม่ซ้ำใคร</p>
+    <p class="sub" id="heroP">เปลี่ยนรูปภาพให้เป็นงานศิลป์ที่จับต้องได้ ของขวัญชิ้นพิเศษที่มีชิ้นเดียว</p>
     <div class="row">
       <a href="#create" class="btn red">เริ่มสร้างเลย →</a>
-      <a href="#ideas" class="btn ghost">ดูไอเดียของขวัญ</a>
+      <a href="#ideas" class="btn ghost">ดูผลงาน</a>
     </div>
-    <svg class="tw y" style="top:46%;right:14%;width:16px;height:16px;animation-delay:.8s" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 0c1 7 5 11 12 12-7 1-11 5-12 12-1-7-5-11-12-12 7-1 11-5 12-12z"/></svg>
-    <svg class="tw b" style="top:18%;right:30%;width:12px;height:12px;animation-delay:1.5s" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 0c1 7 5 11 12 12-7 1-11 5-12 12-1-7-5-11-12-12 7-1 11-5 12-12z"/></svg>
-    <div class="dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-  </div>
-  <div class="compare" id="heroCmp">
-    <canvas class="bot" width="720" height="720" aria-hidden="true"></canvas>
-    <canvas class="top" width="720" height="720" aria-hidden="true"></canvas>
-    <div class="bar"></div><div class="knob" aria-hidden="true">◂ ▸</div>
-    <span class="badge">✦ ดูแบบฟรี</span>
-    <span class="tag l">ภาพจริง</span><span class="tag r">ภาพตัวต่อ</span>
-    <input type="range" min="0" max="100" value="50" id="heroRange" aria-label="เลื่อนเทียบภาพจริงกับภาพตัวต่อ">
   </div>
 </header>
 
-<div class="ribbon" aria-hidden="true"><div><span>ของขวัญชิ้นเดียวในโลก <b>✦</b> ดูแบบฟรีก่อนสั่ง <b>✦</b> ส่งทั่วไทย <b>✦</b> แผนผังต่อง่ายทีละแผ่น <b>✦</b></span><span>ของขวัญชิ้นเดียวในโลก <b>✦</b> ดูแบบฟรีก่อนสั่ง <b>✦</b> ส่งทั่วไทย <b>✦</b> แผนผังต่อง่ายทีละแผ่น <b>✦</b></span></div></div>
+<div class="ribbon" aria-hidden="true"><div><span class="rib">ชิ้นงานที่มีเพียงหนึ่งเดียว <b>✦</b> ดูแบบฟรีก่อนสั่ง <b>✦</b> จัดส่งภายใน 1–3 วัน <b>✦</b> ต่อเองหรือให้ร้านต่อให้ <b>✦</b></span><span class="rib">ชิ้นงานที่มีเพียงหนึ่งเดียว <b>✦</b> ดูแบบฟรีก่อนสั่ง <b>✦</b> จัดส่งภายใน 1–3 วัน <b>✦</b> ต่อเองหรือให้ร้านต่อให้ <b>✦</b></span></div></div>
 
-<section class="in" id="ideas">
-  <div class="head">
-    <h2><svg class="spark" style="position:static" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 0c1 7 5 11 12 12-7 1-11 5-12 12-1-7-5-11-12-12 7-1 11-5 12-12z"/></svg>ไอเดียของขวัญ</h2>
-    <p>รูปสัตว์เลี้ยง รูปคู่ รูปครอบครัว หรือลายที่ชอบ ทุกชิ้นทำจากรูปของคุณเท่านั้น</p>
+<section class="in" id="about">
+  <div class="about">
+    <div class="collage">
+      <img id="aboutImg" alt="ภาพเกี่ยวกับร้าน">
+      <canvas class="mini" id="aboutMini" width="480" height="480" aria-label="ภาพเดียวกันเมื่อเป็นตัวต่อ"></canvas>
+      <span class="arrow">→ ตัวต่อ</span>
+    </div>
+    <div class="about-copy">
+      <p class="kicker">About us</p>
+      <h2>ทุกบล็อก <br>คือความทรงจำ</h2>
+      <p>เราเปลี่ยนรูปที่คุณรักให้เป็นงานศิลปะตัวต่อทีละเม็ด ดูแบบได้ทันทีบนเว็บ เลือกต่อเองให้เป็นกิจกรรมพิเศษ หรือให้ร้านต่อให้พร้อมตั้งโชว์</p>
+      <div class="row"><a href="#create" class="btn red sm">ลองแปลงรูปของคุณ →</a><a href="#how" class="btn ghost sm">วิธีสั่ง</a></div>
+    </div>
   </div>
-  <div class="gallery" id="gallery"></div>
 </section>
 
+<section class="in works" id="ideas">
+  <div class="divider"><span>Featured works</span></div>
+  <button class="navbtn l" type="button" id="wPrev" aria-label="เลื่อนซ้าย">←</button>
+  <div class="gallery" id="gallery"></div>
+  <button class="navbtn r" type="button" id="wNext" aria-label="เลื่อนขวา">→</button>
+</section>
+
+<div class="in"><div class="quote"><img id="bannerImg" alt="ภาพแบนเนอร์"><blockquote id="quoteTxt">ต่อเรื่องราวเล็ก ๆ ให้กลายเป็นของขวัญชิ้นใหญ่</blockquote></div></div>
+
 <section class="in" id="how">
-  <div class="head"><h2>สั่งง่ายใน 3 ขั้น</h2></div>
+  <div class="head"><h2>เปลี่ยนภาพถ่ายเป็นของขวัญง่าย ๆ ใน 5 ขั้น</h2></div>
   <div class="steps">
-    <div class="step"><div class="n">1</div><h3>อัปโหลดรูป</h3><p>เลือกรูปที่ชอบ ลากเพื่อจัดตำแหน่ง และซูมให้เห็นหน้าชัด ๆ</p></div>
-    <div class="step"><div class="n">2</div><h3>เลือกขนาดและโทนสี</h3><p>ยิ่งขนาดใหญ่ รายละเอียดยิ่งคมชัด เห็นภาพตัวอย่างทันทีทุกครั้งที่เปลี่ยน</p></div>
-    <div class="step"><div class="n">3</div><h3>สั่งแล้วรอรับ</h3><p>ได้ชุดชิ้นกลมเรียบ 1×1 แยกสี แผ่นฐาน และแผนผังการต่อทีละแผ่น</p></div>
+    <div class="step"><div class="n">1</div><h3>ส่งรูปสวย ๆ ของคุณ</h3><p>อัปโหลดรูปบนเว็บได้เลย รูปชัด ไม่เบลอ เพื่อความปัง!</p></div>
+    <div class="step"><div class="n">2</div><h3>ดูแบบและคอนเฟิร์ม</h3><p>เห็นภาพตัวต่อทันที และร้านคอนเฟิร์มความเป๊ะกับคุณก่อนเริ่มงานจริง</p></div>
+    <div class="step"><div class="n">3</div><h3>เลือกได้ตามใจ</h3><p>รับไป "ต่อเอง" เป็นของขวัญให้คนพิเศษ หรือให้ "ร้านต่อให้" พร้อมตั้งโชว์</p></div>
+    <div class="step"><div class="n">4</div><h3>ชำระเงินง่าย ๆ</h3><p>สแกน QR โอนเงิน แล้วแนบสลิปบนเว็บได้ทันที</p></div>
+    <div class="step"><div class="n">5</div><h3>รอรับที่บ้าน</h3><p>จัดส่งไว ภายใน <span class="shipTxt">1–3 วัน</span></p></div>
   </div>
 </section>
 
@@ -299,9 +331,14 @@ footer p{opacity:.75;max-width:52ch}
         <div class="seg" id="mode"><button data-v="color" aria-pressed="true">เหมือนจริง</button><button data-v="gray" aria-pressed="false">ขาว-ดำ</button><button data-v="pop" aria-pressed="false">ป๊อปอาร์ต</button><button data-v="pastel" aria-pressed="false">พาสเทล</button></div>
         <div class="seg" id="smooth" style="margin-top:8px"><button data-v="1" aria-pressed="true">ไล่เฉดเนียน (แนะนำ)</button><button data-v="0" aria-pressed="false">สีเรียบคมชัด</button></div>
       </div>
+      <div>
+        <div class="lbl"><i>4</i>ต่อเองหรือให้ร้านต่อ</div>
+        <div class="seg" id="asm"><button data-v="0" aria-pressed="true">ต่อเอง (ได้ชุดตัวต่อ + คู่มือ)</button><button data-v="1" aria-pressed="false" id="asmShop">ให้ร้านต่อให้ พร้อมตั้งโชว์</button></div>
+      </div>
       <div class="sum">
         <div class="li"><span>ขนาด</span><span id="sSize"></span></div>
         <div class="li"><span>จำนวนชิ้น</span><span id="sPcs"></span></div>
+        <div class="li"><span>การต่อ</span><span id="sAsm"></span></div>
         <div class="li"><span>สีที่ใช้</span><span class="palette" id="sPal"></span></div>
         <div class="li tot"><span>รวม</span><span id="sPrice"></span></div>
       </div>
@@ -349,14 +386,16 @@ footer p{opacity:.75;max-width:52ch}
     <details><summary>รูปแบบไหนออกมาสวยที่สุด</summary><p>รูปที่หน้าชัด แสงสว่าง พื้นหลังเรียบ และครอปให้หน้าเต็มกรอบ ถ้าเป็นรูปหลายคน แนะนำขนาด 64×64 ขึ้นไป</p></details>
     <details><summary>ในกล่องมีอะไรบ้าง</summary><p>ชิ้นกลมผิวเรียบ 1×1 แยกถุงตามสี แผ่นฐาน 16×16 และแผนผังการต่อทีละแผ่นพร้อมหมายเลขสี</p></details>
     <details><summary>ต่อเสร็จใช้เวลานานไหม</summary><p>ขนาด 32×32 ประมาณ 1–2 ชั่วโมง ขนาดใหญ่จะใช้เวลามากขึ้นตามจำนวนชิ้น เหมาะเป็นกิจกรรมทำด้วยกัน</p></details>
+    <details><summary>ให้ร้านต่อให้ได้ไหม</summary><p>ได้ เลือก "ให้ร้านต่อให้ พร้อมตั้งโชว์" ตอนสั่ง ร้านจะต่อเสร็จพร้อมตั้งโชว์แล้วจัดส่งให้ถึงบ้าน</p></details>
+    <details><summary>จัดส่งกี่วัน</summary><p>หลังคอนเฟิร์มแบบและชำระเงิน จัดส่งภายใน <span class="shipTxt">1–3 วัน</span></p></details>
     <details><summary>ใช้กับตัวต่อยี่ห้อไหนได้บ้าง</summary><p>ชิ้นส่วนเป็นขนาดมาตรฐาน ใช้ร่วมกับตัวต่อทั่วไปที่ขนาดเดียวกันได้</p></details>
   </div>
 </section>
 
 <footer>
   <div class="in">
-    <div><b>Brick Art</b><p>ของขวัญชิ้นเดียวในโลก จากรูปที่คุณรัก</p></div>
-    <p>Brick Art เป็นแบรนด์อิสระ ไม่มีส่วนเกี่ยวข้องกับผู้ผลิตตัวต่อรายใด</p>
+    <div><b id="ftName">Brick Art</b><p>ชิ้นงานที่มีเพียงหนึ่งเดียว เพราะเรื่องราวของคุณไม่ซ้ำใคร</p><p id="ftContact" style="margin-top:6px" hidden></p></div>
+    <p id="ftNote">Brick Art เป็นแบรนด์อิสระ ไม่มีส่วนเกี่ยวข้องกับผู้ผลิตตัวต่อรายใด</p>
   </div>
 </footer>
 </div>
@@ -367,14 +406,15 @@ footer p{opacity:.75;max-width:52ch}
 const API_URL = "https://script.google.com/macros/s/AKfycby-DVBVH-VQhApHKH6NluyJxd3ZrY23f2OjHCz6DzVyYzCHVLWajnWj9hSenQANXad_/exec";
 /* ============================================================================== */
 const HAS_API=/^https:\/\/script\.google\.com\/.+\/exec$/.test(API_URL.trim());
-const FALLBACK={"palette": [{"code": "BLK", "name": "ดำ", "hex": "#1B2A34"}, {"code": "WHT", "name": "ขาว", "hex": "#F4F4F4"}, {"code": "SKN", "name": "เนื้อ", "hex": "#F2C9A0"}, {"code": "ORG", "name": "ส้ม", "hex": "#FE8A18"}, {"code": "YEL", "name": "เหลือง", "hex": "#F2CD37"}, {"code": "RED", "name": "แดง", "hex": "#C91A09"}, {"code": "BRN", "name": "น้ำตาล", "hex": "#82422A"}, {"code": "PUR", "name": "ม่วง", "hex": "#6A3FA0"}, {"code": "DGR", "name": "เทาเข้ม", "hex": "#6C6E68"}, {"code": "LGR", "name": "เทาอ่อน", "hex": "#A0A5A9"}, {"code": "PNK", "name": "ชมพู", "hex": "#FC97AC"}, {"code": "LBL", "name": "ฟ้า", "hex": "#9FC3E9"}, {"code": "BLU", "name": "น้ำเงิน", "hex": "#0055BF"}, {"code": "DGN", "name": "เขียวเข้ม", "hex": "#184632"}, {"code": "LGN", "name": "เขียวอ่อน", "hex": "#6FBF73"}], "prices": [{"n": 32, "price": 990}, {"n": 48, "price": 1890}, {"n": 64, "price": 2990}, {"n": 96, "price": 5990}]};
-let COLORS,MODES,SIZES;
+const FALLBACK={"palette": [{"code": "BLK", "name": "ดำ", "hex": "#1B2A34"}, {"code": "WHT", "name": "ขาว", "hex": "#F4F4F4"}, {"code": "SKN", "name": "เนื้อ", "hex": "#F2C9A0"}, {"code": "ORG", "name": "ส้ม", "hex": "#FE8A18"}, {"code": "YEL", "name": "เหลือง", "hex": "#F2CD37"}, {"code": "RED", "name": "แดง", "hex": "#C91A09"}, {"code": "BRN", "name": "น้ำตาล", "hex": "#82422A"}, {"code": "PUR", "name": "ม่วง", "hex": "#6A3FA0"}, {"code": "DGR", "name": "เทาเข้ม", "hex": "#6C6E68"}, {"code": "LGR", "name": "เทาอ่อน", "hex": "#A0A5A9"}, {"code": "PNK", "name": "ชมพู", "hex": "#FC97AC"}, {"code": "LBL", "name": "ฟ้า", "hex": "#9FC3E9"}, {"code": "BLU", "name": "น้ำเงิน", "hex": "#0055BF"}, {"code": "DGN", "name": "เขียวเข้ม", "hex": "#184632"}, {"code": "LGN", "name": "เขียวอ่อน", "hex": "#6FBF73"}], "prices": [{"w": 48, "h": 48, "price": 1690}, {"w": 48, "h": 64, "price": 2250}, {"w": 64, "h": 64, "price": 3000}, {"w": 64, "h": 96, "price": 4500}], "shop": {"name": "Brick Art", "tagline": "Custom-made for your special someone", "headline": "ชิ้นงานที่มีเพียงหนึ่งเดียว เพราะเรื่องราวของคุณไม่ซ้ำใคร", "sub": "เปลี่ยนรูปภาพให้เป็นงานศิลป์ที่จับต้องได้ ของขวัญชิ้นพิเศษที่มีชิ้นเดียว", "shipDays": "1–3 วัน", "line": "", "ig": "", "assembleFee": 0, "heroWords": "Build, Create, Gift", "quote": "ต่อเรื่องราวเล็ก ๆ ให้กลายเป็นของขวัญชิ้นใหญ่"}};
+let COLORS,MODES,SIZES,SHOP;
 function applyData(D){
   COLORS=D.palette.map(p=>{const rgb=[1,3,5].map(i=>parseInt(p.hex.slice(i,i+2),16));return{n:p.name,code:p.code,h:p.hex,rgb,lab:rgb2lab(rgb[0],rgb[1],rgb[2])}});
   const pick=cs=>cs.map(c=>COLORS.findIndex(x=>x.code===c)).filter(i=>i>=0);
   MODES={color:COLORS.map((_,i)=>i),gray:pick(["WHT","LGR","DGR","BLK"]),pop:pick(["BLK","WHT","RED","YEL","BLU","PNK","ORG","LBL"]),pastel:pick(["WHT","PNK","LBL","LGN","YEL","SKN","LGR","PUR"])};
   ["gray","pop","pastel"].forEach(k=>{if(MODES[k].length<3)MODES[k]=MODES.color});
-  SIZES=D.prices.length?D.prices:[{n:48,price:0}];
+  SIZES=(D.prices&&D.prices.length?D.prices:FALLBACK.prices).map(p=>({w:Number(p.w||p.n),h:Number(p.h||p.n),price:Number(p.price)||0}));
+  SHOP=Object.assign({},FALLBACK.shop,D.shop||{});
 }
 applyData(FALLBACK);
 const $=id=>document.getElementById(id);
@@ -386,70 +426,62 @@ function rgb2lab(r,g,b){r=lin(r);g=lin(g);b=lin(b);
   const f=t=>t>0.008856?Math.cbrt(t):7.787*t+16/116;
   const x=f((r*0.4124+g*0.3576+b*0.1805)/0.95047),y=f(r*0.2126+g*0.7152+b*0.0722),z=f((r*0.0193+g*0.1192+b*0.9505)/1.08883);
   return[116*y-16,500*(x-y),200*(y-z)]}
-function cropRect(img,c){const w=img.width,h=img.height,s=Math.min(w,h)/c.z,hx=s/2/w,hy=s/2/h;
-  c.x=Math.min(1-hx,Math.max(hx,c.x));c.y=Math.min(1-hy,Math.max(hy,c.y));return[c.x*w-s/2,c.y*h-s/2,s]}
+function cropRect(img,c,a){a=a||1;const iw=img.width,ih=img.height,ch=Math.min(ih,iw/a)/c.z,cw=ch*a,hx=cw/2/iw,hy=ch/2/ih;
+  c.x=Math.min(1-hx,Math.max(hx,c.x));c.y=Math.min(1-hy,Math.max(hy,c.y));return[c.x*iw-cw/2,c.y*ih-ch/2,cw,ch]}
 let SMOOTH=true;
-function quantize(img,crop,N,mode,smooth){
+function quantize(img,crop,W,H,mode,smooth){
   if(smooth===undefined)smooth=SMOOTH;
-  const[sx,sy,s]=cropRect(img,crop),t=document.createElement("canvas");t.width=t.height=N;
-  let src=img,qx=sx,qy=sy,qs=s;
-  while(qs/2>N*2){const c=document.createElement("canvas");c.width=c.height=Math.round(qs/2);const cx=c.getContext("2d");cx.imageSmoothingQuality="high";cx.drawImage(src,qx,qy,qs,qs,0,0,c.width,c.height);src=c;qx=0;qy=0;qs=c.width}
-  const x=t.getContext("2d");x.imageSmoothingQuality="high";x.drawImage(src,qx,qy,qs,qs,0,0,N,N);
-  const d=x.getImageData(0,0,N,N).data,pal=MODES[mode],n=N*N,buf=new Float32Array(n*3);
+  const[sx,sy,sw,sh]=cropRect(img,crop,W/H),t=document.createElement("canvas");t.width=W;t.height=H;
+  let src=img,qx=sx,qy=sy,qw=sw,qh=sh;
+  while(qw/2>W*2&&qh/2>H*2){const c=document.createElement("canvas");c.width=Math.round(qw/2);c.height=Math.round(qh/2);const cx=c.getContext("2d");cx.imageSmoothingQuality="high";cx.drawImage(src,qx,qy,qw,qh,0,0,c.width,c.height);src=c;qx=0;qy=0;qw=c.width;qh=c.height}
+  const x=t.getContext("2d");x.imageSmoothingQuality="high";x.drawImage(src,qx,qy,qw,qh,0,0,W,H);
+  const d=x.getImageData(0,0,W,H).data,pal=MODES[mode],n=W*H,buf=new Float32Array(n*3),M=Math.min(W,H);
   const lum=[];for(let i=0;i<n;i++)lum.push(0.299*d[i*4]+0.587*d[i*4+1]+0.114*d[i*4+2]);
   const so=lum.slice().sort((p,q)=>p-q),lo=so[Math.floor(n*0.01)],hi=so[Math.floor(n*0.99)];
   const k=hi-lo>40?255/(hi-lo):1,mix=0.6;
   for(let i=0;i<n;i++)for(let c=0;c<3;c++){const v=d[i*4+c],st=(v-lo)*k;buf[i*3+c]=Math.min(255,Math.max(0,v+(st-v)*mix))}
-  {const sharp=N<=48?0.6:0.4,cp=Float32Array.from(buf);
-    for(let yy=0;yy<N;yy++)for(let xx=0;xx<N;xx++)for(let c=0;c<3;c++){let sum=0,cnt=0;
-      for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){const X=xx+dx,Y=yy+dy;if(X<0||Y<0||X>=N||Y>=N)continue;sum+=cp[(Y*N+X)*3+c];cnt++}
-      const p=(yy*N+xx)*3+c;buf[p]=Math.min(255,Math.max(0,cp[p]+(cp[p]-sum/cnt)*sharp))}}
+  {const sharp=M<=48?0.6:0.4,cp=Float32Array.from(buf);
+    for(let yy=0;yy<H;yy++)for(let xx=0;xx<W;xx++)for(let c=0;c<3;c++){let sum=0,cnt=0;
+      for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){const X=xx+dx,Y=yy+dy;if(X<0||Y<0||X>=W||Y>=H)continue;sum+=cp[(Y*W+X)*3+c];cnt++}
+      const p=(yy*W+xx)*3+c;buf[p]=Math.min(255,Math.max(0,cp[p]+(cp[p]-sum/cnt)*sharp))}}
   for(let i=0;i<n;i++){const p=i*3;let r=buf[p],g=buf[p+1],b=buf[p+2];const y=0.299*r+0.587*g+0.114*b;
     if(mode==="gray"){r=g=b=y}
     else if(mode==="pop"){const s=1.9;r=y+(r-y)*s;g=y+(g-y)*s;b=y+(b-y)*s;r=(r-128)*1.35+128;g=(g-128)*1.35+128;b=(b-128)*1.35+128}
     else if(mode==="pastel"){const s=1.45;r=y+(r-y)*s;g=y+(g-y)*s;b=y+(b-y)*s;r=(r-128)*1.12+128;g=(g-128)*1.12+128;b=(b-128)*1.12+128;r=r+(255-r)*0.22;g=g+(255-g)*0.22;b=b+(255-b)*0.22}
     buf[p]=Math.min(255,Math.max(0,r));buf[p+1]=Math.min(255,Math.max(0,g));buf[p+2]=Math.min(255,Math.max(0,b))}
   if(mode==="pop")smooth=false;
-  const idx=new Int16Array(n),amt=N<=32?0.28:N<=48?0.42:0.55;
-  for(let yy=0;yy<N;yy++){const rev=yy%2===1;
-    for(let j=0;j<N;j++){const xx=rev?N-1-j:j,i=yy*N+xx,p=i*3;
+  const idx=new Int16Array(n),amt=M<=32?0.28:M<=48?0.42:0.55;
+  for(let yy=0;yy<H;yy++){const rev=yy%2===1;
+    for(let j=0;j<W;j++){const xx=rev?W-1-j:j,i=yy*W+xx,p=i*3;
       const r=Math.min(255,Math.max(0,buf[p])),g=Math.min(255,Math.max(0,buf[p+1])),b=Math.min(255,Math.max(0,buf[p+2]));
       const L=rgb2lab(r,g,b);let best=pal[0],bd=1e12;
       for(const kk of pal){const q=COLORS[kk].lab,dl=L[0]-q[0],da=L[1]-q[1],db=L[2]-q[2],dd=dl*dl+da*da+db*db;if(dd<bd){bd=dd;best=kk}}
       idx[i]=best;
       if(smooth){const c=COLORS[best].rgb,e=[(r-c[0])*amt,(g-c[1])*amt,(b-c[2])*amt],dir=rev?-1:1;
-        const sp=(dx,dy,f)=>{const X=xx+dx*dir,Y=yy+dy;if(X<0||X>=N||Y>=N)return;const q=(Y*N+X)*3;buf[q]+=e[0]*f;buf[q+1]+=e[1]*f;buf[q+2]+=e[2]*f};
+        const sp=(dx,dy,f)=>{const X=xx+dx*dir,Y=yy+dy;if(X<0||X>=W||Y>=H)return;const q=(Y*W+X)*3;buf[q]+=e[0]*f;buf[q+1]+=e[1]*f;buf[q+2]+=e[2]*f};
         sp(1,0,7/16);sp(-1,1,3/16);sp(0,1,5/16);sp(1,1,1/16)}}}
   return idx;
 }
 const spriteCache=new Map();
 function tile(ci,px){const key=ci+"_"+px;if(spriteCache.has(key))return spriteCache.get(key);
-  const c=document.createElement("canvas");c.width=c.height=px;const o=c.getContext("2d"),m=px/2,r=px*0.47,col=COLORS[ci].h;
-  o.fillStyle="#2a2c30";o.fillRect(0,0,px,px);
-  if(px>=10){o.fillStyle="#34363b";[[0,0],[px,0],[0,px],[px,px]].forEach(([a,b])=>{o.beginPath();o.arc(a,b,px*0.16,0,7);o.fill()})}
-  if(px>=8){o.fillStyle="rgba(0,0,0,.45)";o.beginPath();o.arc(m+px*0.03,m+px*0.06,r,0,7);o.fill()}
-  o.fillStyle=col;o.beginPath();o.arc(m,m,r,0,7);o.fill();
-  if(px>=8){
-    const edge=o.createRadialGradient(m,m,r*0.55,m,m,r);edge.addColorStop(0,"rgba(0,0,0,0)");edge.addColorStop(1,"rgba(0,0,0,.22)");
-    o.fillStyle=edge;o.beginPath();o.arc(m,m,r,0,7);o.fill();
-    const hl=o.createRadialGradient(m-r*0.38,m-r*0.42,0,m-r*0.38,m-r*0.42,r*0.75);hl.addColorStop(0,"rgba(255,255,255,.55)");hl.addColorStop(0.45,"rgba(255,255,255,.12)");hl.addColorStop(1,"rgba(255,255,255,0)");
-    o.fillStyle=hl;o.beginPath();o.arc(m,m,r,0,7);o.fill();
-    o.strokeStyle="rgba(255,255,255,.18)";o.lineWidth=Math.max(0.6,px*0.03);o.beginPath();o.arc(m,m,r*0.93,Math.PI*1.05,Math.PI*1.6);o.stroke()}
+  const c=document.createElement("canvas");c.width=c.height=px;const o=c.getContext("2d"),m=px/2,r=px*0.46;
+  o.fillStyle="#ffffff";o.fillRect(0,0,px,px);
+  o.fillStyle=COLORS[ci].h;o.beginPath();o.arc(m,m,r,0,7);o.fill();
+  if(px>=6){o.strokeStyle="rgba(0,0,0,.10)";o.lineWidth=Math.max(0.5,px*0.025);o.stroke()}
   spriteCache.set(key,c);return c}
-function drawMosaic(cv,idx,N){const px=Math.max(4,Math.floor(cv.width/N)),o=cv.getContext("2d"),size=px*N,off=(cv.width-size)/2;
-  o.fillStyle="#141618";o.fillRect(0,0,cv.width,cv.height);
-  for(let i=0;i<N*N;i++)o.drawImage(tile(idx[i],px),off+(i%N)*px,off+Math.floor(i/N)*px)}
-function drawFramed(cv,idx,N){const W=cv.width,o=cv.getContext("2d");
-  const g=o.createLinearGradient(0,0,0,W);g.addColorStop(0,"#f1ebe6");g.addColorStop(1,"#e2d9d1");o.fillStyle=g;o.fillRect(0,0,W,W);
-  const fs=Math.round(W*0.78),fx=(W-fs)/2,fy=(W-fs)/2-W*0.02,bw=Math.round(fs*0.045);
-  o.save();o.shadowColor="rgba(40,25,20,.35)";o.shadowBlur=W*0.05;o.shadowOffsetY=W*0.025;o.fillStyle="#141414";o.fillRect(fx,fy,fs,fs);o.restore();
-  const fg=o.createLinearGradient(fx,fy,fx+fs,fy+fs);fg.addColorStop(0,"#2e2e2e");fg.addColorStop(1,"#0c0c0c");o.fillStyle=fg;o.fillRect(fx,fy,fs,fs);
-  const inner=fs-bw*2,m=document.createElement("canvas");m.width=m.height=Math.max(inner,N*6);drawMosaic(m,idx,N);
-  o.drawImage(m,fx+bw,fy+bw,inner,inner);
-  o.strokeStyle="rgba(255,255,255,.08)";o.lineWidth=2;o.strokeRect(fx+1,fy+1,fs-2,fs-2);
-  const cm=(N*0.8).toFixed(1);o.fillStyle="rgba(59,31,28,.75)";o.font="600 "+Math.round(W*0.026)+"px Kanit, sans-serif";o.textAlign="center";
-  o.fillText("ขนาดจริง "+cm+" × "+cm+" ซม. (ไม่รวมกรอบ)",W/2,fy+fs+W*0.06)}
-function drawPhoto(cv,img,crop){const[sx,sy,s]=cropRect(img,crop),o=cv.getContext("2d");o.imageSmoothingQuality="high";o.drawImage(img,sx,sy,s,s,0,0,cv.width,cv.height)}
+function drawMosaic(cv,idx,W,H){H=H||W;const px=Math.max(3,Math.floor(Math.min(cv.width/W,cv.height/H))),o=cv.getContext("2d"),ox=(cv.width-px*W)/2,oy=(cv.height-px*H)/2;
+  o.fillStyle="#ffffff";o.fillRect(0,0,cv.width,cv.height);
+  for(let i=0;i<W*H;i++)o.drawImage(tile(idx[i],px),ox+(i%W)*px,oy+Math.floor(i/W)*px)}
+function drawFramed(cv,idx,W,H){const CW=cv.width,CH=cv.height,o=cv.getContext("2d");
+  const g=o.createLinearGradient(0,0,0,CH);g.addColorStop(0,"#f1ebe6");g.addColorStop(1,"#e2d9d1");o.fillStyle=g;o.fillRect(0,0,CW,CH);
+  const sc=Math.min(CW*0.78/W,CH*0.74/H),fw=Math.round(W*sc),fh=Math.round(H*sc),fx=(CW-fw)/2,fy=(CH-fh)/2-CH*0.03,bw=Math.round(Math.min(fw,fh)*0.045);
+  o.save();o.shadowColor="rgba(40,25,20,.35)";o.shadowBlur=CW*0.05;o.shadowOffsetY=CW*0.025;o.fillStyle="#141414";o.fillRect(fx-bw,fy-bw,fw+bw*2,fh+bw*2);o.restore();
+  const fg=o.createLinearGradient(fx,fy,fx+fw,fy+fh);fg.addColorStop(0,"#2e2e2e");fg.addColorStop(1,"#0c0c0c");o.fillStyle=fg;o.fillRect(fx-bw,fy-bw,fw+bw*2,fh+bw*2);
+  const m=document.createElement("canvas");m.width=Math.max(fw,W*6);m.height=Math.round(m.width*H/W);drawMosaic(m,idx,W,H);
+  o.drawImage(m,fx,fy,fw,fh);
+  o.fillStyle="rgba(59,31,28,.75)";o.font="600 "+Math.round(CW*0.026)+"px Kanit, sans-serif";o.textAlign="center";
+  o.fillText("ขนาดจริง "+(W*0.8).toFixed(1)+" × "+(H*0.8).toFixed(1)+" ซม. (ไม่รวมกรอบ)",CW/2,fy+fh+bw+CH*0.06)}
+function drawPhoto(cv,img,crop){const[sx,sy,sw,sh]=cropRect(img,crop,cv.width/cv.height),o=cv.getContext("2d");o.fillStyle="#fff";o.fillRect(0,0,cv.width,cv.height);o.imageSmoothingQuality="high";o.drawImage(img,sx,sy,sw,sh,0,0,cv.width,cv.height)}
 
 /* ---------- illustrated sample pictures (drawn in code) ---------- */
 function mk(f,bg){const c=document.createElement("canvas");c.width=c.height=320;const x=c.getContext("2d");x.fillStyle=bg;x.fillRect(0,0,320,320);f(x);return c}
@@ -479,15 +511,37 @@ const flower=()=>mk(x=>{x.fillStyle="#237841";x.fillRect(152,170,16,150);x.begin
   x.fillStyle="#d7362b";for(let k=0;k<8;k++){x.save();x.translate(160,135);x.rotate(k*Math.PI/4);x.beginPath();x.ellipse(0,-58,26,48,0,0,7);x.fill();x.restore()}
   x.fillStyle="#ffd86b";x.beginPath();x.arc(160,135,34,0,7);x.fill();x.fillStyle="#82422a";x.beginPath();x.arc(160,135,18,0,7);x.fill()},"#bcd6ef");
 
-/* ---------- hero compare ---------- */
-let HERO=cat();
-(()=>{const box=$("heroCmp"),img=HERO,crop={z:1,x:.5,y:.5};
-  drawPhoto(box.querySelector(".top"),img,crop);drawMosaic(box.querySelector(".bot"),quantize(img,crop,48,"color"),48);
-  const r=$("heroRange"),set=()=>{const v=r.value;box.querySelector(".top").style.clipPath=`inset(0 ${100-v}% 0 0)`;
-    box.querySelector(".bar").style.left=v+"%";box.querySelector(".knob").style.left=v+"%"};r.addEventListener("input",set);set();
-  if(!matchMedia("(prefers-reduced-motion: reduce)").matches){let t0=null,user=false;r.addEventListener("pointerdown",()=>user=true);
-    const sweep=ts=>{if(user)return;t0=t0??ts;const k=(ts-t0)/2600;if(k>1){r.value=50;set();return}r.value=50+38*Math.sin(k*Math.PI*2);set();requestAnimationFrame(sweep)};
-    setTimeout(()=>requestAnimationFrame(sweep),700)}})();
+/* ---------- default voxel pictures (shown until the shop uploads its own) ---------- */
+function cube(o,x,y,t,top,left,right){const h=t/2;
+  o.fillStyle=top;o.beginPath();o.moveTo(x,y);o.lineTo(x+t,y+h);o.lineTo(x,y+t);o.lineTo(x-t,y+h);o.closePath();o.fill();
+  o.fillStyle=left;o.beginPath();o.moveTo(x-t,y+h);o.lineTo(x,y+t);o.lineTo(x,y+t*2);o.lineTo(x-t,y+h+t);o.closePath();o.fill();
+  o.fillStyle=right;o.beginPath();o.moveTo(x+t,y+h);o.lineTo(x,y+t);o.lineTo(x,y+t*2);o.lineTo(x+t,y+h+t);o.closePath();o.fill()}
+function pxCloud(o,x,y,u){o.fillStyle="#ffffff";[[0,1,6,2],[1,0,3,1],[4,0,2,1],[-1,2,8,1]].forEach(([a,b,w,h])=>o.fillRect(x+a*u,y+b*u,w*u,h*u))}
+function voxelWorld(W,H,opt){const c=document.createElement("canvas");c.width=W;c.height=H;const o=c.getContext("2d");
+  const g=o.createLinearGradient(0,0,0,H);g.addColorStop(0,"#bfe2ff");g.addColorStop(.55,"#fff1c2");g.addColorStop(1,"#ffe08a");o.fillStyle=g;o.fillRect(0,0,W,H);
+  const u=Math.round(H/40);o.fillStyle="#ffd54a";const sx=W*opt.sun,sy=H*0.16;for(let k=-3;k<=3;k++){const w=7-Math.abs(k);o.fillRect(sx-w*u,sy+k*u*1.2,w*2*u,u*1.3)}
+  pxCloud(o,W*0.52,H*0.1,u);pxCloud(o,W*0.78,H*0.2,u*0.8);pxCloud(o,W*0.3,H*0.18,u*0.7);
+  o.fillStyle="#e9c46a";for(let i=0;i<W;i+=u*2){const hh=H*0.42+Math.sin(i/W*9)*H*0.06+Math.sin(i/W*23)*H*0.02;o.fillRect(i,hh,u*2,H)}
+  const t=opt.tile,cols=opt.cols,rows=opt.rows,ox=W*opt.ox,oy=H*opt.oy;
+  const hgt=(i,j)=>Math.max(1,Math.round(2+Math.sin(i*0.7)*1.2+Math.cos(j*0.6)*1.2+(i+j)*0.12));
+  const tops=["#f5c542","#efbd35","#f7cf5a"],dirtL="#b07a3c",dirtR="#8a5a2b";
+  const trees=new Set(opt.trees.map(p=>p.join(",")));
+  for(let s2=0;s2<cols+rows;s2++)for(let i=0;i<cols;i++){const j=s2-i;if(j<0||j>=rows)continue;
+    const x=ox+(i-j)*t,y=oy+(i+j)*t/2,h=hgt(i,j);
+    for(let k=0;k<h;k++)cube(o,x,y-k*t,t,k===h-1?tops[(i*7+j*3)%3]:dirtR,dirtL,dirtR);
+    const top=y-(h-1)*t;
+    if(trees.has(i+","+j)){for(let k=1;k<=2;k++)cube(o,x,top-k*t,t,"#a8743c","#8a5a2b","#6e4520");
+      const ly=top-3*t;[[0,0],[-1,0],[1,0],[0,-1],[0,1]].forEach(([a,b2])=>cube(o,x+(a-b2)*t*0.5,ly+(a+b2)*t*0.25,t*0.9,"#ffb703","#e09200","#c77d00"));cube(o,x,ly-t*0.8,t*0.9,"#ffd166","#f2b134","#d99a1e")}
+    if(opt.house&&i===opt.house[0]&&j===opt.house[1]){cube(o,x,top-t,t,"#fff3d6","#f0dcb0","#d9c08c");cube(o,x,top-2*t,t,"#c0562a","#a3441f","#7f3417")}}
+  return c}
+const voxelHero=()=>voxelWorld(1600,900,{sun:0.86,tile:46,cols:11,rows:9,ox:0.72,oy:0.34,trees:[[2,1],[7,2],[4,6],[9,5],[1,7]],house:[5,3]});
+const voxelBanner=()=>voxelWorld(1800,600,{sun:0.15,tile:34,cols:18,rows:6,ox:0.62,oy:0.30,trees:[[3,1],[8,0],[12,2],[15,1],[6,4],[10,4]],house:[13,4]});
+let ABOUT=cat();
+function aboutMosaic(){drawMosaic($("aboutMini"),quantize(ABOUT,{z:1,x:.5,y:.5},32,32,"color",false),32,32)}
+function setImg(id,src){const el=$(id);if(el)el.src=src}
+setImg("heroImg",voxelHero().toDataURL("image/jpeg",.9));setImg("bannerImg",voxelBanner().toDataURL("image/jpeg",.9));setImg("aboutImg",ABOUT.toDataURL("image/png"));aboutMosaic();
+$("wPrev").addEventListener("click",()=>$("gallery").scrollBy({left:-$("gallery").clientWidth*0.8,behavior:"smooth"}));
+$("wNext").addEventListener("click",()=>$("gallery").scrollBy({left:$("gallery").clientWidth*0.8,behavior:"smooth"}));
 
 /* ---------- gallery ---------- */
 const GALLERY=[{img:cat(),title:"สัตว์เลี้ยงที่รัก",bg:"#bcd6ef",N:48,label:"48×48",mosaic:true},{img:heart(),title:"ของขวัญครบรอบ",bg:"#f9dfe3",N:32,label:"32×32",mosaic:true},
@@ -495,25 +549,47 @@ const GALLERY=[{img:cat(),title:"สัตว์เลี้ยงที่ร�
 const esc=t=>String(t??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 function drawGallery(){
   $("gallery").innerHTML=GALLERY.map((g,i)=>`<div class="g"><div class="ph" style="background:${g.bg}"><canvas width="384" height="384" id="g${i}" aria-label="${esc(g.title)}"></canvas></div><div class="cap"><b>${esc(g.title)}</b><span>${esc(g.label)}</span></div></div>`).join("");
-  GALLERY.forEach((g,i)=>{const cv=$("g"+i),c={z:1,x:.5,y:.5};if(g.mosaic)drawMosaic(cv,quantize(g.img,c,g.N,"color"),g.N);else drawPhoto(cv,g.img,c)})}
+  GALLERY.forEach((g,i)=>{const cv=$("g"+i),c={z:1,x:.5,y:.5};if(g.mosaic)drawMosaic(cv,quantize(g.img,c,g.N,g.N,"color"),g.N,g.N);else drawPhoto(cv,g.img,c)})}
 drawGallery();
-function heroMosaic(){drawMosaic($("heroCmp").querySelector(".bot"),quantize(HERO,{z:1,x:.5,y:.5},48,"color"),48)}
+
 
 /* ---------- builder ---------- */
-const S={img:cat(),crop:{z:1,x:.5,y:.5},size:(SIZES.find(z=>z.n===48)||SIZES[0]).n,mode:"color",view:"mosaic",name:"รูปตัวอย่าง",idx:null};
-const out=$("out");out.width=out.height=768;
-function buildSizes(){if(!SIZES.find(z=>z.n===S.size))S.size=(SIZES.find(z=>z.n===48)||SIZES[0]).n;
-$("sizes").innerHTML=SIZES.map(s=>`<button type="button" class="size" data-n="${s.n}" aria-pressed="${s.n===S.size}"><b>${s.n}×${s.n}</b><span>${(s.n*.8).toFixed(1)} ซม. · ${(s.n*s.n).toLocaleString()} ชิ้น</span><em>${baht(s.price)}</em></button>`).join("")}
+const S={img:cat(),crop:{z:1,x:.5,y:.5},w:SIZES[0].w,h:SIZES[0].h,mode:"color",view:"mosaic",name:"รูปตัวอย่าง",idx:null,assemble:false};
+const out=$("out");
+const cmTxt=(w,h)=>(w*.8).toFixed(1)+"×"+(h*.8).toFixed(1);
+function curSize(){return SIZES.find(z=>z.w===S.w&&z.h===S.h)||SIZES[0]}
+function buildSizes(){if(!SIZES.find(z=>z.w===S.w&&z.h===S.h)){S.w=SIZES[0].w;S.h=SIZES[0].h}
+$("sizes").innerHTML=SIZES.map(s=>`<button type="button" class="size" data-w="${s.w}" data-h="${s.h}" aria-pressed="${s.w===S.w&&s.h===S.h}"><b>${s.w}×${s.h}</b><span>${cmTxt(s.w,s.h)} ซม. · ${(s.w*s.h).toLocaleString()} ชิ้น</span><em>${baht(s.price)}</em></button>`).join("");buildAssemble()}
+function fee(){return S.assemble?(Number(SHOP.assembleFee)||0):0}
+function buildAssemble(){const f=Number(SHOP.assembleFee)||0;$("asmShop").textContent="ให้ร้านต่อให้ พร้อมตั้งโชว์"+(f?" (+"+baht(f)+")":"")}
 buildSizes();
+function applyShop(){const sh=SHOP;
+  const nm=String(sh.name||"Brick Art"),i=nm.indexOf(" ");$("logoTxt").innerHTML=i>0?esc(nm.slice(0,i))+"<span>"+esc(nm.slice(i+1))+"</span>":esc(nm);
+  document.title=nm+" | "+(sh.headline||"");$("heroTag").textContent=sh.tagline||"";$("heroTag").hidden=!sh.tagline;
+  $("heroH").textContent=sh.headline||"";
+  const words=String(sh.heroWords||"Build, Create, Gift").split(",").map(x=>x.trim()).filter(Boolean).slice(0,4);
+  $("heroWords").innerHTML=words.map(w=>"<span>"+esc(w)+"</span>").join("");
+  $("quoteTxt").textContent=sh.quote||"";
+  $("heroP").textContent=sh.sub||"";
+  const rib=["ชิ้นงานที่มีเพียงหนึ่งเดียว","ดูแบบฟรีก่อนสั่ง","จัดส่งภายใน "+sh.shipDays,"ต่อเองหรือให้ร้านต่อให้"].map(t=>esc(t)+" <b>✦</b>").join(" ");
+  document.querySelectorAll(".rib").forEach(e=>e.innerHTML=rib);document.querySelectorAll(".shipTxt").forEach(e=>e.textContent=sh.shipDays);
+  $("ftName").textContent=nm;$("ftNote").textContent=nm+" เป็นแบรนด์อิสระ ไม่มีส่วนเกี่ยวข้องกับผู้ผลิตตัวต่อรายใด";
+  const c=[];if(sh.line)c.push("LINE: <b>"+esc(sh.line)+"</b>");if(sh.ig)c.push('<a href="https://instagram.com/'+encodeURIComponent(sh.ig)+'" target="_blank" rel="noopener">IG: @'+esc(sh.ig)+"</a>");
+  $("ftContact").innerHTML=c.join(" · ");$("ftContact").hidden=!c.length;buildAssemble()}
+applyShop();
 function render(){
-  S.idx=quantize(S.img,S.crop,S.size,S.mode);
-  if(S.view==="mosaic")drawMosaic(out,S.idx,S.size);else if(S.view==="frame")drawFramed(out,S.idx,S.size);else drawPhoto(out,S.img,S.crop);
-  const sz=SIZES.find(s=>s.n===S.size),cm=(S.size*.8).toFixed(1);
-  $("sizeHint").hidden=S.size>32;
-  $("dimTxt").textContent=`${S.size}×${S.size} ปุ่ม · ${cm}×${cm} ซม.`;
-  $("sSize").textContent=`${S.size}×${S.size} (${cm} ซม.)`;$("sPcs").textContent=(S.size*S.size).toLocaleString()+" ชิ้น";
+  const W=S.w,H=S.h;S.idx=quantize(S.img,S.crop,W,H,S.mode);
+  const want=S.view==="frame"?[900,Math.round(900*Math.max(1,H/W*0.9))]:W>=H?[900,Math.round(900*H/W)]:[Math.round(900*W/H),900];
+  if(out.width!==want[0]||out.height!==want[1]){out.width=want[0];out.height=want[1]}
+  if(S.view==="mosaic")drawMosaic(out,S.idx,W,H);else if(S.view==="frame")drawFramed(out,S.idx,W,H);else drawPhoto(out,S.img,S.crop);
+  const sz=curSize(),cm=cmTxt(W,H);
+  const hint=document.querySelector("#stage .hint");if(hint)hint.hidden=S.view==="frame";
+  $("sizeHint").hidden=Math.min(W,H)>32;
+  $("dimTxt").textContent=`${W}×${H} ปุ่ม · ${cm} ซม.`;
+  $("sSize").textContent=`${W}×${H} (${cm} ซม.)`;$("sPcs").textContent=(W*H).toLocaleString()+" ชิ้น";
+  $("sAsm").textContent=S.assemble?"ร้านต่อให้"+(fee()?" +"+baht(fee()):""):"ต่อเอง";
   const used=[...new Set(S.idx)];$("sPal").innerHTML=used.slice(0,14).map(c=>`<i style="background:${COLORS[c].h}" title="${COLORS[c].n}"></i>`).join("")+(used.length>14?` +${used.length-14}`:"");
-  $("sPal").setAttribute("aria-label",used.length+" สี");$("sPrice").textContent=baht(sz.price);
+  $("sPal").setAttribute("aria-label",used.length+" สี");$("sPrice").textContent=baht(sz.price+fee());
 }
 let raf=0;const soon=()=>{if(!raf)raf=requestAnimationFrame(()=>{raf=0;render()})};
 function seg(id,key){const el=$(id);el.addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;
@@ -522,13 +598,15 @@ seg("view","view");seg("mode","mode");
 (()=>{const el=$("smooth");el.addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;
   el.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b));SMOOTH=b.dataset.v==="1";render()})})();
 $("sizes").addEventListener("click",e=>{const b=e.target.closest(".size");if(!b)return;
-  $("sizes").querySelectorAll(".size").forEach(x=>x.setAttribute("aria-pressed",x===b));S.size=Number(b.dataset.n);render()});
+  $("sizes").querySelectorAll(".size").forEach(x=>x.setAttribute("aria-pressed",x===b));S.w=Number(b.dataset.w);S.h=Number(b.dataset.h);render()});
+(()=>{const el=$("asm");el.addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;
+  el.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b));S.assemble=b.dataset.v==="1";render()})})();
 $("zoom").addEventListener("input",e=>{S.crop.z=e.target.value/100;$("zoomOut").textContent=S.crop.z.toFixed(1)+"×";soon()});
 // drag to pan
 (()=>{const st=$("stage");let p=null;
   st.addEventListener("pointerdown",e=>{st.setPointerCapture(e.pointerId);p={x:e.clientX,y:e.clientY}});
-  st.addEventListener("pointermove",e=>{if(!p)return;const r=st.getBoundingClientRect(),s=cropRect(S.img,S.crop)[2];
-    S.crop.x-=(e.clientX-p.x)/r.width*s/S.img.width;S.crop.y-=(e.clientY-p.y)/r.height*s/S.img.height;p={x:e.clientX,y:e.clientY};soon()});
+  st.addEventListener("pointermove",e=>{if(!p)return;const r=st.getBoundingClientRect(),cr=cropRect(S.img,S.crop,S.w/S.h);
+    S.crop.x-=(e.clientX-p.x)/r.width*cr[2]/S.img.width;S.crop.y-=(e.clientY-p.y)/r.height*cr[3]/S.img.height;p={x:e.clientX,y:e.clientY};soon()});
   ["pointerup","pointercancel"].forEach(t=>st.addEventListener(t,()=>p=null))})();
 // upload
 function load(f){if(!f||!f.type.startsWith("image/"))return;const u=URL.createObjectURL(f),im=new Image();
@@ -542,12 +620,14 @@ document.addEventListener("paste",e=>{const it=[...(e.clipboardData?.items||[])]
 render();
 /* โหลดสีและราคาล่าสุดจาก Google Sheet */
 if(HAS_API){fetch(API_URL.trim()+"?action=data").then(r=>r.json()).then(d=>{if(!d.palette||!d.palette.length)return;
-  applyData(d);spriteCache.clear();buildSizes();drawGallery();heroMosaic();render()}).catch(()=>{})
+  applyData(d);spriteCache.clear();applyShop();buildSizes();drawGallery();aboutMosaic();render()}).catch(()=>{})
   .then(()=>fetch(API_URL.trim()+"?action=showcase")).then(r=>r.json()).then(applyShowcase).catch(()=>{})}
 function loadImg(src){return new Promise((ok,no)=>{const im=new Image();im.onload=()=>ok(im);im.onerror=no;im.src=src})}
 async function applyShowcase(sc){
   if(!sc)return;
-  if(sc.hero&&sc.hero.img){HERO=await loadImg(sc.hero.img);drawPhoto($("heroCmp").querySelector(".top"),HERO,{z:1,x:.5,y:.5});heroMosaic()}
+  if(sc.hero&&sc.hero.img)setImg("heroImg",sc.hero.img);
+  if(sc.banner&&sc.banner.img)setImg("bannerImg",sc.banner.img);
+  if(sc.about&&sc.about.img){ABOUT=await loadImg(sc.about.img);setImg("aboutImg",sc.about.img);aboutMosaic()}
   for(let i=0;i<GALLERY.length;i++){const it=sc["g"+i];if(!it||!it.img)continue;
     const m=/(\d+)\s*[×xX]/.exec(it.label||""),N=m?Math.min(96,Math.max(16,Number(m[1]))):48;
     GALLERY[i]=Object.assign({},GALLERY[i],{img:await loadImg(it.img),title:it.title||GALLERY[i].title,label:it.label||"",mosaic:it.mosaic!==false,N})}
@@ -644,43 +724,43 @@ function buildPdf(pages) {
 }
 async function makeInstructions(plan, onStep) {
   if (document.fonts && document.fonts.ready) { try { await document.fonts.ready; } catch (e) {} }
-  const N = plan.n, cells = String(plan.grid).split(",").map(Number), P = N / 16;
+  const W = plan.w || plan.n, H = plan.h || plan.n, cells = String(plan.grid).split(",").map(Number), PC = W / 16, PR = H / 16, TOT = PC * PR;
   const counts = plan.colors.map(() => 0); cells.forEach(v => counts[v]++);
   const order = plan.colors.map((c, i) => i).filter(i => counts[i] > 0).sort((p, q) => counts[q] - counts[p]);
   const numOf = {}; order.forEach((ci, k) => numOf[ci] = k + 1);
   const item = (ci, cnt) => ({ num: numOf[ci], hex: plan.colors[ci].hex, name: plan.colors[ci].name, code: plan.colors[ci].code, count: cnt });
-  const pages = [], snap = c => { const u = c.toDataURL("image/jpeg", N > 64 ? 0.62 : 0.75); pages.push({ jpg: b64Bytes(u.slice(u.indexOf(",") + 1)), w: PW, h: PH }); };
+  const pages = [], snap = c => { const u = c.toDataURL("image/jpeg", W * H > 4096 ? 0.62 : 0.75); pages.push({ jpg: b64Bytes(u.slice(u.indexOf(",") + 1)), w: PW, h: PH }); };
   let [c, o] = pageCanvas();
   o.fillStyle = "#1b1b1b"; o.textAlign = "left"; o.textBaseline = "alphabetic";
-  o.font = "600 64px Kanit, sans-serif"; o.fillText("Brick Art · คู่มือการต่อ", 560, 120);
+  o.font = "600 60px Kanit, sans-serif"; o.fillText((plan.shop || "Brick Art") + " · คู่มือการต่อ", 560, 120);
   o.font = "30px Kanit, sans-serif"; o.fillStyle = "#444";
   o.fillText("ออเดอร์ " + plan.id + (plan.title ? " · " + plan.title : ""), 560, 175);
-  o.fillText("ขนาด " + N + " × " + N + " ปุ่ม (" + (N * 0.8).toFixed(1) + " × " + (N * 0.8).toFixed(1) + " ซม.) · แผ่นฐาน " + (P * P) + " แผ่น · " + (N * N).toLocaleString() + " ชิ้น", 560, 220);
+  o.fillText("ขนาด " + W + " × " + H + " ปุ่ม (" + (W * 0.8).toFixed(1) + " × " + (H * 0.8).toFixed(1) + " ซม.) · แผ่นฐาน " + TOT + " แผ่น · " + (W * H).toLocaleString() + " ชิ้น", 560, 220);
   legend(o, 60, 60, 440, order.map(ci => item(ci, counts[ci])), "สีทั้งหมดที่ใช้");
-  const map = 300, cell = map / P; o.font = "600 " + Math.round(cell * 0.4) + "px Kanit, sans-serif"; o.textAlign = "center"; o.textBaseline = "middle";
-  for (let r = 0; r < P; r++) for (let q = 0; q < P; q++) { const X = 560 + q * cell, Y = 290 + r * cell; o.strokeStyle = "#1b1b1b"; o.lineWidth = 3; o.strokeRect(X, Y, cell, cell); o.fillStyle = "#1b1b1b"; o.fillText(String(r * P + q + 1), X + cell / 2, Y + cell / 2); }
-  o.textAlign = "left"; o.font = "24px Kanit, sans-serif"; o.fillStyle = "#555"; o.fillText("ลำดับแผ่น", 560, 625); o.fillText("เริ่มต่อจากแผ่นที่ 1", 560, 657);
-  const pv = 560, px = 920, py = 290, ps = pv / N;
-  o.fillStyle = "#222"; o.fillRect(px, py, pv, pv);
-  cells.forEach((v, i) => { o.fillStyle = plan.colors[v].hex; o.beginPath(); o.arc(px + (i % N + 0.5) * ps, py + (Math.floor(i / N) + 0.5) * ps, ps * 0.46, 0, Math.PI * 2); o.fill(); });
-  o.font = "24px Kanit, sans-serif"; o.fillStyle = "#555"; o.fillText("ภาพตัวอย่างงานที่เสร็จ", px, py + pv + 40);
-  snap(c); if (onStep) onStep(1, P * P + 1);
-  for (let r = 0; r < P; r++) for (let q = 0; q < P; q++) {
+  const cell = Math.min(300 / PC, 300 / PR); o.font = "600 " + Math.round(cell * 0.4) + "px Kanit, sans-serif"; o.textAlign = "center"; o.textBaseline = "middle";
+  for (let r = 0; r < PR; r++) for (let q = 0; q < PC; q++) { const X = 560 + q * cell, Y = 290 + r * cell; o.strokeStyle = "#1b1b1b"; o.lineWidth = 3; o.strokeRect(X, Y, cell, cell); o.fillStyle = "#1b1b1b"; o.fillText(String(r * PC + q + 1), X + cell / 2, Y + cell / 2); }
+  o.textAlign = "left"; o.font = "24px Kanit, sans-serif"; o.fillStyle = "#555"; o.fillText("ลำดับแผ่น", 560, 290 + PR * cell + 36); o.fillText("เริ่มต่อจากแผ่นที่ 1", 560, 290 + PR * cell + 68);
+  const ps = Math.min(600 / W, 820 / H), pw = ps * W, ph = ps * H, px = 920, py = 290;
+  o.fillStyle = "#ffffff"; o.fillRect(px, py, pw, ph); o.strokeStyle = "#ddd"; o.lineWidth = 2; o.strokeRect(px, py, pw, ph);
+  cells.forEach((v, i) => { o.fillStyle = plan.colors[v].hex; o.beginPath(); o.arc(px + (i % W + 0.5) * ps, py + (Math.floor(i / W) + 0.5) * ps, ps * 0.46, 0, Math.PI * 2); o.fill(); });
+  o.font = "24px Kanit, sans-serif"; o.fillStyle = "#555"; o.fillText("ภาพตัวอย่างงานที่เสร็จ", px, Math.min(PH - 20, py + ph + 36));
+  snap(c); if (onStep) onStep(1, TOT + 1);
+  for (let r = 0; r < PR; r++) for (let q = 0; q < PC; q++) {
     [c, o] = pageCanvas();
-    const sec = r * P + q + 1, local = {};
-    for (let y = 0; y < 16; y++) for (let x2 = 0; x2 < 16; x2++) { const v = cells[(r * 16 + y) * N + q * 16 + x2]; local[v] = (local[v] || 0) + 1; }
+    const sec = r * PC + q + 1, local = {};
+    for (let y = 0; y < 16; y++) for (let x2 = 0; x2 < 16; x2++) { const v = cells[(r * 16 + y) * W + q * 16 + x2]; local[v] = (local[v] || 0) + 1; }
     o.fillStyle = "#1b1b1b"; o.font = "600 52px Kanit, sans-serif"; o.textAlign = "left"; o.textBaseline = "alphabetic";
-    const ttl = "แผ่นที่ " + sec + " / " + (P * P); o.fillText(ttl, 560, 90); const tw = o.measureText(ttl).width;
+    const ttl = "แผ่นที่ " + sec + " / " + TOT; o.fillText(ttl, 560, 90); const tw = o.measureText(ttl).width;
     o.font = "26px Kanit, sans-serif"; o.fillStyle = "#555"; o.fillText("แถว " + (r + 1) + " · คอลัมน์ " + (q + 1) + " · ออเดอร์ " + plan.id, 560 + tw + 28, 90);
     legend(o, 60, 60, 440, order.filter(ci => local[ci]).map(ci => item(ci, local[ci])), "สีในแผ่นนี้");
     const gx = 560, gy = 130, gs = 1000, cs2 = gs / 16;
-    o.fillStyle = "#151515"; o.fillRect(gx, gy, gs, gs);
-    for (let y = 0; y < 16; y++) for (let x2 = 0; x2 < 16; x2++) { const v = cells[(r * 16 + y) * N + q * 16 + x2]; dot(o, gx + (x2 + 0.5) * cs2, gy + (y + 0.5) * cs2, cs2 * 0.44, plan.colors[v].hex, numOf[v]); }
-    o.strokeStyle = "rgba(255,255,255,.35)"; o.lineWidth = 2;
+    o.fillStyle = "#ffffff"; o.fillRect(gx, gy, gs, gs); o.strokeStyle = "#cfcfcf"; o.lineWidth = 2; o.strokeRect(gx, gy, gs, gs);
+    for (let y = 0; y < 16; y++) for (let x2 = 0; x2 < 16; x2++) { const v = cells[(r * 16 + y) * W + q * 16 + x2]; dot(o, gx + (x2 + 0.5) * cs2, gy + (y + 0.5) * cs2, cs2 * 0.44, plan.colors[v].hex, numOf[v]); }
+    o.strokeStyle = "rgba(0,0,0,.18)"; o.lineWidth = 2;
     for (let k = 4; k < 16; k += 4) { o.beginPath(); o.moveTo(gx + k * cs2, gy); o.lineTo(gx + k * cs2, gy + gs); o.moveTo(gx, gy + k * cs2); o.lineTo(gx + gs, gy + k * cs2); o.stroke(); }
     o.fillStyle = "#888"; o.font = "18px Kanit, sans-serif"; o.textAlign = "center"; o.textBaseline = "middle";
     for (let k = 0; k < 16; k++) { o.fillText(String(k + 1), gx + (k + 0.5) * cs2, gy - 14); o.fillText(String(k + 1), gx - 18, gy + (k + 0.5) * cs2); }
-    snap(c); if (onStep) onStep(sec + 1, P * P + 1);
+    snap(c); if (onStep) onStep(sec + 1, TOT + 1);
     await new Promise(res => setTimeout(res, 0));
   }
   return bytesB64(buildPdf(pages));
@@ -694,12 +774,12 @@ $("orderForm").addEventListener("submit",e=>{e.preventDefault();
   err.hidden=true;
   const btn=e.submitter||$("orderForm").querySelector("button[type=submit]");btn.disabled=true;const label=btn.innerHTML;btn.innerHTML='<span class="spin"></span> กำลังส่ง…';
   const counts={};S.idx.forEach(ci=>{const c=COLORS[ci].code;counts[c]=(counts[c]||0)+1});
-  const [sx,sy,s]=cropRect(S.img,S.crop),k=Math.min(1,1200/s),pc=document.createElement("canvas");pc.width=pc.height=Math.round(s*k);
-  pc.getContext("2d").drawImage(S.img,sx,sy,s,s,0,0,pc.width,pc.height);
-  const mc=document.createElement("canvas");mc.width=mc.height=768;drawMosaic(mc,S.idx,S.size);
-  const modeTxt={color:"เหมือนจริง",gray:"ขาว-ดำ",pop:"ป๊อปอาร์ต",pastel:"พาสเทล"}[S.mode],sz=SIZES.find(z=>z.n===S.size);
+  const [sx,sy,sw,sh]=cropRect(S.img,S.crop,S.w/S.h),k=Math.min(1,1200/Math.max(sw,sh)),pc=document.createElement("canvas");pc.width=Math.round(sw*k);pc.height=Math.round(sh*k);
+  pc.getContext("2d").drawImage(S.img,sx,sy,sw,sh,0,0,pc.width,pc.height);
+  const mc=document.createElement("canvas");mc.width=S.w*12;mc.height=S.h*12;drawMosaic(mc,S.idx,S.w,S.h);
+  const modeTxt={color:"เหมือนจริง",gray:"ขาว-ดำ",pop:"ป๊อปอาร์ต",pastel:"พาสเทล"}[S.mode],sz=curSize();
   const payload={name:v("fName"),title:v("fTitle"),phone:v("fPhone"),line:v("fLine"),address:v("fAddr"),note:v("fNote"),
-    size:S.size,mode:modeTxt,counts,plan:(()=>{const codes=[],pos={},cells=[];S.idx.forEach(ci=>{const c=COLORS[ci].code;if(pos[c]===undefined){pos[c]=codes.length;codes.push(c)}cells.push(pos[c])});return{codes,grid:cells.join(",")}})(),photo:pc.toDataURL("image/jpeg",.85),preview:mc.toDataURL("image/jpeg",.9)};
+    w:S.w,h:S.h,assemble:S.assemble,mode:modeTxt,counts,plan:(()=>{const codes=[],pos={},cells=[];S.idx.forEach(ci=>{const c=COLORS[ci].code;if(pos[c]===undefined){pos[c]=codes.length;codes.push(c)}cells.push(pos[c])});return{codes,grid:cells.join(",")}})(),photo:pc.toDataURL("image/jpeg",.85),preview:mc.toDataURL("image/jpeg",.9)};
   const box=$("result");
   const fail=er=>{btn.disabled=false;btn.innerHTML=label;err.hidden=false;err.textContent="ส่งไม่สำเร็จ: "+((er&&er.message)||er)+" ลองใหม่อีกครั้ง"};
   const OK=r=>{btn.disabled=false;btn.innerHTML=label;$("orderForm").reset();
@@ -708,9 +788,9 @@ $("orderForm").addEventListener("submit",e=>{e.preventDefault();
       <div id="payArea" style="width:100%"></div>
       <p class="note">เก็บเลขออเดอร์ ${r.id} ไว้ ใช้ส่งสลิปภายหลังหรือดูเลขพัสดุได้ที่ "ติดตามออเดอร์"</p>`;
     showPay($("payArea"),r.id,payload.phone,r.price,false);
-    try{const pl=payload.plan,plan={id:r.id,title:payload.title,n:S.size,grid:pl.grid,colors:pl.codes.map(c=>{const k=COLORS.find(x=>x.code===c);return{code:c,name:k?k.n:c,hex:k?k.h:"#999999"}})};
+    try{const pl=payload.plan,plan={id:r.id,title:payload.title,w:S.w,h:S.h,shop:SHOP.name,grid:pl.grid,colors:pl.codes.map(c=>{const k=COLORS.find(x=>x.code===c);return{code:c,name:k?k.n:c,hex:k?k.h:"#999999"}})};
       INSTR.make(plan).then(b64=>post({action:"pdf",id:r.id,phone:payload.phone,pdf:b64})).catch(()=>{})}catch(e){}
-    $("orderTxt").textContent=`เลขออเดอร์: ${r.id}\nขนาด: ${S.size}×${S.size} (${(S.size*.8).toFixed(1)} ซม.)\nโทนสี: ${modeTxt}\nราคา: ${baht(r.price)}\nผู้รับ: ${payload.name}`;
+    $("orderTxt").textContent=`เลขออเดอร์: ${r.id}\nขนาด: ${S.w}×${S.h} (${cmTxt(S.w,S.h)} ซม.)\nโทนสี: ${modeTxt}\nการต่อ: ${S.assemble?"ร้านต่อให้ พร้อมตั้งโชว์":"ต่อเอง"}\nราคา: ${baht(r.price)}\nผู้รับ: ${payload.name}`;
     box.scrollIntoView({block:"nearest",behavior:"smooth"})};
   if(!HAS_API){fail(new Error("ร้านยังไม่ได้เชื่อมระบบสั่งซื้อ"));return}
   fetch(API_URL.trim(),{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(Object.assign({action:"order"},payload))})
