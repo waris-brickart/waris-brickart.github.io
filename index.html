@@ -232,6 +232,24 @@ html.lock,html.lock body{overflow:hidden}
 .thsteps b{color:var(--ink);display:block}
 .thnote{margin:0;font-size:13px;color:var(--muted)}.thty{margin:0;font-weight:600;color:var(--ink)}
 .thbtns{width:100%;display:grid;gap:10px}.thbtns .btn{justify-content:center;min-height:50px;font-size:17px}
+.app{max-width:1180px;margin:0 auto;background:var(--paper);min-height:100vh;padding-bottom:calc(36px + env(safe-area-inset-bottom))}
+@media (min-width:901px){.app{margin:12px auto 24px;border-radius:22px;min-height:0;overflow:hidden;box-shadow:0 10px 0 rgba(138,90,43,.18)}}
+.apphead{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:10px;padding:calc(10px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) 10px max(16px,env(safe-area-inset-left,0px));background:var(--paper);border-bottom:1.5px solid var(--line)}
+.back{background:#fff;border:1.5px solid var(--line);border-radius:999px;padding:9px 14px;font-weight:600;cursor:pointer;white-space:nowrap;color:var(--ink)}
+.apptitle{font-family:var(--display);font-weight:600;font-size:17px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.stepbar{display:flex;gap:6px;padding:12px max(16px,env(safe-area-inset-right,0px)) 16px max(16px,env(safe-area-inset-left,0px));font-size:13px;max-width:720px;margin:0 auto}
+.stepbar span{flex:1;text-align:center;padding:7px 4px;border-radius:999px;background:#fff;color:var(--muted);border:1.5px solid var(--line);white-space:nowrap}
+.stepbar .on{background:var(--sun);color:var(--ink);border-color:var(--sun-dk);font-weight:700}
+.stepbar .done{background:var(--ink);color:#fff;border-color:var(--ink)}
+.ori{display:inline-block;width:11px;height:15px;border:2px solid currentColor;border-radius:3px;margin-right:7px;vertical-align:-2px}.ori.l{width:15px;height:11px;vertical-align:0}
+.btn.big{justify-content:center;min-height:54px;font-size:17px;width:100%}
+#order{display:grid;gap:16px;max-width:720px;margin:0 auto}
+.cosum{display:grid!important;grid-template-columns:110px minmax(0,1fr);gap:16px;align-items:start}
+#coThumb{width:100%;height:auto;border-radius:12px;background:#202020;display:block}
+.colines{display:grid;gap:6px;font-size:15px;min-width:0}.colines>div{display:flex;justify-content:space-between;gap:8px}.colines>div span:first-child{color:var(--muted)}
+.colines .tot{font-weight:700;font-size:18px;border-top:1px dashed var(--line);padding-top:8px}.colines .tot span:last-child{color:var(--red)}
+.cohead{font-family:var(--display);margin:6px 0 0;font-size:22px}
+#orderForm input,#orderForm textarea{font-size:16px}
 .minipv{position:fixed;right:max(12px,env(safe-area-inset-right));bottom:calc(14px + env(safe-area-inset-bottom));z-index:60;width:min(38vw,170px);background:#fff;border:3px solid var(--sun);border-radius:14px;padding:4px;box-shadow:0 8px 24px rgba(43,29,14,.25);display:grid;gap:2px;cursor:pointer;transition:transform .2s,opacity .2s}
 .minipv canvas{width:100%;height:auto;display:block;border-radius:9px}
 .minipv span{font-size:11px;text-align:center;color:var(--muted)}
@@ -258,19 +276,19 @@ footer a{color:inherit}
 <div class="thanks" id="thanks" role="dialog" aria-modal="true" aria-labelledby="thH" hidden>
   <div class="thbox">
     <svg class="thok" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="#f5c542"/><path d="M19 33l9 9 17-19" fill="none" stroke="#2b1d0e" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    <h2 id="thH">ชำระเงินเรียบร้อย</h2>
-    <p class="thsub">ร้านได้รับสลิปแล้ว กำลังตรวจสอบยอดเงิน</p>
+    <h2 id="thH">สั่งซื้อเรียบร้อยแล้ว</h2>
+    <p class="thsub">ร้านได้รับออเดอร์และสลิปของคุณแล้ว และส่งอีเมลยืนยันออเดอร์ให้เรียบร้อย</p>
     <div class="thcard">
       <div><span>เลขออเดอร์</span><b id="thId"></b></div>
-      <div><span>แจ้งสถานะทางอีเมล</span><b id="thMail"></b></div>
+      <div><span>ส่งอีเมลยืนยันไปที่</span><b id="thMail"></b></div>
     </div>
-    <ol class="thsteps"><li><div><b>ตรวจสอบสลิป</b>ร้านจะยืนยันยอดและส่งอีเมลแจ้ง</div></li><li><div><b>เตรียมงาน</b>ทำชุดตัวต่อ หรือต่อให้ตามที่เลือก</div></li><li><div><b>จัดส่ง</b>ส่งเลขพัสดุให้ทางอีเมล ติดตามได้ทันที</div></li></ol>
+    <ol class="thsteps"><li><div><b>ยืนยันการชำระเงิน</b>ร้านตรวจยอดแล้วส่งอีเมลยืนยันการชำระเงิน</div></li><li><div><b>เตรียมงาน</b>ทำชุดตัวต่อ หรือต่อให้ตามที่เลือก</div></li><li><div><b>ยืนยันการจัดส่ง</b>ส่งชื่อขนส่งและเลขพัสดุให้ทางอีเมล</div></li></ol>
     <p class="thnote">ถ้าไม่เห็นอีเมล ลองดูในโฟลเดอร์จดหมายขยะหรือโปรโมชั่น</p>
     <p class="thty">ขอบคุณที่ไว้ใจให้เราดูแลของขวัญชิ้นนี้ค่ะ ✦</p>
     <div class="thbtns"><button class="btn red" type="button" id="thHome">กลับหน้าแรก</button><button class="btn ghost" type="button" id="thTrack">ดูสถานะออเดอร์</button></div>
   </div>
 </div>
-<div class="page">
+<div class="page" id="homeView">
 
 <nav aria-label="เมนูหลัก">
   <div class="in">
@@ -335,83 +353,9 @@ footer a{color:inherit}
   </div>
 </section>
 
-<section class="in" id="create">
-  <div class="head">
-    <h2>สร้างของขวัญจากรูปของคุณ</h2>
-    <p>ดูแบบได้ฟรี รูปของคุณจะถูกส่งให้ร้านเฉพาะตอนกดส่งออเดอร์เท่านั้น</p>
-  </div>
-  <div class="builder">
-    <div class="preview">
-      <div class="row" style="justify-content:space-between">
-        <div class="seg" id="view"><button data-v="mosaic" aria-pressed="true">ภาพตัวต่อ</button><button data-v="frame" aria-pressed="false">ในกรอบ</button><button data-v="photo" aria-pressed="false">ภาพจริง</button></div>
-        <span class="note" id="dimTxt"></span>
-      </div>
-      <div class="stage" id="stage"><canvas id="out" aria-label="ภาพตัวอย่างงานตัวต่อ"></canvas><span class="hint">ลากเพื่อขยับรูป</span></div>
-      <label class="zoom">ซูม<input type="range" id="zoom" min="100" max="400" value="100"><output id="zoomOut">1.0×</output></label>
-    </div>
 
-    <div class="form">
-      <div>
-        <div class="lbl"><i>1</i>อัปโหลดรูป</div>
-        <label class="drop" id="drop">
-          <input type="file" id="file" accept="image/*">
-          <b>เลือกรูปภาพ</b>
-          <small>หรือลากรูปมาวางที่นี่ · วางรูปด้วย Ctrl+V / ⌘+V ก็ได้</small>
-          <span class="file" id="fileName">ตอนนี้แสดงรูปตัวอย่าง (แมวส้ม)</span>
-        </label>
-      </div>
-      <div>
-        <div class="lbl"><i>2</i>เลือกขนาด</div>
-        <div class="sizes" id="sizes"></div>
-        <p class="note" style="margin-top:8px">ราคาตัวอย่าง รวมชิ้นส่วน แผ่นฐาน และแผนผังการต่อ</p>
-        <p class="note" id="sizeHint" style="margin-top:4px;color:var(--red);font-weight:600" hidden>ขนาด 32×32 เหมาะกับลายเรียบ ๆ ถ้าเป็นรูปคนหรือสัตว์ แนะนำ 48×48 ขึ้นไป หน้าจะชัดกว่ามาก</p>
-      </div>
-      <div>
-        <div class="lbl"><i>3</i>โทนสี</div>
-        <div class="seg" id="mode"><button data-v="color" aria-pressed="true">เหมือนจริง</button><button data-v="gray" aria-pressed="false">ขาว-ดำ</button><button data-v="pop" aria-pressed="false">ป๊อปอาร์ต</button><button data-v="pastel" aria-pressed="false">พาสเทล</button></div>
-        <div class="seg" id="smooth" style="margin-top:8px"><button data-v="1" aria-pressed="true">ไล่เฉดเนียน (แนะนำ)</button><button data-v="0" aria-pressed="false">สีเรียบคมชัด</button></div>
-        <div class="adj" id="adj">
-          <label class="zoom">ความสว่าง<input type="range" data-k="b" min="-50" max="50" step="5" value="0"><output>0</output></label>
-          <label class="zoom">ความเข้ม<input type="range" data-k="c" min="-30" max="60" step="5" value="0"><output>0</output></label>
-          <label class="zoom">ความสดของสี<input type="range" data-k="s" min="-50" max="80" step="5" value="0"><output>0</output></label>
-          <button type="button" class="linkbtn" id="adjReset">คืนค่าเดิม</button>
-        </div>
-      </div>
-      <div>
-        <div class="lbl"><i>4</i>ต่อเองหรือให้ร้านต่อ</div>
-        <div class="seg" id="asm"><button data-v="0" aria-pressed="true">ต่อเอง (ได้ชุดตัวต่อ + คู่มือ)</button><button data-v="1" aria-pressed="false" id="asmShop">ให้ร้านต่อให้ พร้อมตั้งโชว์</button></div>
-      </div>
-      <div class="sum">
-        <div class="li"><span>ขนาด</span><span id="sSize"></span></div>
-        <div class="li"><span>จำนวนชิ้น</span><span id="sPcs"></span></div>
-        <div class="li"><span>การต่อ</span><span id="sAsm"></span></div>
-        <div class="li"><span>สีที่ใช้</span><span class="palette" id="sPal"></span></div>
-        <div class="li tot"><span>รวม</span><span id="sPrice"></span></div>
-      </div>
-      <a href="#order" class="btn red" style="justify-content:center">สั่งทำชิ้นนี้ →</a>
-    </div>
-  </div>
-</section>
 
-<section class="in" id="order">
-  <div class="head"><h2>ข้อมูลจัดส่ง</h2><p>กด "ส่งออเดอร์" แล้วร้านจะได้รับรูปและรายละเอียดทันที และติดต่อกลับเพื่อยืนยันและแจ้งชำระเงิน</p></div>
-  <div class="order">
-    <form class="panel" id="orderForm" novalidate>
-      <div class="fld"><label for="fName">ชื่อผู้รับ</label><input id="fName" autocomplete="name" required></div>
-      <div class="fld"><label for="fTitle">ชื่องาน <small>(เช่น รูปน้องหมาของแม่)</small></label><input id="fTitle" maxlength="100"></div>
-      <div class="fld"><label for="fPhone">เบอร์โทร</label><input id="fPhone" type="tel" autocomplete="tel" inputmode="tel" required></div>
-      <div class="fld"><label for="fEmail">อีเมล <small>(รับแจ้งสถานะและเลขพัสดุ)</small></label><input id="fEmail" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" placeholder="name@gmail.com" required></div>
-      <div class="fld"><label for="fAddr">ที่อยู่จัดส่ง</label><textarea id="fAddr" autocomplete="street-address" required></textarea></div>
-      <div class="fld"><label for="fNote">ข้อความถึงร้าน <small>(เช่น ของขวัญวันเกิด ต้องการภายในวันที่…)</small></label><textarea id="fNote"></textarea></div>
-      <p class="err" id="err" hidden></p>
-      <button class="btn red" type="submit" style="justify-content:center">ส่งออเดอร์</button>
-    </form>
-    <div class="panel empty" id="result">
-      <svg width="40" height="40" viewBox="0 0 24 24" aria-hidden="true"><path fill="#d7362b" d="M12 0c1 7 5 11 12 12-7 1-11 5-12 12-1-7-5-11-12-12 7-1 11-5 12-12z"/></svg>
-      <p>สรุปออเดอร์ของคุณจะแสดงที่นี่</p>
-    </div>
-  </div>
-</section>
+
 
 <section class="in" id="track">
   <div class="head"><h2>ติดตามออเดอร์</h2><p>ใส่เลขออเดอร์และเบอร์โทรที่ใช้สั่ง เพื่อดูสถานะ ส่งสลิป หรือดูเลขพัสดุ</p></div>
@@ -429,7 +373,7 @@ footer a{color:inherit}
 <section class="in" id="faq">
   <div class="head"><h2>คำถามที่พบบ่อย</h2></div>
   <div class="faq">
-    <details><summary>รูปแบบไหนออกมาสวยที่สุด</summary><p>รูปที่หน้าชัด แสงสว่าง พื้นหลังเรียบ และครอปให้หน้าเต็มกรอบ ถ้าเป็นรูปหลายคน แนะนำขนาด 64×64 ขึ้นไป</p></details>
+    <details><summary>รูปแบบไหนออกมาสวยที่สุด</summary><p>รูปที่หน้าชัด แสงสว่าง พื้นหลังเรียบ และครอปให้หน้าเต็มภาพ ถ้าเป็นรูปหลายคน แนะนำขนาด 64×64 ขึ้นไป</p></details>
     <details><summary>ในกล่องมีอะไรบ้าง</summary><p>ชิ้นกลมผิวเรียบ 1×1 แยกถุงตามสี แผ่นฐาน 16×16 และแผนผังการต่อทีละแผ่นพร้อมหมายเลขสี</p></details>
     <details><summary>ต่อเสร็จใช้เวลานานไหม</summary><p>ขนาด 32×32 ประมาณ 1–2 ชั่วโมง ขนาดใหญ่จะใช้เวลามากขึ้นตามจำนวนชิ้น เหมาะเป็นกิจกรรมทำด้วยกัน</p></details>
     <details><summary>ให้ร้านต่อให้ได้ไหม</summary><p>ได้ เลือก "ให้ร้านต่อให้ พร้อมตั้งโชว์" ตอนสั่ง ร้านจะต่อเสร็จพร้อมตั้งโชว์แล้วจัดส่งให้ถึงบ้าน</p></details>
@@ -446,6 +390,103 @@ footer a{color:inherit}
   </div>
 </footer>
 </div>
+<div class="app" id="makeView" hidden>
+  <div class="apphead"><button type="button" class="back" data-go="home">← หน้าแรก</button><span class="apptitle">สร้างงานจากรูปของคุณ</span></div>
+  <div class="stepbar"><span class="on">1 ออกแบบ</span><span>2 จัดส่ง &amp; ชำระเงิน</span><span>3 เสร็จสิ้น</span></div>
+  <section class="in" id="create">
+  <div class="builder">
+    <div class="preview">
+      <div class="row" style="justify-content:space-between">
+        <div class="seg" id="view"><button data-v="mosaic" aria-pressed="true">ภาพตัวต่อ</button><button data-v="photo" aria-pressed="false">ภาพจริง</button></div>
+        <span class="note" id="dimTxt"></span>
+      </div>
+      <div class="stage" id="stage"><canvas id="out" aria-label="ภาพตัวอย่างงานตัวต่อ"></canvas><span class="hint">ลากเพื่อขยับรูป</span></div>
+      <label class="zoom">ซูม<input type="range" id="zoom" min="100" max="400" value="100"><output id="zoomOut">1.0×</output></label>
+    </div>
+
+    <div class="form">
+      <div>
+        <div class="lbl"><i>1</i>อัปโหลดรูปภาพ</div>
+        <label class="drop" id="drop">
+          <input type="file" id="file" accept="image/*">
+          <b>เลือกรูปภาพ</b>
+          <small>หรือลากรูปมาวางที่นี่ · วางรูปด้วย Ctrl+V / ⌘+V ก็ได้</small>
+          <span class="file" id="fileName">ตอนนี้แสดงรูปตัวอย่าง (แมวส้ม)</span>
+        </label>
+      </div>
+      <div>
+        <div class="lbl"><i>2</i>โทนสี</div>
+        <div class="seg" id="mode"><button data-v="color" aria-pressed="true">เหมือนจริง</button><button data-v="gray" aria-pressed="false">ขาว-ดำ</button><button data-v="pop" aria-pressed="false">ป๊อปอาร์ต</button><button data-v="pastel" aria-pressed="false">พาสเทล</button></div>
+        <div class="seg" id="smooth" style="margin-top:8px"><button data-v="1" aria-pressed="true">ไล่เฉดเนียน (แนะนำ)</button><button data-v="0" aria-pressed="false">สีเรียบคมชัด</button></div>
+        <div class="adj" id="adj">
+          <label class="zoom">ความสว่าง<input type="range" data-k="b" min="-50" max="50" step="5" value="0"><output>0</output></label>
+          <label class="zoom">ความเข้ม<input type="range" data-k="c" min="-30" max="60" step="5" value="0"><output>0</output></label>
+          <label class="zoom">ความสดของสี<input type="range" data-k="s" min="-50" max="80" step="5" value="0"><output>0</output></label>
+          <button type="button" class="linkbtn" id="adjReset">คืนค่าเดิม</button>
+        </div>
+      
+      </div>
+      <div>
+        <div class="lbl"><i>3</i>เลือกขนาด</div>
+        <div class="sizes" id="sizes"></div>
+        <p class="note" style="margin-top:8px">ราคาตัวอย่าง รวมชิ้นส่วน แผ่นฐาน และแผนผังการต่อ</p>
+        <p class="note" id="sizeHint" style="margin-top:4px;color:var(--red);font-weight:600" hidden>ขนาด 32×32 เหมาะกับลายเรียบ ๆ ถ้าเป็นรูปคนหรือสัตว์ แนะนำ 48×48 ขึ้นไป หน้าจะชัดกว่ามาก</p>
+      
+      </div>
+      <div>
+        <div class="lbl"><i>4</i>เลือกแบบ</div>
+        <div class="seg" id="orient"><button data-v="portrait" aria-pressed="true"><i class="ori"></i>แนวตั้ง</button><button data-v="landscape" aria-pressed="false"><i class="ori l"></i>แนวนอน</button></div>
+        <p class="note" id="orientNote" style="margin-top:6px" hidden>ขนาดนี้เป็นสี่เหลี่ยมจัตุรัส ใช้ได้ทั้งสองแบบ</p>
+      </div>
+      <div>
+        <div class="lbl"><i>5</i>ต่อเองหรือให้ร้านต่อ</div>
+        <div class="seg" id="asm"><button data-v="0" aria-pressed="true">ต่อเอง (ได้ชุดตัวต่อ + คู่มือ)</button><button data-v="1" aria-pressed="false" id="asmShop">ให้ร้านต่อให้ พร้อมตั้งโชว์</button></div>
+      </div>
+      <div class="sum">
+        <div class="li"><span>ขนาด</span><span id="sSize"></span></div>
+        <div class="li"><span>จำนวนชิ้น</span><span id="sPcs"></span></div>
+        <div class="li"><span>การต่อ</span><span id="sAsm"></span></div>
+        <div class="li"><span>สีที่ใช้</span><span class="palette" id="sPal"></span></div>
+        <div class="li tot"><span>รวม</span><span id="sPrice"></span></div>
+      </div>
+      <button type="button" class="btn red big" id="toCheckout">สั่งทำชิ้นงานนี้ →</button>
+    </div>
+  </div>
+</section>
+</div>
+<div class="app" id="checkoutView" hidden>
+  <div class="apphead"><button type="button" class="back" data-go="make">← กลับไปแก้แบบ</button><span class="apptitle">จัดส่งและชำระเงิน</span></div>
+  <div class="stepbar"><span class="done">1 ออกแบบ</span><span class="on">2 จัดส่ง &amp; ชำระเงิน</span><span>3 เสร็จสิ้น</span></div>
+  <section class="in" id="order">
+  <div class="cosum panel">
+    <canvas id="coThumb" width="240" height="240" aria-label="ภาพงานที่เลือก"></canvas>
+    <div class="colines">
+      <b>งานของคุณ</b>
+      <div><span>ขนาด</span><span id="coSize"></span></div>
+      <div><span>แบบ</span><span id="coOrient"></span></div>
+      <div><span>โทนสี</span><span id="coMode"></span></div>
+      <div><span>การต่อ</span><span id="coAsm"></span></div>
+      <div class="tot"><span>ยอดชำระ</span><span id="coPrice"></span></div>
+      <button type="button" class="linkbtn" data-go="make" style="justify-self:start">แก้แบบ</button>
+    </div>
+  </div>
+  <h2 class="cohead" id="coHead">ข้อมูลจัดส่ง</h2>
+  <form class="panel" id="orderForm" novalidate>
+      <div class="fld"><label for="fName">ชื่อผู้รับ</label><input id="fName" autocomplete="name" required></div>
+      <div class="fld"><label for="fTitle">ชื่องาน <small>(เช่น รูปน้องหมาของแม่)</small></label><input id="fTitle" maxlength="100"></div>
+      <div class="fld"><label for="fPhone">เบอร์โทร</label><input id="fPhone" type="tel" autocomplete="tel" inputmode="tel" required></div>
+      <div class="fld"><label for="fEmail">อีเมล <small>(รับแจ้งสถานะและเลขพัสดุ)</small></label><input id="fEmail" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" placeholder="name@gmail.com" required></div>
+      <div class="fld"><label for="fAddr">ที่อยู่จัดส่ง</label><textarea id="fAddr" autocomplete="street-address" required></textarea></div>
+      <div class="fld"><label for="fNote">ข้อความถึงร้าน <small>(เช่น ของขวัญวันเกิด ต้องการภายในวันที่…)</small></label><textarea id="fNote"></textarea></div>
+      <p class="err" id="err" hidden></p>
+      <button class="btn red big" type="submit">ยืนยันสั่งซื้อ และไปชำระเงิน →</button>
+    </form>
+  <div class="panel empty" id="result" hidden>
+      <svg width="40" height="40" viewBox="0 0 24 24" aria-hidden="true"><path fill="#d7362b" d="M12 0c1 7 5 11 12 12-7 1-11 5-12 12-1-7-5-11-12-12 7-1 11-5 12-12z"/></svg>
+      <p>สรุปออเดอร์ของคุณจะแสดงที่นี่</p>
+    </div>
+</section>
+</div>
 
 <script>
 /* ---------- palette ---------- */
@@ -460,7 +501,7 @@ function applyData(D){
   const pick=cs=>cs.map(c=>COLORS.findIndex(x=>x.code===c)).filter(i=>i>=0);
   MODES={color:COLORS.map((_,i)=>i),gray:pick(["WHT","LGR","DGR","BLK"]),pop:pick(["BLK","WHT","RED","YEL","BLU","PNK","ORG","LBL"]),pastel:pick(["WHT","PNK","LBL","LGN","YEL","SKN","LGR","PUR"])};
   ["gray","pop","pastel"].forEach(k=>{if(MODES[k].length<3)MODES[k]=MODES.color});
-  SIZES=(D.prices&&D.prices.length?D.prices:FALLBACK.prices).map(p=>({w:Number(p.w||p.n),h:Number(p.h||p.n),price:Number(p.price)||0}));
+  {const seen={};SIZES=[];(D.prices&&D.prices.length?D.prices:FALLBACK.prices).forEach(p=>{const a=Number(p.w||p.n),b=Number(p.h||p.n),w=Math.min(a,b),h=Math.max(a,b),k=w+"x"+h;if(!w||seen[k])return;seen[k]=1;SIZES.push({w,h,price:Number(p.price)||0})});SIZES.sort((x,y)=>x.w*x.h-y.w*y.h)}
   SHOP=Object.assign({},FALLBACK.shop,D.shop||{});
 }
 applyData(FALLBACK);
@@ -484,7 +525,7 @@ function quantize(img,crop,W,H,mode,smooth,adj){
   const x=t.getContext("2d");x.imageSmoothingQuality="high";x.drawImage(src,qx,qy,qw,qh,0,0,W,H);
   const d=x.getImageData(0,0,W,H).data,pal=MODES[mode],n=W*H,buf=new Float32Array(n*3),M=Math.min(W,H);
   const lum=[];for(let i=0;i<n;i++)lum.push(0.299*d[i*4]+0.587*d[i*4+1]+0.114*d[i*4+2]);
-  const so=lum.slice().sort((p,q)=>p-q),lo=so[Math.floor(n*0.02)],hi=so[Math.floor(n*0.98)];
+  const so=lum.slice().sort((p,q)=>p-q),lo=Math.min(40,so[Math.floor(n*0.02)]),hi=Math.max(215,so[Math.floor(n*0.98)]);
   const k=hi-lo>40?255/(hi-lo):1,mix=0.95;
   for(let i=0;i<n;i++)for(let c=0;c<3;c++){const v=d[i*4+c],st=(v-lo)*k;buf[i*3+c]=Math.min(255,Math.max(0,v+(st-v)*mix))}
   {const sharp=M<=48?0.65:0.5,cp=Float32Array.from(buf);
@@ -605,12 +646,15 @@ drawGallery();
 
 
 /* ---------- builder ---------- */
-const S={img:cat(),crop:{z:1,x:.5,y:.5},w:SIZES[0].w,h:SIZES[0].h,mode:"color",view:"mosaic",name:"รูปตัวอย่าง",idx:null,assemble:false};
+const S={img:cat(),crop:{z:1,x:.5,y:.5},w:SIZES[0].w,h:SIZES[0].h,mode:"color",view:"mosaic",name:"รูปตัวอย่าง",idx:null,assemble:false,orient:"portrait",orientAuto:true};
 const out=$("out");
 const cmTxt=(w,h)=>(w*.8).toFixed(1)+"×"+(h*.8).toFixed(1);
-function curSize(){return SIZES.find(z=>z.w===S.w&&z.h===S.h)||SIZES[0]}
-function buildSizes(){if(!SIZES.find(z=>z.w===S.w&&z.h===S.h)){S.w=SIZES[0].w;S.h=SIZES[0].h}
-$("sizes").innerHTML=SIZES.map(s=>`<button type="button" class="size" data-w="${s.w}" data-h="${s.h}" aria-pressed="${s.w===S.w&&s.h===S.h}"><b>${s.w}×${s.h}</b><span>${cmTxt(s.w,s.h)} ซม. · ${(s.w*s.h).toLocaleString()} ชิ้น</span><em>${baht(s.price)}</em></button>`).join("");buildAssemble()}
+function curSize(){return SIZES.find(z=>z.w===Math.min(S.w,S.h)&&z.h===Math.max(S.w,S.h))||SIZES[0]}
+function oDims(z){return z.w===z.h||S.orient==="portrait"?[z.w,z.h]:[z.h,z.w]}
+function setDims(z){[S.w,S.h]=oDims(z);const sq=z.w===z.h;$("orientNote").hidden=!sq;
+  $("orient").querySelectorAll("button").forEach(b=>{b.setAttribute("aria-pressed",b.dataset.v===S.orient);b.disabled=sq;b.style.opacity=sq?.5:1})}
+function buildSizes(){const cs=curSize();setDims(cs);
+$("sizes").innerHTML=SIZES.map((s,i)=>{const[dw,dh]=oDims(s);return`<button type="button" class="size" data-i="${i}" aria-pressed="${s===cs}"><b>${dw}×${dh}</b><span>${cmTxt(dw,dh)} ซม. · ${(s.w*s.h).toLocaleString()} ชิ้น</span><em>${baht(s.price)}</em></button>`}).join("");buildAssemble()}
 function fee(){return S.assemble?(Number(SHOP.assembleFee)||0):0}
 function buildAssemble(){const f=Number(SHOP.assembleFee)||0;$("asmShop").textContent="ให้ร้านต่อให้ พร้อมตั้งโชว์"+(f?" (+"+baht(f)+")":"")}
 buildSizes();
@@ -646,11 +690,12 @@ function render(){
   drawMini();
 }
 function drawMini(){const m=$("miniCv");if(!m)return;const k=Math.min(320/out.width,320/out.height);m.width=Math.round(out.width*k);m.height=Math.round(out.height*k);m.getContext("2d").drawImage(out,0,0,m.width,m.height)}
-(function(){const mp=$("miniPv"),mq=matchMedia("(max-width: 900px)");let stageVis=true,inCreate=false;
-  const upd=()=>{mp.hidden=!(mq.matches&&inCreate&&!stageVis&&$("thanks").hidden)};
+(function(){const mp=$("miniPv"),mq=matchMedia("(max-width: 900px)");let stageVis=true,inCreate=false,btnVis=false;
+  const upd=()=>{mp.hidden=!(mq.matches&&inCreate&&!stageVis&&!btnVis&&VIEW==="make"&&$("thanks").hidden)};
   if("IntersectionObserver" in window){
     new IntersectionObserver(es=>{stageVis=es[0].intersectionRatio>0.35;upd()},{threshold:[0,0.35,1]}).observe($("stage"));
     new IntersectionObserver(es=>{inCreate=es[0].isIntersecting;upd()},{threshold:0}).observe($("create"));
+    new IntersectionObserver(es=>{btnVis=es[0].isIntersecting;upd()},{threshold:0}).observe($("toCheckout"));
   }
   (mq.addEventListener?mq.addEventListener("change",upd):mq.addListener(upd));
   mp.addEventListener("click",()=>$("stage").scrollIntoView({behavior:"smooth",block:"center"}));})();
@@ -665,7 +710,9 @@ seg("view","view");seg("mode","mode");
   box.addEventListener("input",()=>{sync();cancelAnimationFrame(raf);raf=requestAnimationFrame(render)});
   $("adjReset").addEventListener("click",()=>{box.querySelectorAll("input").forEach(i=>i.value=0);sync();render()});})();
 $("sizes").addEventListener("click",e=>{const b=e.target.closest(".size");if(!b)return;
-  $("sizes").querySelectorAll(".size").forEach(x=>x.setAttribute("aria-pressed",x===b));S.w=Number(b.dataset.w);S.h=Number(b.dataset.h);render()});
+  setDims(SIZES[Number(b.dataset.i)]);buildSizes();render()});
+$("orient").addEventListener("click",e=>{const b=e.target.closest("button");if(!b||b.disabled)return;
+  S.orient=b.dataset.v;S.orientAuto=false;buildSizes();render()});
 (()=>{const el=$("asm");el.addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;
   el.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b));S.assemble=b.dataset.v==="1";render()})})();
 $("zoom").addEventListener("input",e=>{S.crop.z=e.target.value/100;$("zoomOut").textContent=S.crop.z.toFixed(1)+"×";soon()});
@@ -678,12 +725,12 @@ $("zoom").addEventListener("input",e=>{S.crop.z=e.target.value/100;$("zoomOut").
 // upload
 function load(f){if(!f||!f.type.startsWith("image/"))return;const u=URL.createObjectURL(f),im=new Image();
   im.onload=()=>{S.img=im;S.crop={z:1,x:.5,y:.5};S.name=f.name||"รูปที่วาง";$("zoom").value=100;$("zoomOut").textContent="1.0×";
-    $("fileName").textContent="ใช้รูป: "+S.name;render()};im.src=u}
+    $("fileName").textContent="ใช้รูป: "+S.name;if(S.orientAuto)S.orient=im.width>im.height*1.05?"landscape":"portrait";buildSizes();render()};im.src=u}
 $("file").addEventListener("change",e=>load(e.target.files[0]));
 const drop=$("drop");["dragenter","dragover"].forEach(t=>drop.addEventListener(t,e=>{e.preventDefault();drop.classList.add("on")}));
 ["dragleave","drop"].forEach(t=>drop.addEventListener(t,e=>{e.preventDefault();drop.classList.remove("on")}));
 drop.addEventListener("drop",e=>load(e.dataTransfer.files[0]));
-document.addEventListener("paste",e=>{const it=[...(e.clipboardData?.items||[])].find(i=>i.type.startsWith("image/"));if(it){load(it.getAsFile());$("create").scrollIntoView()}});
+document.addEventListener("paste",e=>{const it=[...(e.clipboardData?.items||[])].find(i=>i.type.startsWith("image/"));if(it){load(it.getAsFile());if(VIEW!=="make")showView("make")}});
 render();
 /* โหลดสีและราคาล่าสุดจาก Google Sheet */
 if(HAS_API){fetch(API_URL.trim()+"?action=data").then(r=>r.json()).then(d=>{if(!d.palette||!d.palette.length)return;
@@ -727,9 +774,9 @@ async function showPay(el,id,phone,price,slipSent,email){
 function showThanks(id,phone,email){const t=$("thanks");
   $("thId").textContent=id;$("thMail").textContent=email||"อีเมลที่ให้ไว้ตอนสั่ง";
   t.hidden=false;document.documentElement.classList.add("lock");t.scrollTop=0;setTimeout(()=>$("thHome").focus(),50);
-  $("thTrack").onclick=()=>{closeThanks();$("tId").value=id;$("tPhone").value=phone;$("track").scrollIntoView({behavior:"smooth"})};}
+  $("thTrack").onclick=()=>{closeThanks();showView("home");$("tId").value=id;$("tPhone").value=phone;setTimeout(()=>$("track").scrollIntoView({behavior:"smooth"}),50)};}
 function closeThanks(){$("thanks").hidden=true;document.documentElement.classList.remove("lock")}
-$("thHome").addEventListener("click",()=>{closeThanks();window.scrollTo({top:0,behavior:"smooth"})});
+$("thHome").addEventListener("click",()=>{closeThanks();showView("home")});
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("thanks").hidden)closeThanks()});
 
 /* ---------- track order ---------- */
@@ -749,7 +796,26 @@ $("trackForm").addEventListener("submit",async e=>{e.preventDefault();
   btn.disabled=false});
 
 /* in-page links (Apps Script runs inside a frame) */
-document.addEventListener("click",e=>{const a=e.target.closest('a[href^="#"]');if(!a)return;const t=document.querySelector(a.getAttribute("href"));if(t){e.preventDefault();t.scrollIntoView({behavior:"smooth"})}});
+const VIEWS={home:"homeView",make:"makeView",checkout:"checkoutView"};let VIEW="home",DIRTY=true;
+function routeOf(h){h=(h||"").replace(/^#/,"");return h==="make"||h==="create"?"make":h==="checkout"||h==="order"?"checkout":"home"}
+function showView(v,push){if(!VIEWS[v])v="home";VIEW=v;for(const k in VIEWS)$(VIEWS[k]).hidden=k!==v;
+  if(push!==false){try{history.pushState({v},"",v==="home"?location.pathname+location.search:"#"+v)}catch(x){}}
+  window.scrollTo(0,0);$("miniPv").hidden=true;
+  if(v==="make"){DIRTY=true;render()}
+  if(v==="checkout")fillCheckout()}
+window.addEventListener("popstate",()=>showView(routeOf(location.hash),false));
+document.addEventListener("click",e=>{const g=e.target.closest("[data-go]");if(g){e.preventDefault();showView(g.dataset.go);return}
+  const a=e.target.closest('a[href^="#"]');if(!a)return;const id=a.getAttribute("href"),r=routeOf(id);
+  if(r!=="home"){e.preventDefault();showView(r);return}
+  const t=id.length>1&&document.querySelector(id);if(t){e.preventDefault();if(VIEW!=="home")showView("home");t.scrollIntoView({behavior:"smooth"})}});
+$("toCheckout").addEventListener("click",()=>showView("checkout"));
+const MODETXT={color:"เหมือนจริง",gray:"ขาว-ดำ",pop:"ป๊อปอาร์ต",pastel:"พาสเทล"};
+function fillCheckout(){const c=$("coThumb"),k=Math.min(6,Math.floor(320/Math.max(S.w,S.h)))||3;c.width=S.w*k;c.height=S.h*k;if(S.idx)drawMosaic(c,S.idx,S.w,S.h);
+  $("coSize").textContent=S.w+"×"+S.h+" ("+cmTxt(S.w,S.h)+" ซม.)";$("coOrient").textContent=S.w===S.h?"สี่เหลี่ยมจัตุรัส":S.w>S.h?"แนวนอน":"แนวตั้ง";
+  $("coMode").textContent=MODETXT[S.mode];$("coAsm").textContent=S.assemble?"ร้านต่อให้"+(fee()?" (+"+baht(fee())+")":""):"ต่อเอง";
+  $("coPrice").textContent=baht(curSize().price+fee());
+  if(DIRTY){$("orderForm").hidden=false;$("result").hidden=true;$("coHead").textContent="ข้อมูลจัดส่ง";$("err").hidden=true}}
+{const r0=routeOf(location.hash);if(r0!=="home")showView(r0,false);else if(location.hash.length>1){const t=document.querySelector(location.hash);if(t)setTimeout(()=>t.scrollIntoView(),300)}}
 
 /* ---------- instructions PDF (same as admin) ---------- */
 const INSTR=(function(){
@@ -857,7 +923,7 @@ function gStepsPage(plan, W, H, PC, PR, TOT, order, numOf) {
   step(5, [{ t: "ในแต่ละแผ่น ต่อจากซ้ายไปขวา และจากบนลงล่าง ทีละแถว" }, { t: "ใช้เลขแถวและคอลัมน์ที่ขอบแบบช่วยนับ", s: 26, c: "#6b5a3e" }]);
   step(6, [{ t: "ตรวจหมายเลขสีของแต่ละช่องให้ตรงกันก่อนขึ้นแถวใหม่" }, { t: "ต่อผิดใช้ที่งัดถอดออกได้ (ดูหน้าที่งัดตัวต่อ)", s: 26, c: "#6b5a3e" }]);
   step(7, [{ t: TOT > 1 ? "ต่อครบทุกแผ่นแล้ว เชื่อมทั้ง " + TOT + " แผ่นเข้าด้วยกันด้วยหมุดล็อก (ดูหน้าถัดไป)" : "ต่อครบแล้ว กดชิ้นทุกแถวให้แน่นอีกครั้ง" }]);
-  step(8, [{ t: "เสร็จสมบูรณ์ ใส่กรอบหรือตั้งโชว์ได้เลย", b: 1 }]);
+  step(8, [{ t: "เสร็จสมบูรณ์ พร้อมแขวนผนังหรือตั้งโชว์ได้เลย", b: 1 }]);
   const bx = 1030, bw = 470; let by = 220;
   o.fillStyle = "#fff8e1"; o.fillRect(bx, by, bw, 450); o.strokeStyle = "#e8c85a"; o.lineWidth = 3; o.strokeRect(bx, by, bw, 450);
   o.fillStyle = "#2b1d0e"; o.font = "600 28px Kanit, sans-serif"; o.fillText("ตัวอย่างการอ่านแบบ", bx + 24, by + 46);
@@ -888,7 +954,7 @@ function gJoinPage(plan, PC, PR, TOT) {
   [["1", "ต่อตัวต่อให้ครบทุกแผ่นก่อน แล้ววางเรียงตามเลข 1–" + TOT + " ให้เหมือนภาพด้านขวา"],
    ["2", "เสียบหมุดล็อกเข้ารูด้านข้างของแผ่น แล้วดันแผ่นที่อยู่ติดกันเข้าหากันจนสนิท"],
    ["3", "เชื่อมทีละแถวจากบนลงล่าง รอยต่อทั้งหมด " + J + " จุด"],
-   ["4", "ตรวจให้ขอบทุกแผ่นเสมอกันและไม่มีช่องว่าง ก่อนใส่กรอบ"]].forEach(([n, t]) => {
+   ["4", "ตรวจให้ขอบทุกแผ่นเสมอกันและไม่มีช่องว่าง ก่อนแขวนหรือตั้งโชว์"]].forEach(([n, t]) => {
     gBadge(o, X + 18, y - 10, n, 20); o.fillStyle = "#2b1d0e"; o.font = "27px Kanit, sans-serif"; y = gText(o, t, X + 54, y, MW, 38) + 18; });
   const AW = 900, AH = 900, ax = 620, ay = 220, gapF = 0.2;
   const s = Math.min(AW / (PC + (PC - 1) * gapF), AH / (PR + (PR - 1) * gapF)), g = s * gapF;
@@ -1027,6 +1093,7 @@ $("orderForm").addEventListener("submit",e=>{e.preventDefault();
   const box=$("result");
   const fail=er=>{btn.disabled=false;btn.innerHTML=label;err.hidden=false;err.textContent="ส่งไม่สำเร็จ: "+((er&&er.message)||er)+" ลองใหม่อีกครั้ง"};
   const OK=r=>{btn.disabled=false;btn.innerHTML=label;$("orderForm").reset();
+    DIRTY=false;$("orderForm").hidden=true;box.hidden=false;$("coHead").textContent="ชำระเงิน";
     box.className="panel done";
     box.innerHTML=`<h3>ได้รับออเดอร์แล้ว ✦ ${r.id}</h3><pre id="orderTxt"></pre><img src="${payload.preview}" alt="ภาพตัวอย่างงานของออเดอร์นี้">
       <div id="payArea" style="width:100%"></div>
@@ -1034,8 +1101,8 @@ $("orderForm").addEventListener("submit",e=>{e.preventDefault();
     showPay($("payArea"),r.id,payload.phone,r.price,false,payload.email);
     try{const pl=payload.plan,plan={id:r.id,title:payload.title,w:S.w,h:S.h,shop:SHOP.name,contact:SHOP.line||"",qr:LINEQR,grid:pl.grid,colors:pl.codes.map(c=>{const k=COLORS.find(x=>x.code===c);return{code:c,name:k?k.n:c,hex:k?k.h:"#999999"}})};
       INSTR.make(plan).then(b64=>post({action:"pdf",id:r.id,phone:payload.phone,pdf:b64})).catch(()=>{})}catch(e){}
-    $("orderTxt").textContent=`เลขออเดอร์: ${r.id}\nขนาด: ${S.w}×${S.h} (${cmTxt(S.w,S.h)} ซม.)\nโทนสี: ${modeTxt}\nการต่อ: ${S.assemble?"ร้านต่อให้ พร้อมตั้งโชว์":"ต่อเอง"}\nราคา: ${baht(r.price)}\nผู้รับ: ${payload.name}`;
-    box.scrollIntoView({block:"nearest",behavior:"smooth"})};
+    $("orderTxt").textContent=`เลขออเดอร์: ${r.id}\nขนาด: ${S.w}×${S.h} (${cmTxt(S.w,S.h)} ซม.)\nแบบ: ${S.w===S.h?"สี่เหลี่ยมจัตุรัส":S.w>S.h?"แนวนอน":"แนวตั้ง"}\nโทนสี: ${modeTxt}\nการต่อ: ${S.assemble?"ร้านต่อให้ พร้อมตั้งโชว์":"ต่อเอง"}\nราคา: ${baht(r.price)}\nผู้รับ: ${payload.name}`;
+    $("coHead").scrollIntoView({block:"start",behavior:"smooth"})};
   if(!HAS_API){fail(new Error("ร้านยังไม่ได้เชื่อมระบบสั่งซื้อ"));return}
   fetch(API_URL.trim(),{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(Object.assign({action:"order"},payload))})
     .then(r=>r.json()).then(r=>{if(!r.ok)throw new Error(r.error||"ไม่ทราบสาเหตุ");OK(r)}).catch(fail);
