@@ -292,6 +292,7 @@ footer p{opacity:.75;max-width:52ch}
         <div class="lbl"><i>2</i>เลือกขนาด</div>
         <div class="sizes" id="sizes"></div>
         <p class="note" style="margin-top:8px">ราคาตัวอย่าง รวมชิ้นส่วน แผ่นฐาน และแผนผังการต่อ</p>
+        <p class="note" id="sizeHint" style="margin-top:4px;color:var(--red);font-weight:600" hidden>ขนาด 32×32 เหมาะกับลายเรียบ ๆ ถ้าเป็นรูปคนหรือสัตว์ แนะนำ 48×48 ขึ้นไป หน้าจะชัดกว่ามาก</p>
       </div>
       <div>
         <div class="lbl"><i>3</i>โทนสี</div>
@@ -391,19 +392,25 @@ let SMOOTH=true;
 function quantize(img,crop,N,mode,smooth){
   if(smooth===undefined)smooth=SMOOTH;
   const[sx,sy,s]=cropRect(img,crop),t=document.createElement("canvas");t.width=t.height=N;
-  const x=t.getContext("2d");x.imageSmoothingQuality="high";x.drawImage(img,sx,sy,s,s,0,0,N,N);
+  let src=img,qx=sx,qy=sy,qs=s;
+  while(qs/2>N*2){const c=document.createElement("canvas");c.width=c.height=Math.round(qs/2);const cx=c.getContext("2d");cx.imageSmoothingQuality="high";cx.drawImage(src,qx,qy,qs,qs,0,0,c.width,c.height);src=c;qx=0;qy=0;qs=c.width}
+  const x=t.getContext("2d");x.imageSmoothingQuality="high";x.drawImage(src,qx,qy,qs,qs,0,0,N,N);
   const d=x.getImageData(0,0,N,N).data,pal=MODES[mode],n=N*N,buf=new Float32Array(n*3);
   const lum=[];for(let i=0;i<n;i++)lum.push(0.299*d[i*4]+0.587*d[i*4+1]+0.114*d[i*4+2]);
   const so=lum.slice().sort((p,q)=>p-q),lo=so[Math.floor(n*0.01)],hi=so[Math.floor(n*0.99)];
   const k=hi-lo>40?255/(hi-lo):1,mix=0.6;
   for(let i=0;i<n;i++)for(let c=0;c<3;c++){const v=d[i*4+c],st=(v-lo)*k;buf[i*3+c]=Math.min(255,Math.max(0,v+(st-v)*mix))}
+  {const sharp=N<=48?0.6:0.4,cp=Float32Array.from(buf);
+    for(let yy=0;yy<N;yy++)for(let xx=0;xx<N;xx++)for(let c=0;c<3;c++){let sum=0,cnt=0;
+      for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){const X=xx+dx,Y=yy+dy;if(X<0||Y<0||X>=N||Y>=N)continue;sum+=cp[(Y*N+X)*3+c];cnt++}
+      const p=(yy*N+xx)*3+c;buf[p]=Math.min(255,Math.max(0,cp[p]+(cp[p]-sum/cnt)*sharp))}}
   for(let i=0;i<n;i++){const p=i*3;let r=buf[p],g=buf[p+1],b=buf[p+2];const y=0.299*r+0.587*g+0.114*b;
     if(mode==="gray"){r=g=b=y}
     else if(mode==="pop"){const s=1.9;r=y+(r-y)*s;g=y+(g-y)*s;b=y+(b-y)*s;r=(r-128)*1.35+128;g=(g-128)*1.35+128;b=(b-128)*1.35+128}
     else if(mode==="pastel"){const s=1.45;r=y+(r-y)*s;g=y+(g-y)*s;b=y+(b-y)*s;r=(r-128)*1.12+128;g=(g-128)*1.12+128;b=(b-128)*1.12+128;r=r+(255-r)*0.22;g=g+(255-g)*0.22;b=b+(255-b)*0.22}
     buf[p]=Math.min(255,Math.max(0,r));buf[p+1]=Math.min(255,Math.max(0,g));buf[p+2]=Math.min(255,Math.max(0,b))}
   if(mode==="pop")smooth=false;
-  const idx=new Int16Array(n),amt=0.55;
+  const idx=new Int16Array(n),amt=N<=32?0.28:N<=48?0.42:0.55;
   for(let yy=0;yy<N;yy++){const rev=yy%2===1;
     for(let j=0;j<N;j++){const xx=rev?N-1-j:j,i=yy*N+xx,p=i*3;
       const r=Math.min(255,Math.max(0,buf[p])),g=Math.min(255,Math.max(0,buf[p+1])),b=Math.min(255,Math.max(0,buf[p+2]));
@@ -502,6 +509,7 @@ function render(){
   S.idx=quantize(S.img,S.crop,S.size,S.mode);
   if(S.view==="mosaic")drawMosaic(out,S.idx,S.size);else if(S.view==="frame")drawFramed(out,S.idx,S.size);else drawPhoto(out,S.img,S.crop);
   const sz=SIZES.find(s=>s.n===S.size),cm=(S.size*.8).toFixed(1);
+  $("sizeHint").hidden=S.size>32;
   $("dimTxt").textContent=`${S.size}×${S.size} ปุ่ม · ${cm}×${cm} ซม.`;
   $("sSize").textContent=`${S.size}×${S.size} (${cm} ซม.)`;$("sPcs").textContent=(S.size*S.size).toLocaleString()+" ชิ้น";
   const used=[...new Set(S.idx)];$("sPal").innerHTML=used.slice(0,14).map(c=>`<i style="background:${COLORS[c].h}" title="${COLORS[c].n}"></i>`).join("")+(used.length>14?` +${used.length-14}`:"");
@@ -600,7 +608,7 @@ $("orderForm").addEventListener("submit",e=>{e.preventDefault();
   const mc=document.createElement("canvas");mc.width=mc.height=768;drawMosaic(mc,S.idx,S.size);
   const modeTxt={color:"เหมือนจริง",gray:"ขาว-ดำ",pop:"ป๊อปอาร์ต",pastel:"พาสเทล"}[S.mode],sz=SIZES.find(z=>z.n===S.size);
   const payload={name:v("fName"),title:v("fTitle"),phone:v("fPhone"),line:v("fLine"),address:v("fAddr"),note:v("fNote"),
-    size:S.size,mode:modeTxt,counts,photo:pc.toDataURL("image/jpeg",.85),preview:mc.toDataURL("image/jpeg",.9)};
+    size:S.size,mode:modeTxt,counts,plan:(()=>{const codes=[],pos={},cells=[];S.idx.forEach(ci=>{const c=COLORS[ci].code;if(pos[c]===undefined){pos[c]=codes.length;codes.push(c)}cells.push(pos[c])});return{codes,grid:cells.join(",")}})(),photo:pc.toDataURL("image/jpeg",.85),preview:mc.toDataURL("image/jpeg",.9)};
   const box=$("result");
   const fail=er=>{btn.disabled=false;btn.innerHTML=label;err.hidden=false;err.textContent="ส่งไม่สำเร็จ: "+((er&&er.message)||er)+" ลองใหม่อีกครั้ง"};
   const OK=r=>{btn.disabled=false;btn.innerHTML=label;$("orderForm").reset();
