@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Waris BrickArt | เปลี่ยนรูปที่รักให้เป็นงานศิลปะตัวต่อ</title>
+<title>Waris BrickArt | ต่อความสุข ให้เป็นงานศิลปะ</title>
 <meta name="description" content="อัปโหลดรูปของคุณ เลือกขนาด ดูแบบฟรีก่อนสั่ง Waris BrickArt ส่งชุดตัวต่อพร้อมแผนผังการต่อถึงบ้าน">
 <meta property="og:title" content="Waris BrickArt · ของขวัญภาพตัวต่อจากรูปของคุณ">
 <meta property="og:description" content="อัปรูป เลือกขนาด ดูแบบฟรีก่อนสั่ง">
@@ -850,19 +850,18 @@ function legend(o, x, y, w, items, title) {
     o.fillStyle = "#555"; o.font = Math.round(rowH * 0.3) + "px Kanit, sans-serif"; o.fillText(it.name + " · " + it.code, x + 84, cy + rowH * 0.24);
   });
 }
-function pageCanvas() { const c = document.createElement("canvas"); c.width = PW; c.height = PH; const o = c.getContext("2d"); o.fillStyle = "#ffffff"; o.fillRect(0, 0, PW, PH); return [c, o]; }
+function pageCanvas() { const c = document.createElement("canvas"); c.width = PW; c.height = PH; const o = gFix(c.getContext("2d")); o.fillStyle = "#ffffff"; o.fillRect(0, 0, PW, PH); return [c, o]; }
 function b64Bytes(b) { const s = atob(b), u = new Uint8Array(s.length); for (let i = 0; i < s.length; i++) u[i] = s.charCodeAt(i); return u; }
 function bytesB64(u) { let s = ""; for (let i = 0; i < u.length; i += 32768) s += String.fromCharCode.apply(null, u.subarray(i, i + 32768)); return btoa(s); }
 function buildPdf(pages) {
   const enc = new TextEncoder(), parts = [], offs = []; let len = 0;
   const push = x => { const b = typeof x === "string" ? enc.encode(x) : x; parts.push(b); len += b.length; };
-  const W = 960, H = 720;
   push("%PDF-1.4\n%\u00e2\u00e3\u00cf\u00d3\n");
   const obj = (n, body) => { offs[n] = len; push(n + " 0 obj\n" + body + "\nendobj\n"); };
   obj(1, "<< /Type /Catalog /Pages 2 0 R >>");
   obj(2, "<< /Type /Pages /Kids [" + pages.map((_, i) => (3 + 3 * i) + " 0 R").join(" ") + "] /Count " + pages.length + " >>");
   pages.forEach((p, i) => {
-    const pn = 3 + 3 * i, cn = pn + 1, im = pn + 2, cs = "q " + W + " 0 0 " + H + " 0 0 cm /Im" + i + " Do Q";
+    const W = Math.round(p.w * 0.6), H = Math.round(p.h * 0.6), pn = 3 + 3 * i, cn = pn + 1, im = pn + 2, cs = "q " + W + " 0 0 " + H + " 0 0 cm /Im" + i + " Do Q";
     obj(pn, "<< /Type /Page /Parent 2 0 R /MediaBox [0 0 " + W + " " + H + "] /Resources << /XObject << /Im" + i + " " + im + " 0 R >> >> /Contents " + cn + " 0 R >>");
     obj(cn, "<< /Length " + cs.length + " >>\nstream\n" + cs + "\nendstream");
     offs[im] = len;
@@ -955,26 +954,35 @@ function gStepsPage(plan, W, H, PC, PR, TOT, order, numOf) {
   o.fillText("เริ่มที่แผ่นสีเหลือง (แผ่นที่ 1)", bx, py + Math.max(PR * cell, ps * H) + 36);
   return c;
 }
-function gJoinPage(plan, PC, PR, TOT) {
-  const [c, o] = pageCanvas(); gDeco(o);
-  gTitle(o, "ต่อแผ่นให้เป็นภาพใหญ่", "ใช้หมุดล็อกเชื่อม " + TOT + " แผ่นเข้าด้วยกัน (" + PC + " × " + PR + " แผ่น)");
-  gPin(o, 120, 250, 230);
-  o.fillStyle = "#2b1d0e"; o.font = "600 26px Kanit, sans-serif"; o.fillText("หมุดล็อก (Pin)", 150, 345);
-  const J = (PC - 1) * PR + PC * (PR - 1);
-  let y = 420; const X = 110, MW = 430;
-  [["1", "ต่อตัวต่อให้ครบทุกแผ่นก่อน แล้ววางเรียงตามเลข 1–" + TOT + " ให้เหมือนภาพด้านขวา"],
-   ["2", "เสียบหมุดล็อกเข้ารูด้านข้างของแผ่น แล้วดันแผ่นที่อยู่ติดกันเข้าหากันจนสนิท"],
-   ["3", "เชื่อมทีละแถวจากบนลงล่าง รอยต่อทั้งหมด " + J + " จุด"],
-   ["4", "ตรวจให้ขอบทุกแผ่นเสมอกันและไม่มีช่องว่าง ก่อนแขวนหรือตั้งโชว์"]].forEach(([n, t]) => {
-    gBadge(o, X + 18, y - 10, n, 20); o.fillStyle = "#2b1d0e"; o.font = "27px Kanit, sans-serif"; y = gText(o, t, X + 54, y, MW, 38) + 18; });
-  const AW = 900, AH = 900, ax = 620, ay = 220, gapF = 0.2;
-  const s = Math.min(AW / (PC + (PC - 1) * gapF), AH / (PR + (PR - 1) * gapF)), g = s * gapF;
-  const ox = ax + (AW - (PC * s + (PC - 1) * g)) / 2, oy = ay + (AH - (PR * s + (PR - 1) * g)) / 2;
-  for (let r = 0; r < PR; r++) for (let q = 0; q < PC; q++) gPlate(o, ox + q * (s + g), oy + r * (s + g), s, r * PC + q + 1);
-  const pw = g * 1.6;
-  for (let r = 0; r < PR; r++) for (let q = 0; q < PC - 1; q++) [0.25, 0.5, 0.75].forEach(f => gPin(o, ox + (q + 1) * s + q * g + (g - pw) / 2, oy + r * (s + g) + s * f - pw * 0.14, pw));
-  for (let r = 0; r < PR - 1; r++) for (let q = 0; q < PC; q++) [0.25, 0.5, 0.75].forEach(f => { const h = pw, w = pw * 0.28; gCaps(o, ox + q * (s + g) + s * f - w / 2, oy + (r + 1) * s + r * g + (g - h) / 2, w, h, "#1f1f1f"); });
+function gJoinPage(plan, PC, PR, TOT, img, kind) {
+  const c = document.createElement("canvas"); c.width = img.width; c.height = img.height;
+  const o = gFix(c.getContext("2d")); o.drawImage(img, 0, 0);
+  if (kind === TOT && PC === PR) return c;
+  const k = img.width / 910, orig = o.getImageData(0, 0, c.width, c.height);
+  o.fillStyle = "#ffffff"; o.fillRect(100 * k, 540 * k, 705 * k, 75 * k); o.fillRect(140 * k, 635 * k, 620 * k, 580 * k);
+  o.fillStyle = "#111111"; o.textBaseline = "alphabetic"; o.textAlign = "center"; o.font = "400 " + Math.round(41 * k) + "px Kanit, sans-serif";
+  o.fillText("ใช้หมุดล็อกเลโก้ " + TOT + " แผ่นเข้าด้วยกัน", 455 * k, 597 * k); o.textAlign = "left";
+  const cb = [[205, 340], [340, 470], [470, 600], [600, 735]], rb = [[670, 811], [811, 952], [952, 1085], [1085, 1214]];
+  const pick = (i, n) => i === 0 ? 0 : (i === n - 1 ? 3 : (i % 2 ? 1 : 2));
+  const cols = [], rows = [];
+  for (let q = 0; q < PC; q++) cols.push(cb[pick(q, PC)]);
+  for (let r = 0; r < PR; r++) rows.push(rb[pick(r, PR)]);
+  const tw = cols.reduce((s, x) => s + x[1] - x[0], 0), th = rows.reduce((s, x) => s + x[1] - x[0], 0);
+  const sc = Math.min(1, 560 / tw, 550 / th) * k, ox = 455 * k - tw * sc / 2, oy = 648 * k;
+  let yy = oy;
+  rows.forEach(rr => { let xx = ox; const hh = (rr[1] - rr[0]) * sc;
+    cols.forEach(cc => { const ww = (cc[1] - cc[0]) * sc; o.drawImage(img, cc[0] * k, rr[0] * k, (cc[1] - cc[0]) * k, (rr[1] - rr[0]) * k, xx, yy, ww + 0.5, hh + 0.5); xx += ww; });
+    yy += hh; });
+  const cur = o.getImageData(0, 0, c.width, c.height), d = cur.data, s = orig.data;
+  for (let i = 0; i < d.length; i += 4) { const mx = Math.max(s[i], s[i + 1], s[i + 2]), mn = Math.min(s[i], s[i + 1], s[i + 2]); if (mx - mn > 60) { d[i] = s[i]; d[i + 1] = s[i + 1]; d[i + 2] = s[i + 2]; } }
+  o.putImageData(cur, 0, 0);
   return c;
+}
+function gFix(o) {
+  if (o.__fixed) return o;
+  const f = o.fillText.bind(o);
+  o.fillText = function (t, x, y) { const a = o.textAlign; if (a === "center") { o.textAlign = "left"; f(t, x - o.measureText(String(t)).width / 2, y); o.textAlign = a; } else f(t, x, y); };
+  o.__fixed = true; return o;
 }
 function gRRect(o, x, y, w, h, r) { o.beginPath(); o.moveTo(x + r, y); o.lineTo(x + w - r, y); o.arc(x + w - r, y + r, r, -Math.PI / 2, 0); o.lineTo(x + w, y + h - r); o.arc(x + w - r, y + h - r, r, 0, Math.PI / 2); o.lineTo(x + r, y + h); o.arc(x + r, y + h - r, r, Math.PI / 2, Math.PI); o.lineTo(x, y + r); o.arc(x + r, y + r, r, Math.PI, Math.PI * 1.5); o.closePath(); }
 function gTool(o, x, y, k, rot) {
@@ -1044,7 +1052,7 @@ async function makeInstructions(plan, onStep) {
   const order = plan.colors.map((c, i) => i).filter(i => counts[i] > 0).sort((p, q) => counts[q] - counts[p]);
   const numOf = {}; order.forEach((ci, k) => numOf[ci] = k + 1);
   const item = (ci, cnt) => ({ num: numOf[ci], hex: plan.colors[ci].hex, name: plan.colors[ci].name, code: plan.colors[ci].code, count: cnt });
-  const pages = [], snap = c => { const u = c.toDataURL("image/jpeg", W * H > 4096 ? 0.62 : 0.75); pages.push({ jpg: b64Bytes(u.slice(u.indexOf(",") + 1)), w: PW, h: PH }); };
+  const pages = [], snap = c => { const u = c.toDataURL("image/jpeg", W * H > 4096 ? 0.62 : 0.75); pages.push({ jpg: b64Bytes(u.slice(u.indexOf(",") + 1)), w: c.width, h: c.height }); };
   let [c, o] = pageCanvas();
   o.fillStyle = "#1b1b1b"; o.textAlign = "left"; o.textBaseline = "alphabetic";
   o.font = "600 60px Kanit, sans-serif"; o.fillText((plan.shop || "Brick Art") + " · คู่มือการต่อ", 560, 120);
@@ -1059,10 +1067,12 @@ async function makeInstructions(plan, onStep) {
   o.fillStyle = "#202020"; o.fillRect(px, py, pw, ph);
   cells.forEach((v, i) => { o.fillStyle = plan.colors[v].hex; o.beginPath(); o.arc(px + (i % W + 0.5) * ps, py + (Math.floor(i / W) + 0.5) * ps, ps * 0.47, 0, Math.PI * 2); o.fill(); });
   o.font = "24px Kanit, sans-serif"; o.fillStyle = "#555"; o.fillText("ภาพตัวอย่างงานที่เสร็จ", px, Math.min(PH - 20, py + ph + 36));
-  const EX = TOT > 1 ? 4 : 3, ALL = TOT + 1 + EX, qrImg = await gLoadImg(plan.qr), toolImg = await gLoadImg(plan.toolImg || TOOL_IMG);
+  if (!plan.join && TOT > 1 && HAS_API) { try { plan.join = await (await fetch(API_URL.trim() + "?action=guide&plates=" + TOT)).json(); } catch (x) {} }
+  const joinImg = TOT > 1 && plan.join ? await gLoadImg(plan.join.img) : null;
+  const EX = joinImg ? 4 : 3, ALL = TOT + 1 + EX, qrImg = await gLoadImg(plan.qr), toolImg = await gLoadImg(plan.toolImg || TOOL_IMG);
   snap(c); if (onStep) onStep(1, ALL);
   snap(gStepsPage(plan, W, H, PC, PR, TOT, order, numOf));
-  if (TOT > 1) snap(gJoinPage(plan, PC, PR, TOT));
+  if (joinImg) snap(gJoinPage(plan, PC, PR, TOT, joinImg, plan.join.kind));
   snap(gToolPage(plan, toolImg));
   snap(gTipsPage(plan, qrImg)); if (onStep) onStep(1 + EX, ALL);
   for (let r = 0; r < PR; r++) for (let q = 0; q < PC; q++) {
