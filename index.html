@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Brick Art | เปลี่ยนรูปที่รักให้เป็นงานศิลปะตัวต่อ</title>
-<meta name="description" content="อัปโหลดรูปของคุณ เลือกขนาด ดูแบบฟรีก่อนสั่ง Brick Art ส่งชุดตัวต่อพร้อมแผนผังการต่อถึงบ้าน">
-<meta property="og:title" content="Brick Art · ของขวัญภาพตัวต่อจากรูปของคุณ">
+<title>Waris BrickArt | เปลี่ยนรูปที่รักให้เป็นงานศิลปะตัวต่อ</title>
+<meta name="description" content="อัปโหลดรูปของคุณ เลือกขนาด ดูแบบฟรีก่อนสั่ง Waris BrickArt ส่งชุดตัวต่อพร้อมแผนผังการต่อถึงบ้าน">
+<meta property="og:title" content="Waris BrickArt · ของขวัญภาพตัวต่อจากรูปของคุณ">
 <meta property="og:description" content="อัปรูป เลือกขนาด ดูแบบฟรีก่อนสั่ง">
 <meta name="theme-color" content="#f4cdd4">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='9' cy='9' r='7' fill='%23d7362b'/%3E%3Ccircle cx='23' cy='9' r='7' fill='%23ffd86b'/%3E%3Ccircle cx='9' cy='23' r='7' fill='%237fb0e0'/%3E%3Ccircle cx='23' cy='23' r='7' fill='%233b1f1c'/%3E%3C/svg%3E">
@@ -242,6 +242,14 @@ html.lock,html.lock body{overflow:hidden}
 .stepbar .on{background:var(--sun);color:var(--ink);border-color:var(--sun-dk);font-weight:700}
 .stepbar .done{background:var(--ink);color:#fff;border-color:var(--ink)}
 .ori{display:inline-block;width:11px;height:15px;border:2px solid currentColor;border-radius:3px;margin-right:7px;vertical-align:-2px}.ori.l{width:15px;height:11px;vertical-align:0}
+.upl{display:grid;gap:10px;margin-bottom:16px}
+.oris{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.oris button{display:grid;justify-items:center;align-content:end;gap:6px;padding:14px 10px 12px;min-height:118px;border-radius:16px;border:2px solid var(--line);background:#fff;cursor:pointer;color:var(--ink)}
+.oris button[aria-pressed="true"]{border-color:var(--sun-dk);background:#fff6d6;box-shadow:0 4px 0 rgba(217,165,20,.35)}
+.oris b{font-size:15px}.oris span{font-size:12px;color:var(--muted)}
+.oshape{display:block;background:#202020 radial-gradient(circle,#f5c542 36%,transparent 40%) 0 0/8px 8px;border-radius:5px}
+.oshape.p{width:42px;height:56px}.oshape.l{width:56px;height:42px}
+.logo b{display:inline-grid;line-height:1.05}.logo b small{font-size:10px;letter-spacing:.32em;color:var(--muted);font-weight:700}
 .btn.big{justify-content:center;min-height:54px;font-size:17px;width:100%}
 #order{display:grid;gap:16px;max-width:720px;margin:0 auto}
 .cosum{display:grid!important;grid-template-columns:110px minmax(0,1fr);gap:16px;align-items:start}
@@ -292,9 +300,9 @@ footer a{color:inherit}
 
 <nav aria-label="เมนูหลัก">
   <div class="in">
-    <a href="#top" class="logo" aria-label="Brick Art หน้าแรก">
+    <a href="#top" class="logo" aria-label="Waris BrickArt หน้าแรก">
       <span class="mark" aria-hidden="true"><i style="background:#d7362b"></i><i style="background:#ffd86b"></i><i style="background:#7fb0e0"></i><i style="background:#3b1f1c"></i></span>
-      <b id="logoTxt">Brick<span>Art</span></b>
+      <b id="logoTxt"><small>WARIS</small><em style="font-style:normal">Brick<span>Art</span></em></b>
     </a>
     <div class="links"><a href="#about">เกี่ยวกับเรา</a><a href="#ideas">ผลงาน</a><a href="#how">วิธีสั่ง</a><a href="#create">ขนาดและราคา</a><a href="#track">ติดตามออเดอร์</a><a href="#faq">คำถามที่พบบ่อย</a></div>
     <a href="#create" class="btn red sm">สร้างของคุณ</a>
@@ -304,10 +312,10 @@ footer a{color:inherit}
 <header class="hero" id="top">
   <img class="bg" id="heroImg" alt="ภาพหลักของร้าน">
   <div class="in hero-copy">
-    <p class="eyebrow" id="heroTag">Custom-made for your special someone</p>
-    <h1 id="heroWords"><span>Build</span><span>Create</span><span>Gift</span></h1>
-    <p class="lead" id="heroH">ชิ้นงานที่มีเพียงหนึ่งเดียว เพราะเรื่องราวของคุณไม่ซ้ำใคร</p>
-    <p class="sub" id="heroP">เปลี่ยนรูปภาพให้เป็นงานศิลป์ที่จับต้องได้ ของขวัญชิ้นพิเศษที่มีชิ้นเดียว</p>
+    <p class="eyebrow" id="heroTag">Your photo · One piece only</p>
+    <h1 id="heroWords"><span>Your</span><span>Story</span><span>In Bricks</span></h1>
+    <p class="lead" id="heroH">เปลี่ยนรูปที่คุณรัก ให้เป็นภาพตัวต่อชิ้นเดียวในโลก</p>
+    <p class="sub" id="heroP">อัปโหลดรูปแล้วเห็นแบบทันที จะต่อเองเป็นกิจกรรมพิเศษกับคนที่รัก หรือให้เราต่อให้พร้อมแขวนก็ได้</p>
     <div class="row">
       <a href="#create" class="btn red">เริ่มสร้างเลย →</a>
       <a href="#ideas" class="btn ghost">ดูผลงาน</a>
@@ -384,9 +392,9 @@ footer a{color:inherit}
 
 <footer>
   <div class="in">
-    <div><b id="ftName">Brick Art</b><p>ชิ้นงานที่มีเพียงหนึ่งเดียว เพราะเรื่องราวของคุณไม่ซ้ำใคร</p><p id="ftContact" style="margin-top:6px" hidden></p></div>
+    <div><b id="ftName">Waris BrickArt</b><p>ภาพตัวต่อจากรูปของคุณ ทุกชิ้นมีเพียงชิ้นเดียวในโลก</p><p id="ftContact" style="margin-top:6px" hidden></p></div>
     <a class="ftqr" id="ftQr" target="_blank" rel="noopener" hidden><img alt="QR แอด LINE ร้าน" width="104" height="104"><span>สแกนแอด LINE ร้าน</span></a>
-    <p id="ftNote">Brick Art เป็นแบรนด์อิสระ ไม่มีส่วนเกี่ยวข้องกับผู้ผลิตตัวต่อรายใด</p>
+    <p id="ftNote">Waris BrickArt เป็นแบรนด์อิสระ ไม่มีส่วนเกี่ยวข้องกับผู้ผลิตตัวต่อรายใด</p>
   </div>
 </footer>
 </div>
@@ -394,6 +402,15 @@ footer a{color:inherit}
   <div class="apphead"><button type="button" class="back" data-go="home">← หน้าแรก</button><span class="apptitle">สร้างงานจากรูปของคุณ</span></div>
   <div class="stepbar"><span class="on">1 ออกแบบ</span><span>2 จัดส่ง &amp; ชำระเงิน</span><span>3 เสร็จสิ้น</span></div>
   <section class="in" id="create">
+  <div class="upl">
+    <div class="lbl"><i>1</i>อัปโหลดรูปภาพ</div>
+    <label class="drop" id="drop">
+          <input type="file" id="file" accept="image/*">
+          <b>เลือกรูปภาพ</b>
+          <small>หรือลากรูปมาวางที่นี่ · วางรูปด้วย Ctrl+V / ⌘+V ก็ได้</small>
+          <span class="file" id="fileName">ตอนนี้แสดงรูปตัวอย่าง (แมวส้ม)</span>
+        </label>
+  </div>
   <div class="builder">
     <div class="preview">
       <div class="row" style="justify-content:space-between">
@@ -406,16 +423,19 @@ footer a{color:inherit}
 
     <div class="form">
       <div>
-        <div class="lbl"><i>1</i>อัปโหลดรูปภาพ</div>
-        <label class="drop" id="drop">
-          <input type="file" id="file" accept="image/*">
-          <b>เลือกรูปภาพ</b>
-          <small>หรือลากรูปมาวางที่นี่ · วางรูปด้วย Ctrl+V / ⌘+V ก็ได้</small>
-          <span class="file" id="fileName">ตอนนี้แสดงรูปตัวอย่าง (แมวส้ม)</span>
-        </label>
+        <div class="lbl"><i>2</i>เลือกขนาด</div>
+        <div class="sizes" id="sizes"></div>
+        <p class="note" style="margin-top:8px">ราคาตัวอย่าง รวมชิ้นส่วน แผ่นฐาน และแผนผังการต่อ</p>
+        <p class="note" id="sizeHint" style="margin-top:4px;color:var(--red);font-weight:600" hidden>ขนาด 32×32 เหมาะกับลายเรียบ ๆ ถ้าเป็นรูปคนหรือสัตว์ แนะนำ 48×48 ขึ้นไป หน้าจะชัดกว่ามาก</p>
+      
       </div>
       <div>
-        <div class="lbl"><i>2</i>โทนสี</div>
+        <div class="lbl"><i>3</i>เลือกแบบ</div>
+        <div class="oris" id="orient"><button type="button" data-v="portrait" aria-pressed="true"><i class="oshape p"></i><b>แนวตั้ง</b><span id="oP"></span></button><button type="button" data-v="landscape" aria-pressed="false"><i class="oshape l"></i><b>แนวนอน</b><span id="oL"></span></button></div>
+        <p class="note" id="orientNote" style="margin-top:6px" hidden>ขนาดนี้เป็นสี่เหลี่ยมจัตุรัส ใช้ได้ทั้งสองแบบ</p>
+      </div>
+      <div>
+        <div class="lbl"><i>4</i>โทนสี</div>
         <div class="seg" id="mode"><button data-v="color" aria-pressed="true">เหมือนจริง</button><button data-v="gray" aria-pressed="false">ขาว-ดำ</button><button data-v="pop" aria-pressed="false">ป๊อปอาร์ต</button><button data-v="pastel" aria-pressed="false">พาสเทล</button></div>
         <div class="seg" id="smooth" style="margin-top:8px"><button data-v="1" aria-pressed="true">ไล่เฉดเนียน (แนะนำ)</button><button data-v="0" aria-pressed="false">สีเรียบคมชัด</button></div>
         <div class="adj" id="adj">
@@ -425,18 +445,6 @@ footer a{color:inherit}
           <button type="button" class="linkbtn" id="adjReset">คืนค่าเดิม</button>
         </div>
       
-      </div>
-      <div>
-        <div class="lbl"><i>3</i>เลือกขนาด</div>
-        <div class="sizes" id="sizes"></div>
-        <p class="note" style="margin-top:8px">ราคาตัวอย่าง รวมชิ้นส่วน แผ่นฐาน และแผนผังการต่อ</p>
-        <p class="note" id="sizeHint" style="margin-top:4px;color:var(--red);font-weight:600" hidden>ขนาด 32×32 เหมาะกับลายเรียบ ๆ ถ้าเป็นรูปคนหรือสัตว์ แนะนำ 48×48 ขึ้นไป หน้าจะชัดกว่ามาก</p>
-      
-      </div>
-      <div>
-        <div class="lbl"><i>4</i>เลือกแบบ</div>
-        <div class="seg" id="orient"><button data-v="portrait" aria-pressed="true"><i class="ori"></i>แนวตั้ง</button><button data-v="landscape" aria-pressed="false"><i class="ori l"></i>แนวนอน</button></div>
-        <p class="note" id="orientNote" style="margin-top:6px" hidden>ขนาดนี้เป็นสี่เหลี่ยมจัตุรัส ใช้ได้ทั้งสองแบบ</p>
       </div>
       <div>
         <div class="lbl"><i>5</i>ต่อเองหรือให้ร้านต่อ</div>
@@ -494,7 +502,7 @@ footer a{color:inherit}
 const API_URL = "https://script.google.com/macros/s/AKfycby-DVBVH-VQhApHKH6NluyJxd3ZrY23f2OjHCz6DzVyYzCHVLWajnWj9hSenQANXad_/exec";
 /* ============================================================================== */
 const HAS_API=/^https:\/\/script\.google\.com\/.+\/exec$/.test(API_URL.trim());
-const FALLBACK={"palette": [{"code": "BLK", "name": "ดำ", "hex": "#1B2A34"}, {"code": "WHT", "name": "ขาว", "hex": "#F4F4F4"}, {"code": "SKN", "name": "เนื้อ", "hex": "#F2C9A0"}, {"code": "ORG", "name": "ส้ม", "hex": "#FE8A18"}, {"code": "YEL", "name": "เหลือง", "hex": "#F2CD37"}, {"code": "RED", "name": "แดง", "hex": "#C91A09"}, {"code": "BRN", "name": "น้ำตาล", "hex": "#82422A"}, {"code": "PUR", "name": "ม่วง", "hex": "#6A3FA0"}, {"code": "DGR", "name": "เทาเข้ม", "hex": "#6C6E68"}, {"code": "LGR", "name": "เทาอ่อน", "hex": "#A0A5A9"}, {"code": "PNK", "name": "ชมพู", "hex": "#FC97AC"}, {"code": "LBL", "name": "ฟ้า", "hex": "#9FC3E9"}, {"code": "BLU", "name": "น้ำเงิน", "hex": "#0055BF"}, {"code": "DGN", "name": "เขียวเข้ม", "hex": "#184632"}, {"code": "LGN", "name": "เขียวอ่อน", "hex": "#6FBF73"}], "prices": [{"w": 48, "h": 48, "price": 1690}, {"w": 48, "h": 64, "price": 2250}, {"w": 64, "h": 64, "price": 3000}, {"w": 64, "h": 96, "price": 4500}], "shop": {"name": "Brick Art", "tagline": "Custom-made for your special someone", "headline": "ชิ้นงานที่มีเพียงหนึ่งเดียว เพราะเรื่องราวของคุณไม่ซ้ำใคร", "sub": "เปลี่ยนรูปภาพให้เป็นงานศิลป์ที่จับต้องได้ ของขวัญชิ้นพิเศษที่มีชิ้นเดียว", "shipDays": "1–3 วัน", "line": "@967wicnz", "ig": "", "assembleFee": 0, "heroWords": "Build, Create, Gift", "quote": "ต่อเรื่องราวเล็ก ๆ ให้กลายเป็นของขวัญชิ้นใหญ่"}};
+const FALLBACK={"palette": [{"code": "BLK", "name": "ดำ", "hex": "#1B2A34"}, {"code": "WHT", "name": "ขาว", "hex": "#F4F4F4"}, {"code": "SKN", "name": "เนื้อ", "hex": "#F2C9A0"}, {"code": "ORG", "name": "ส้ม", "hex": "#FE8A18"}, {"code": "YEL", "name": "เหลือง", "hex": "#F2CD37"}, {"code": "RED", "name": "แดง", "hex": "#C91A09"}, {"code": "BRN", "name": "น้ำตาล", "hex": "#82422A"}, {"code": "PUR", "name": "ม่วง", "hex": "#6A3FA0"}, {"code": "DGR", "name": "เทาเข้ม", "hex": "#6C6E68"}, {"code": "LGR", "name": "เทาอ่อน", "hex": "#A0A5A9"}, {"code": "PNK", "name": "ชมพู", "hex": "#FC97AC"}, {"code": "LBL", "name": "ฟ้า", "hex": "#9FC3E9"}, {"code": "BLU", "name": "น้ำเงิน", "hex": "#0055BF"}, {"code": "DGN", "name": "เขียวเข้ม", "hex": "#184632"}, {"code": "LGN", "name": "เขียวอ่อน", "hex": "#6FBF73"}], "prices": [{"w": 48, "h": 48, "price": 1690}, {"w": 48, "h": 64, "price": 2250}, {"w": 64, "h": 64, "price": 3000}, {"w": 64, "h": 96, "price": 4500}], "shop": {"name": "Waris BrickArt", "tagline": "Your photo · One piece only", "headline": "เปลี่ยนรูปที่คุณรัก ให้เป็นภาพตัวต่อชิ้นเดียวในโลก", "sub": "อัปโหลดรูปแล้วเห็นแบบทันที จะต่อเองเป็นกิจกรรมพิเศษกับคนที่รัก หรือให้เราต่อให้พร้อมแขวนก็ได้", "shipDays": "1–3 วัน", "line": "@967wicnz", "ig": "", "assembleFee": 0, "heroWords": "Your, Story, In Bricks", "quote": "ต่อเรื่องราวเล็ก ๆ ให้กลายเป็นของขวัญชิ้นใหญ่"}};
 let COLORS,MODES,SIZES,SHOP;
 function applyData(D){
   COLORS=D.palette.map(p=>{const rgb=[1,3,5].map(i=>parseInt(p.hex.slice(i,i+2),16));return{n:p.name,code:p.code,h:p.hex,rgb,lab:rgb2lab(rgb[0],rgb[1],rgb[2])}});
@@ -651,7 +659,7 @@ const out=$("out");
 const cmTxt=(w,h)=>(w*.8).toFixed(1)+"×"+(h*.8).toFixed(1);
 function curSize(){return SIZES.find(z=>z.w===Math.min(S.w,S.h)&&z.h===Math.max(S.w,S.h))||SIZES[0]}
 function oDims(z){return z.w===z.h||S.orient==="portrait"?[z.w,z.h]:[z.h,z.w]}
-function setDims(z){[S.w,S.h]=oDims(z);const sq=z.w===z.h;$("orientNote").hidden=!sq;
+function setDims(z){[S.w,S.h]=oDims(z);const sq=z.w===z.h;$("orientNote").hidden=!sq;$("oP").textContent=z.w+"×"+z.h;$("oL").textContent=z.h+"×"+z.w;
   $("orient").querySelectorAll("button").forEach(b=>{b.setAttribute("aria-pressed",b.dataset.v===S.orient);b.disabled=sq;b.style.opacity=sq?.5:1})}
 function buildSizes(){const cs=curSize();setDims(cs);
 $("sizes").innerHTML=SIZES.map((s,i)=>{const[dw,dh]=oDims(s);return`<button type="button" class="size" data-i="${i}" aria-pressed="${s===cs}"><b>${dw}×${dh}</b><span>${cmTxt(dw,dh)} ซม. · ${(s.w*s.h).toLocaleString()} ชิ้น</span><em>${baht(s.price)}</em></button>`}).join("");buildAssemble()}
@@ -659,10 +667,11 @@ function fee(){return S.assemble?(Number(SHOP.assembleFee)||0):0}
 function buildAssemble(){const f=Number(SHOP.assembleFee)||0;$("asmShop").textContent="ให้ร้านต่อให้ พร้อมตั้งโชว์"+(f?" (+"+baht(f)+")":"")}
 buildSizes();
 function applyShop(){const sh=SHOP;
-  const nm=String(sh.name||"Brick Art"),i=nm.indexOf(" ");$("logoTxt").innerHTML=i>0?esc(nm.slice(0,i))+"<span>"+esc(nm.slice(i+1))+"</span>":esc(nm);
+  const nm=String(sh.name||"Waris BrickArt");{const ws=nm.trim().split(/\s+/),last=ws.pop(),m=/^(.+?)([A-Z][a-z]*)$/.exec(last);
+    $("logoTxt").innerHTML=(ws.length?"<small>"+esc(ws.join(" ").toUpperCase())+"</small>":"")+"<em style=\"font-style:normal\">"+(m?esc(m[1])+"<span>"+esc(m[2])+"</span>":esc(last))+"</em>"}
   document.title=nm+" | "+(sh.headline||"");$("heroTag").textContent=sh.tagline||"";$("heroTag").hidden=!sh.tagline;
   $("heroH").textContent=sh.headline||"";
-  const words=String(sh.heroWords||"Build, Create, Gift").split(",").map(x=>x.trim()).filter(Boolean).slice(0,4);
+  const words=String(sh.heroWords||"Your, Story, In Bricks").split(",").map(x=>x.trim()).filter(Boolean).slice(0,4);
   $("heroWords").innerHTML=words.map(w=>"<span>"+esc(w)+"</span>").join("");
   $("quoteTxt").textContent=sh.quote||"";
   $("heroP").textContent=sh.sub||"";
@@ -774,7 +783,8 @@ async function showPay(el,id,phone,price,slipSent,email){
 function showThanks(id,phone,email){const t=$("thanks");
   $("thId").textContent=id;$("thMail").textContent=email||"อีเมลที่ให้ไว้ตอนสั่ง";
   t.hidden=false;document.documentElement.classList.add("lock");t.scrollTop=0;setTimeout(()=>$("thHome").focus(),50);
-  $("thTrack").onclick=()=>{closeThanks();showView("home");$("tId").value=id;$("tPhone").value=phone;setTimeout(()=>$("track").scrollIntoView({behavior:"smooth"}),50)};}
+  $("thTrack").onclick=()=>{closeThanks();showView("home");runTrack(id,phone)};}
+function runTrack(id,phone){$("tId").value=id;$("tPhone").value=phone;setTimeout(()=>{$("track").scrollIntoView({behavior:"smooth"});const f=$("trackForm");if(f.requestSubmit)f.requestSubmit();else f.dispatchEvent(new Event("submit",{cancelable:true}))},120)}
 function closeThanks(){$("thanks").hidden=true;document.documentElement.classList.remove("lock")}
 $("thHome").addEventListener("click",()=>{closeThanks();showView("home")});
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("thanks").hidden)closeThanks()});
@@ -815,6 +825,7 @@ function fillCheckout(){const c=$("coThumb"),k=Math.min(6,Math.floor(320/Math.ma
   $("coMode").textContent=MODETXT[S.mode];$("coAsm").textContent=S.assemble?"ร้านต่อให้"+(fee()?" (+"+baht(fee())+")":""):"ต่อเอง";
   $("coPrice").textContent=baht(curSize().price+fee());
   if(DIRTY){$("orderForm").hidden=false;$("result").hidden=true;$("coHead").textContent="ข้อมูลจัดส่ง";$("err").hidden=true}}
+{const q=new URLSearchParams(location.search),oid=q.get("order"),tel=q.get("tel");if(oid&&tel)setTimeout(()=>runTrack(oid,tel),400)}
 {const r0=routeOf(location.hash);if(r0!=="home")showView(r0,false);else if(location.hash.length>1){const t=document.querySelector(location.hash);if(t)setTimeout(()=>t.scrollIntoView(),300)}}
 
 /* ---------- instructions PDF (same as admin) ---------- */
