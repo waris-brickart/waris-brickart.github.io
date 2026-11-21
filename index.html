@@ -136,6 +136,9 @@ section{padding-block:clamp(28px,5vw,56px)}
 .seg button[aria-pressed="true"]{background:var(--ink);color:#fff}
 .zoom{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px;font-size:14px;color:var(--muted)}
 .zoom input{width:100%;accent-color:var(--red)}
+.adj{display:grid;gap:6px;margin-top:12px;padding:12px 14px;border:1.5px dashed var(--line,#ecdcae);border-radius:14px}
+.adj .zoom{grid-template-columns:96px 1fr 34px}.adj output{text-align:right;font-variant-numeric:tabular-nums}
+.linkbtn{justify-self:end;background:none;border:0;padding:4px 0;font:inherit;font-size:13px;color:var(--muted);text-decoration:underline;cursor:pointer}
 .form{display:grid;gap:22px;align-content:start}
 .lbl{font-family:var(--display);font-weight:500;font-size:19px;display:flex;align-items:center;gap:10px;margin-bottom:10px}
 .lbl i{font-style:normal;width:28px;height:28px;border-radius:50%;background:var(--blush);color:var(--red);display:grid;place-items:center;font-size:15px;font-weight:600}
@@ -330,6 +333,12 @@ footer a{color:inherit}
         <div class="lbl"><i>3</i>โทนสี</div>
         <div class="seg" id="mode"><button data-v="color" aria-pressed="true">เหมือนจริง</button><button data-v="gray" aria-pressed="false">ขาว-ดำ</button><button data-v="pop" aria-pressed="false">ป๊อปอาร์ต</button><button data-v="pastel" aria-pressed="false">พาสเทล</button></div>
         <div class="seg" id="smooth" style="margin-top:8px"><button data-v="1" aria-pressed="true">ไล่เฉดเนียน (แนะนำ)</button><button data-v="0" aria-pressed="false">สีเรียบคมชัด</button></div>
+        <div class="adj" id="adj">
+          <label class="zoom">ความสว่าง<input type="range" data-k="b" min="-50" max="50" step="5" value="0"><output>0</output></label>
+          <label class="zoom">ความเข้ม<input type="range" data-k="c" min="-30" max="60" step="5" value="0"><output>0</output></label>
+          <label class="zoom">ความสดของสี<input type="range" data-k="s" min="-50" max="80" step="5" value="0"><output>0</output></label>
+          <button type="button" class="linkbtn" id="adjReset">คืนค่าเดิม</button>
+        </div>
       </div>
       <div>
         <div class="lbl"><i>4</i>ต่อเองหรือให้ร้านต่อ</div>
@@ -428,8 +437,8 @@ function rgb2lab(r,g,b){r=lin(r);g=lin(g);b=lin(b);
   return[116*y-16,500*(x-y),200*(y-z)]}
 function cropRect(img,c,a){a=a||1;const iw=img.width,ih=img.height,ch=Math.min(ih,iw/a)/c.z,cw=ch*a,hx=cw/2/iw,hy=ch/2/ih;
   c.x=Math.min(1-hx,Math.max(hx,c.x));c.y=Math.min(1-hy,Math.max(hy,c.y));return[c.x*iw-cw/2,c.y*ih-ch/2,cw,ch]}
-let SMOOTH=true;
-function quantize(img,crop,W,H,mode,smooth){
+let SMOOTH=true;const ADJ={b:0,c:0,s:0};
+function quantize(img,crop,W,H,mode,smooth,adj){
   if(smooth===undefined)smooth=SMOOTH;
   const[sx,sy,sw,sh]=cropRect(img,crop,W/H),t=document.createElement("canvas");t.width=W;t.height=H;
   let src=img,qx=sx,qy=sy,qw=sw,qh=sh;
@@ -445,8 +454,12 @@ function quantize(img,crop,W,H,mode,smooth){
       for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){const X=xx+dx,Y=yy+dy;if(X<0||Y<0||X>=W||Y>=H)continue;sum+=cp[(Y*W+X)*3+c];cnt++}
       const p=(yy*W+xx)*3+c;buf[p]=Math.min(255,Math.max(0,cp[p]+(cp[p]-sum/cnt)*sharp))}}
   for(let i=0;i<n;i++){const p=i*3;let r=buf[p],g=buf[p+1],b=buf[p+2];const y=0.299*r+0.587*g+0.114*b;
+    if(adj){if(adj.s){const f=1+adj.s/100;r=y+(r-y)*f;g=y+(g-y)*f;b=y+(b-y)*f}
+      if(adj.c){const f=1+adj.c/100;r=(r-128)*f+128;g=(g-128)*f+128;b=(b-128)*f+128}
+      if(adj.b){const f=adj.b*1.6;r+=f;g+=f;b+=f}}
+    const y2=0.299*r+0.587*g+0.114*b;
     if(mode==="color"){const s=1.0;r=y+(r-y)*s;g=y+(g-y)*s;b=y+(b-y)*s;const sc=v=>{v=Math.min(255,Math.max(0,v))/255;return 255*(v+((v<.5?2*v*v:1-2*(1-v)*(1-v))-v)*0.22)};r=sc(r);g=sc(g);b=sc(b)}
-    else if(mode==="gray"){r=g=b=y;const v=Math.min(255,Math.max(0,y))/255;r=g=b=255*(v+((v<.5?2*v*v:1-2*(1-v)*(1-v))-v)*0.25)}
+    else if(mode==="gray"){const v=Math.min(255,Math.max(0,y2))/255;r=g=b=255*(v+((v<.5?2*v*v:1-2*(1-v)*(1-v))-v)*0.25)}
     else if(mode==="pop"){const s=1.9;r=y+(r-y)*s;g=y+(g-y)*s;b=y+(b-y)*s;r=(r-128)*1.35+128;g=(g-128)*1.35+128;b=(b-128)*1.35+128}
     else if(mode==="pastel"){const s=1.45;r=y+(r-y)*s;g=y+(g-y)*s;b=y+(b-y)*s;r=(r-128)*1.12+128;g=(g-128)*1.12+128;b=(b-128)*1.12+128;r=r+(255-r)*0.22;g=g+(255-g)*0.22;b=b+(255-b)*0.22}
     buf[p]=Math.min(255,Math.max(0,r));buf[p+1]=Math.min(255,Math.max(0,g));buf[p+2]=Math.min(255,Math.max(0,b))}
@@ -578,7 +591,7 @@ function applyShop(){const sh=SHOP;
   $("ftContact").innerHTML=c.join(" · ");$("ftContact").hidden=!c.length;buildAssemble()}
 applyShop();
 function render(){
-  const W=S.w,H=S.h;S.idx=quantize(S.img,S.crop,W,H,S.mode);
+  const W=S.w,H=S.h;S.idx=quantize(S.img,S.crop,W,H,S.mode,undefined,ADJ);
   const want=S.view==="frame"?[900,Math.round(900*Math.max(1,H/W*0.9))]:W>=H?[900,Math.round(900*H/W)]:[Math.round(900*W/H),900];
   if(out.width!==want[0]||out.height!==want[1]){out.width=want[0];out.height=want[1]}
   if(S.view==="mosaic")drawMosaic(out,S.idx,W,H);else if(S.view==="frame")drawFramed(out,S.idx,W,H);else drawPhoto(out,S.img,S.crop);
@@ -597,6 +610,10 @@ function seg(id,key){const el=$(id);el.addEventListener("click",e=>{const b=e.ta
 seg("view","view");seg("mode","mode");
 (()=>{const el=$("smooth");el.addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;
   el.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b));SMOOTH=b.dataset.v==="1";render()})})();
+(function(){const box=$("adj");let raf=0;
+  const sync=()=>box.querySelectorAll("input").forEach(i=>{ADJ[i.dataset.k]=Number(i.value);i.nextElementSibling.textContent=(i.value>0?"+":"")+i.value});
+  box.addEventListener("input",()=>{sync();cancelAnimationFrame(raf);raf=requestAnimationFrame(render)});
+  $("adjReset").addEventListener("click",()=>{box.querySelectorAll("input").forEach(i=>i.value=0);sync();render()});})();
 $("sizes").addEventListener("click",e=>{const b=e.target.closest(".size");if(!b)return;
   $("sizes").querySelectorAll(".size").forEach(x=>x.setAttribute("aria-pressed",x===b));S.w=Number(b.dataset.w);S.h=Number(b.dataset.h);render()});
 (()=>{const el=$("asm");el.addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;
