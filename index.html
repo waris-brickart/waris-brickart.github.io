@@ -48,6 +48,10 @@ nav .in{display:flex;align-items:center;justify-content:space-between;gap:12px;p
 .mark i{width:13px;height:13px;border-radius:2px;display:block;box-shadow:inset 0 -3px 0 rgba(0,0,0,.18)}
 .links{display:flex;gap:22px;font-size:15px}
 .links a{text-decoration:none;color:var(--muted)}
+.links a{white-space:nowrap}
+@media (max-width:1100px){.links{gap:14px;font-size:14px}}
+@media (max-width:980px){.links{display:none!important}}
+nav .btn.sm{white-space:nowrap}
 .links a:hover{color:var(--ink)}
 @media (max-width:760px){.links{display:none}}
 .btn{display:inline-flex;align-items:center;gap:8px;border:0;border-radius:8px;padding:12px 22px;font-weight:600;cursor:pointer;text-decoration:none;font-size:15px;transition:transform .12s,box-shadow .12s}
@@ -324,7 +328,7 @@ footer a{color:inherit}
   </div>
 </header>
 
-<div class="ribbon" aria-hidden="true"><div><span class="rib">Custom-made for your special someone <b>✦</b> ดูแบบฟรีก่อนสั่ง <b>✦</b> จัดส่งภายใน 1–3 วัน <b>✦</b> ต่อเองหรือให้ร้านต่อให้ <b>✦</b></span><span class="rib">Custom-made for your special someone <b>✦</b> ดูแบบฟรีก่อนสั่ง <b>✦</b> จัดส่งภายใน 1–3 วัน <b>✦</b> ต่อเองหรือให้ร้านต่อให้ <b>✦</b></span></div></div>
+<div class="ribbon" aria-hidden="true"><div><span class="rib">ชิ้นงานที่มีเพียงหนึ่งเดียว <b>✦</b> ดูแบบฟรีก่อนสั่ง <b>✦</b> จัดส่งภายใน 1–3 วัน <b>✦</b> ต่อเองหรือให้ร้านต่อให้ <b>✦</b></span><span class="rib">ชิ้นงานที่มีเพียงหนึ่งเดียว <b>✦</b> ดูแบบฟรีก่อนสั่ง <b>✦</b> จัดส่งภายใน 1–3 วัน <b>✦</b> ต่อเองหรือให้ร้านต่อให้ <b>✦</b></span></div></div>
 
 <section class="in" id="about">
   <div class="about">
@@ -393,7 +397,7 @@ footer a{color:inherit}
 
 <footer>
   <div class="in">
-    <div><b id="ftName">Waris BrickArt</b><p class="ftslogan" id="ftSlogan">Custom-made for your special someone</p><p>ต่อความสุข ให้เป็นงานศิลปะ Custom-made for your special someone</p><p id="ftContact" style="margin-top:6px" hidden></p></div>
+    <div><b id="ftName">Waris BrickArt</b><p class="ftslogan" id="ftSlogan">Custom-made for your special someone</p><p id="ftContact" style="margin-top:6px" hidden></p></div>
     <a class="ftqr" id="ftQr" target="_blank" rel="noopener" hidden><img alt="QR แอด LINE ร้าน" width="104" height="104"><span>สแกนแอด LINE ร้าน</span></a>
     <p id="ftNote">Waris BrickArt เป็นแบรนด์อิสระ ไม่มีส่วนเกี่ยวข้องกับผู้ผลิตตัวต่อรายใด</p>
   </div>
@@ -1042,7 +1046,7 @@ function gTipsPage(plan, qr) {
     o.fillStyle = "#ffffff"; o.fillRect(bx + 50, by + 125, 300, 300); o.imageSmoothingEnabled = false; o.drawImage(qr, bx + 50, by + 125, 300, 300); o.imageSmoothingEnabled = true;
     o.fillStyle = "#6b5a3e"; o.font = "22px Kanit, sans-serif"; o.fillText("แจ้งเลขออเดอร์ " + plan.id, bx + bw / 2, by + 480); o.textAlign = "left";
   }
-  o.fillStyle = "#2b1d0e"; o.font = "600 40px Kanit, sans-serif"; o.textAlign = "center"; o.fillText("ขอบคุณที่ให้ " + (plan.shop || "Brick Art") + " ได้เป็นส่วนหนึ่งของความทรงจำ ", PW / 2, 920); o.textAlign = "left";
+  o.fillStyle = "#2b1d0e"; o.font = "600 40px Kanit, sans-serif"; o.textAlign = "center"; o.fillText("ขอบคุณที่ให้ " + (plan.shop || "Brick Art") + " ได้เป็นส่วนหนึ่งของความทรงจำ ✦", PW / 2, 920); o.textAlign = "left";
   return c;
 }
 function gLoadImg(src) { return new Promise(res => { if (!src) return res(null); const i = new Image(); i.onload = () => res(i); i.onerror = () => res(null); i.src = src; }); }
