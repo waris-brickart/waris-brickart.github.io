@@ -271,7 +271,7 @@ footer p{opacity:.75;max-width:52ch}
   <div class="builder">
     <div class="preview">
       <div class="row" style="justify-content:space-between">
-        <div class="seg" id="view"><button data-v="mosaic" aria-pressed="true">ภาพตัวต่อ</button><button data-v="photo" aria-pressed="false">ภาพจริง</button></div>
+        <div class="seg" id="view"><button data-v="mosaic" aria-pressed="true">ภาพตัวต่อ</button><button data-v="frame" aria-pressed="false">ในกรอบ</button><button data-v="photo" aria-pressed="false">ภาพจริง</button></div>
         <span class="note" id="dimTxt"></span>
       </div>
       <div class="stage" id="stage"><canvas id="out" aria-label="ภาพตัวอย่างงานตัวต่อ"></canvas><span class="hint">ลากเพื่อขยับรูป</span></div>
@@ -295,7 +295,8 @@ footer p{opacity:.75;max-width:52ch}
       </div>
       <div>
         <div class="lbl"><i>3</i>โทนสี</div>
-        <div class="seg" id="mode"><button data-v="color" aria-pressed="true">สีเต็ม</button><button data-v="gray" aria-pressed="false">ขาว-ดำ</button><button data-v="warm" aria-pressed="false">ซีเปีย</button></div>
+        <div class="seg" id="mode"><button data-v="color" aria-pressed="true">เหมือนจริง</button><button data-v="gray" aria-pressed="false">ขาว-ดำ</button><button data-v="pop" aria-pressed="false">ป๊อปอาร์ต</button><button data-v="pastel" aria-pressed="false">พาสเทล</button></div>
+        <div class="seg" id="smooth" style="margin-top:8px"><button data-v="1" aria-pressed="true">ไล่เฉดเนียน (แนะนำ)</button><button data-v="0" aria-pressed="false">สีเรียบคมชัด</button></div>
       </div>
       <div class="sum">
         <div class="li"><span>ขนาด</span><span id="sSize"></span></div>
@@ -368,10 +369,10 @@ const HAS_API=/^https:\/\/script\.google\.com\/.+\/exec$/.test(API_URL.trim());
 const FALLBACK={"palette": [{"code": "BLK", "name": "ดำ", "hex": "#1B2A34"}, {"code": "WHT", "name": "ขาว", "hex": "#F4F4F4"}, {"code": "SKN", "name": "เนื้อ", "hex": "#F2C9A0"}, {"code": "ORG", "name": "ส้ม", "hex": "#FE8A18"}, {"code": "YEL", "name": "เหลือง", "hex": "#F2CD37"}, {"code": "RED", "name": "แดง", "hex": "#C91A09"}, {"code": "BRN", "name": "น้ำตาล", "hex": "#82422A"}, {"code": "PUR", "name": "ม่วง", "hex": "#6A3FA0"}, {"code": "DGR", "name": "เทาเข้ม", "hex": "#6C6E68"}, {"code": "LGR", "name": "เทาอ่อน", "hex": "#A0A5A9"}, {"code": "PNK", "name": "ชมพู", "hex": "#FC97AC"}, {"code": "LBL", "name": "ฟ้า", "hex": "#9FC3E9"}, {"code": "BLU", "name": "น้ำเงิน", "hex": "#0055BF"}, {"code": "DGN", "name": "เขียวเข้ม", "hex": "#184632"}, {"code": "LGN", "name": "เขียวอ่อน", "hex": "#6FBF73"}], "prices": [{"n": 32, "price": 990}, {"n": 48, "price": 1890}, {"n": 64, "price": 2990}, {"n": 96, "price": 5990}]};
 let COLORS,MODES,SIZES;
 function applyData(D){
-  COLORS=D.palette.map(p=>({n:p.name,code:p.code,h:p.hex,rgb:[1,3,5].map(i=>parseInt(p.hex.slice(i,i+2),16))}));
+  COLORS=D.palette.map(p=>{const rgb=[1,3,5].map(i=>parseInt(p.hex.slice(i,i+2),16));return{n:p.name,code:p.code,h:p.hex,rgb,lab:rgb2lab(rgb[0],rgb[1],rgb[2])}});
   const pick=cs=>cs.map(c=>COLORS.findIndex(x=>x.code===c)).filter(i=>i>=0);
-  MODES={color:COLORS.map((_,i)=>i),gray:pick(["WHT","LGR","DGR","BLK"]),warm:pick(["WHT","SKN","ORG","BRN","DGR","BLK"])};
-  if(MODES.gray.length<2)MODES.gray=MODES.color;if(MODES.warm.length<2)MODES.warm=MODES.color;
+  MODES={color:COLORS.map((_,i)=>i),gray:pick(["WHT","LGR","DGR","BLK"]),pop:pick(["BLK","WHT","RED","YEL","BLU","PNK","ORG","LBL"]),pastel:pick(["WHT","PNK","LBL","LGN","YEL","SKN","LGR","PUR"])};
+  ["gray","pop","pastel"].forEach(k=>{if(MODES[k].length<3)MODES[k]=MODES.color});
   SIZES=D.prices.length?D.prices:[{n:48,price:0}];
 }
 applyData(FALLBACK);
@@ -379,25 +380,68 @@ const $=id=>document.getElementById(id);
 const baht=v=>"฿"+v.toLocaleString("th-TH");
 
 /* ---------- mosaic engine ---------- */
-function dist(r,g,b,c){const[pr,pg,pb]=c.rgb,rm=(r+pr)/2,dr=r-pr,dg=g-pg,db=b-pb;return(2+rm/256)*dr*dr+4*dg*dg+(2+(255-rm)/256)*db*db}
+function lin(c){c/=255;return c<=0.04045?c/12.92:Math.pow((c+0.055)/1.055,2.4)}
+function rgb2lab(r,g,b){r=lin(r);g=lin(g);b=lin(b);
+  const f=t=>t>0.008856?Math.cbrt(t):7.787*t+16/116;
+  const x=f((r*0.4124+g*0.3576+b*0.1805)/0.95047),y=f(r*0.2126+g*0.7152+b*0.0722),z=f((r*0.0193+g*0.1192+b*0.9505)/1.08883);
+  return[116*y-16,500*(x-y),200*(y-z)]}
 function cropRect(img,c){const w=img.width,h=img.height,s=Math.min(w,h)/c.z,hx=s/2/w,hy=s/2/h;
   c.x=Math.min(1-hx,Math.max(hx,c.x));c.y=Math.min(1-hy,Math.max(hy,c.y));return[c.x*w-s/2,c.y*h-s/2,s]}
-function quantize(img,crop,N,mode){
+let SMOOTH=true;
+function quantize(img,crop,N,mode,smooth){
+  if(smooth===undefined)smooth=SMOOTH;
   const[sx,sy,s]=cropRect(img,crop),t=document.createElement("canvas");t.width=t.height=N;
   const x=t.getContext("2d");x.imageSmoothingQuality="high";x.drawImage(img,sx,sy,s,s,0,0,N,N);
-  const d=x.getImageData(0,0,N,N).data,pal=MODES[mode],idx=new Int16Array(N*N);
-  for(let i=0;i<N*N;i++){let best=pal[0],bd=1e12;for(const k of pal){const dd=dist(d[i*4],d[i*4+1],d[i*4+2],COLORS[k]);if(dd<bd){bd=dd;best=k}}idx[i]=best}
+  const d=x.getImageData(0,0,N,N).data,pal=MODES[mode],n=N*N,buf=new Float32Array(n*3);
+  const lum=[];for(let i=0;i<n;i++)lum.push(0.299*d[i*4]+0.587*d[i*4+1]+0.114*d[i*4+2]);
+  const so=lum.slice().sort((p,q)=>p-q),lo=so[Math.floor(n*0.01)],hi=so[Math.floor(n*0.99)];
+  const k=hi-lo>40?255/(hi-lo):1,mix=0.6;
+  for(let i=0;i<n;i++)for(let c=0;c<3;c++){const v=d[i*4+c],st=(v-lo)*k;buf[i*3+c]=Math.min(255,Math.max(0,v+(st-v)*mix))}
+  for(let i=0;i<n;i++){const p=i*3;let r=buf[p],g=buf[p+1],b=buf[p+2];const y=0.299*r+0.587*g+0.114*b;
+    if(mode==="gray"){r=g=b=y}
+    else if(mode==="pop"){const s=1.9;r=y+(r-y)*s;g=y+(g-y)*s;b=y+(b-y)*s;r=(r-128)*1.35+128;g=(g-128)*1.35+128;b=(b-128)*1.35+128}
+    else if(mode==="pastel"){const s=1.45;r=y+(r-y)*s;g=y+(g-y)*s;b=y+(b-y)*s;r=(r-128)*1.12+128;g=(g-128)*1.12+128;b=(b-128)*1.12+128;r=r+(255-r)*0.22;g=g+(255-g)*0.22;b=b+(255-b)*0.22}
+    buf[p]=Math.min(255,Math.max(0,r));buf[p+1]=Math.min(255,Math.max(0,g));buf[p+2]=Math.min(255,Math.max(0,b))}
+  if(mode==="pop")smooth=false;
+  const idx=new Int16Array(n),amt=0.55;
+  for(let yy=0;yy<N;yy++){const rev=yy%2===1;
+    for(let j=0;j<N;j++){const xx=rev?N-1-j:j,i=yy*N+xx,p=i*3;
+      const r=Math.min(255,Math.max(0,buf[p])),g=Math.min(255,Math.max(0,buf[p+1])),b=Math.min(255,Math.max(0,buf[p+2]));
+      const L=rgb2lab(r,g,b);let best=pal[0],bd=1e12;
+      for(const kk of pal){const q=COLORS[kk].lab,dl=L[0]-q[0],da=L[1]-q[1],db=L[2]-q[2],dd=dl*dl+da*da+db*db;if(dd<bd){bd=dd;best=kk}}
+      idx[i]=best;
+      if(smooth){const c=COLORS[best].rgb,e=[(r-c[0])*amt,(g-c[1])*amt,(b-c[2])*amt],dir=rev?-1:1;
+        const sp=(dx,dy,f)=>{const X=xx+dx*dir,Y=yy+dy;if(X<0||X>=N||Y>=N)return;const q=(Y*N+X)*3;buf[q]+=e[0]*f;buf[q+1]+=e[1]*f;buf[q+2]+=e[2]*f};
+        sp(1,0,7/16);sp(-1,1,3/16);sp(0,1,5/16);sp(1,1,1/16)}}}
   return idx;
 }
 const spriteCache=new Map();
 function tile(ci,px){const key=ci+"_"+px;if(spriteCache.has(key))return spriteCache.get(key);
-  const c=document.createElement("canvas");c.width=c.height=px;const o=c.getContext("2d"),m=px/2;
-  o.fillStyle="#141618";o.fillRect(0,0,px,px);o.fillStyle=COLORS[ci].h;o.beginPath();o.arc(m,m,px*.46,0,7);o.fill();
-  const g=o.createLinearGradient(0,0,px,px);g.addColorStop(0,"rgba(255,255,255,.14)");g.addColorStop(1,"rgba(0,0,0,.12)");
-  o.fillStyle=g;o.beginPath();o.arc(m,m,px*.46,0,7);o.fill();spriteCache.set(key,c);return c}
+  const c=document.createElement("canvas");c.width=c.height=px;const o=c.getContext("2d"),m=px/2,r=px*0.47,col=COLORS[ci].h;
+  o.fillStyle="#2a2c30";o.fillRect(0,0,px,px);
+  if(px>=10){o.fillStyle="#34363b";[[0,0],[px,0],[0,px],[px,px]].forEach(([a,b])=>{o.beginPath();o.arc(a,b,px*0.16,0,7);o.fill()})}
+  if(px>=8){o.fillStyle="rgba(0,0,0,.45)";o.beginPath();o.arc(m+px*0.03,m+px*0.06,r,0,7);o.fill()}
+  o.fillStyle=col;o.beginPath();o.arc(m,m,r,0,7);o.fill();
+  if(px>=8){
+    const edge=o.createRadialGradient(m,m,r*0.55,m,m,r);edge.addColorStop(0,"rgba(0,0,0,0)");edge.addColorStop(1,"rgba(0,0,0,.22)");
+    o.fillStyle=edge;o.beginPath();o.arc(m,m,r,0,7);o.fill();
+    const hl=o.createRadialGradient(m-r*0.38,m-r*0.42,0,m-r*0.38,m-r*0.42,r*0.75);hl.addColorStop(0,"rgba(255,255,255,.55)");hl.addColorStop(0.45,"rgba(255,255,255,.12)");hl.addColorStop(1,"rgba(255,255,255,0)");
+    o.fillStyle=hl;o.beginPath();o.arc(m,m,r,0,7);o.fill();
+    o.strokeStyle="rgba(255,255,255,.18)";o.lineWidth=Math.max(0.6,px*0.03);o.beginPath();o.arc(m,m,r*0.93,Math.PI*1.05,Math.PI*1.6);o.stroke()}
+  spriteCache.set(key,c);return c}
 function drawMosaic(cv,idx,N){const px=Math.max(4,Math.floor(cv.width/N)),o=cv.getContext("2d"),size=px*N,off=(cv.width-size)/2;
   o.fillStyle="#141618";o.fillRect(0,0,cv.width,cv.height);
   for(let i=0;i<N*N;i++)o.drawImage(tile(idx[i],px),off+(i%N)*px,off+Math.floor(i/N)*px)}
+function drawFramed(cv,idx,N){const W=cv.width,o=cv.getContext("2d");
+  const g=o.createLinearGradient(0,0,0,W);g.addColorStop(0,"#f1ebe6");g.addColorStop(1,"#e2d9d1");o.fillStyle=g;o.fillRect(0,0,W,W);
+  const fs=Math.round(W*0.78),fx=(W-fs)/2,fy=(W-fs)/2-W*0.02,bw=Math.round(fs*0.045);
+  o.save();o.shadowColor="rgba(40,25,20,.35)";o.shadowBlur=W*0.05;o.shadowOffsetY=W*0.025;o.fillStyle="#141414";o.fillRect(fx,fy,fs,fs);o.restore();
+  const fg=o.createLinearGradient(fx,fy,fx+fs,fy+fs);fg.addColorStop(0,"#2e2e2e");fg.addColorStop(1,"#0c0c0c");o.fillStyle=fg;o.fillRect(fx,fy,fs,fs);
+  const inner=fs-bw*2,m=document.createElement("canvas");m.width=m.height=Math.max(inner,N*6);drawMosaic(m,idx,N);
+  o.drawImage(m,fx+bw,fy+bw,inner,inner);
+  o.strokeStyle="rgba(255,255,255,.08)";o.lineWidth=2;o.strokeRect(fx+1,fy+1,fs-2,fs-2);
+  const cm=(N*0.8).toFixed(1);o.fillStyle="rgba(59,31,28,.75)";o.font="600 "+Math.round(W*0.026)+"px Kanit, sans-serif";o.textAlign="center";
+  o.fillText("ขนาดจริง "+cm+" × "+cm+" ซม. (ไม่รวมกรอบ)",W/2,fy+fs+W*0.06)}
 function drawPhoto(cv,img,crop){const[sx,sy,s]=cropRect(img,crop),o=cv.getContext("2d");o.imageSmoothingQuality="high";o.drawImage(img,sx,sy,s,s,0,0,cv.width,cv.height)}
 
 /* ---------- illustrated sample pictures (drawn in code) ---------- */
@@ -456,7 +500,7 @@ $("sizes").innerHTML=SIZES.map(s=>`<button type="button" class="size" data-n="${
 buildSizes();
 function render(){
   S.idx=quantize(S.img,S.crop,S.size,S.mode);
-  if(S.view==="mosaic")drawMosaic(out,S.idx,S.size);else drawPhoto(out,S.img,S.crop);
+  if(S.view==="mosaic")drawMosaic(out,S.idx,S.size);else if(S.view==="frame")drawFramed(out,S.idx,S.size);else drawPhoto(out,S.img,S.crop);
   const sz=SIZES.find(s=>s.n===S.size),cm=(S.size*.8).toFixed(1);
   $("dimTxt").textContent=`${S.size}×${S.size} ปุ่ม · ${cm}×${cm} ซม.`;
   $("sSize").textContent=`${S.size}×${S.size} (${cm} ซม.)`;$("sPcs").textContent=(S.size*S.size).toLocaleString()+" ชิ้น";
@@ -467,6 +511,8 @@ let raf=0;const soon=()=>{if(!raf)raf=requestAnimationFrame(()=>{raf=0;render()}
 function seg(id,key){const el=$(id);el.addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;
   el.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b));S[key]=b.dataset.v;render()})}
 seg("view","view");seg("mode","mode");
+(()=>{const el=$("smooth");el.addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;
+  el.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b));SMOOTH=b.dataset.v==="1";render()})})();
 $("sizes").addEventListener("click",e=>{const b=e.target.closest(".size");if(!b)return;
   $("sizes").querySelectorAll(".size").forEach(x=>x.setAttribute("aria-pressed",x===b));S.size=Number(b.dataset.n);render()});
 $("zoom").addEventListener("input",e=>{S.crop.z=e.target.value/100;$("zoomOut").textContent=S.crop.z.toFixed(1)+"×";soon()});
@@ -552,7 +598,7 @@ $("orderForm").addEventListener("submit",e=>{e.preventDefault();
   const [sx,sy,s]=cropRect(S.img,S.crop),k=Math.min(1,1200/s),pc=document.createElement("canvas");pc.width=pc.height=Math.round(s*k);
   pc.getContext("2d").drawImage(S.img,sx,sy,s,s,0,0,pc.width,pc.height);
   const mc=document.createElement("canvas");mc.width=mc.height=768;drawMosaic(mc,S.idx,S.size);
-  const modeTxt={color:"สีเต็ม",gray:"ขาว-ดำ",warm:"ซีเปีย"}[S.mode],sz=SIZES.find(z=>z.n===S.size);
+  const modeTxt={color:"เหมือนจริง",gray:"ขาว-ดำ",pop:"ป๊อปอาร์ต",pastel:"พาสเทล"}[S.mode],sz=SIZES.find(z=>z.n===S.size);
   const payload={name:v("fName"),title:v("fTitle"),phone:v("fPhone"),line:v("fLine"),address:v("fAddr"),note:v("fNote"),
     size:S.size,mode:modeTxt,counts,photo:pc.toDataURL("image/jpeg",.85),preview:mc.toDataURL("image/jpeg",.9)};
   const box=$("result");
